@@ -4,43 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #f0f2f5;
+      --bg: #fafafa;
       --bg-white: #ffffff;
-      --text: #1c1e21;
-      --text-secondary: #65676b;
-      --border: #dddfe2;
-      --accent: #1877f2;
-      --accent-hover: #166fe5;
-      --green: #42b72a;
-      --orange: #f7b928;
-      --red: #fa3e3e;
+      --text: #1a1a1a;
+      --text-secondary: #666666;
+      --text-light: #999999;
+      --border: #e5e5e5;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --green: #10b981;
+      --red: #ef4444;
+      --orange: #f59e0b;
+      --purple: #8b5cf6;
     }
     body {
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
     }
     
-    /* Header - Facebook style */
+    /* Header */
     .header {
       background: var(--bg-white);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      border-bottom: 1px solid var(--border);
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 0 16px;
-      height: 50px;
+      padding: 0 24px;
+      height: 64px;
       display: flex;
       align-items: center;
     }
     .header-content {
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
       width: 100%;
       display: flex;
@@ -48,309 +51,318 @@
       justify-content: space-between;
     }
     .logo {
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 22px;
+      font-weight: 700;
       color: var(--accent);
-      text-decoration: none;
+      letter-spacing: -0.5px;
     }
-    .header-links {
+    .header-right {
       display: flex;
-      gap: 20px;
+      align-items: center;
+      gap: 16px;
     }
-    .header-links a {
+    .nav-link {
       color: var(--text-secondary);
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
     }
-    .header-links a:hover {
-      color: var(--accent);
-    }
-    .header-links .nav-item {
-      display: none;
-    }
-    .header-links.show-nav .nav-item {
-      display: block;
+    .nav-link:hover {
+      background: var(--bg);
+      color: var(--text);
     }
     
     /* Main Container */
     .container {
-      max-width: 960px;
-      margin: 70px auto 20px;
-      padding: 0 16px;
+      max-width: 1200px;
+      margin: 84px auto 40px;
+      padding: 0 24px;
     }
     
-    /* Search Bar - Simple 2010s style */
-    .search-bar {
-      background: var(--bg-white);
-      padding: 16px;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, #818cf8 100%);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 32px;
+      color: white;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .hero p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    /* Search */
+    .search-section {
       display: flex;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
-    .search-bar input, .search-bar select {
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-    }
-    .search-bar input:focus, .search-bar select:focus {
-      border-color: var(--accent);
-    }
-    .search-bar input[type="text"] {
+    .search-input {
       flex: 1;
-      min-width: 200px;
-    }
-    .search-bar input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(24,119,242,0.2);
-    }
-    
-    /* Filter Pills - Simple style */
-    .filters {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .filter-pill {
-      padding: 8px 16px;
-      background: var(--bg-white);
+      min-width: 280px;
+      padding: 14px 20px;
       border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 13px;
-      cursor: pointer;
+      border-radius: 12px;
+      font-size: 15px;
+      background: var(--bg-white);
       transition: all 0.2s;
     }
-    .filter-pill:hover {
-      background: #f5f6f7;
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
-    .filter-pill.active {
+    .filter-select {
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      background: var(--bg-white);
+      cursor: pointer;
+      min-width: 140px;
+    }
+    
+    /* Category Pills */
+    .categories {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .category-pill {
+      padding: 10px 18px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .category-pill:hover {
+      border-color: var(--accent);
+      background: rgba(99, 102, 241, 0.05);
+    }
+    .category-pill.active {
       background: var(--accent);
       color: white;
       border-color: var(--accent);
     }
+    .category-icon {
+      font-size: 16px;
+    }
     
-    /* Listings Grid - Simple cards */
+    /* Listings Grid - Card Style */
     .listings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
     }
+    
     .listing-card {
       background: var(--bg-white);
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.25s ease;
+      border: 1px solid var(--border);
     }
     .listing-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
     }
-    .listing-image {
+    
+    .card-image {
+      position: relative;
+      height: 180px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+    .card-image img {
       width: 100%;
-      height: 160px;
+      height: 100%;
       object-fit: cover;
-      background: #e4e6eb;
     }
-    .listing-image-placeholder {
-      width: 100%;
-      height: 160px;
-      background: linear-gradient(135deg, #e4e6eb 0%, #d8dadf 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      color: #bcc0c4;
-    }
-    .listing-content {
-      padding: 12px;
-    }
-    .listing-type {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: 6px;
     }
-    .listing-type.buy {
-      background: #e7f3e8;
-      color: #1877f2;
+    .badge-hot {
+      background: var(--red);
+      color: white;
     }
-    .listing-type.sell {
-      background: #fff4e5;
-      color: #f7b928;
+    .badge-new {
+      background: var(--green);
+      color: white;
     }
-    .listing-title {
+    .badge-great {
+      background: var(--orange);
+      color: white;
+    }
+    .badge-boosted {
+      background: var(--purple);
+      color: white;
+    }
+    .card-save {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .card-save:hover {
+      transform: scale(1.1);
+      background: white;
+    }
+    .card-save.saved {
+      color: var(--red);
+    }
+    
+    .card-content {
+      padding: 16px;
+    }
+    .card-price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-title {
       font-size: 15px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin: 6px 0 4px;
       color: var(--text);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .listing-price {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .listing-price .range {
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
-      font-weight: normal;
       color: var(--text-secondary);
+      margin-bottom: 12px;
     }
-    .listing-location {
+    .card-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--text-light);
+    }
+    
+    .card-seller {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .seller-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #818cf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .seller-info {
+      flex: 1;
+    }
+    .seller-name {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .seller-trust {
+      font-size: 11px;
+      color: var(--green);
     }
     
     /* Detail View */
     .detail-view {
       background: var(--bg-white);
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      padding: 24px;
-      margin-bottom: 20px;
+      border-radius: 20px;
+      overflow: hidden;
     }
     .detail-header {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
     }
     .detail-image {
-      width: 300px;
-      height: 225px;
+      width: 100%;
+      height: 400px;
       object-fit: cover;
-      border-radius: 8px;
-      background: #e4e6eb;
-    }
-    .detail-image-placeholder {
-      width: 300px;
-      height: 225px;
-      background: linear-gradient(135deg, #e4e6eb 0%, #d8dadf 100%);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 60px;
-      color: #bcc0c4;
+      border-radius: 16px;
     }
     .detail-info {
-      flex: 1;
-      min-width: 280px;
-    }
-    .detail-type {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .detail-type.buy { background: #e7f3e8; color: #1877f2; }
-    .detail-type.sell { background: #fff4e5; color: #f7b928; }
-    .detail-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 8px;
+      padding: 8px 0;
     }
     .detail-price {
-      font-size: 28px;
-      font-weight: bold;
-      color: var(--text);
-      margin-bottom: 12px;
+      font-size: 36px;
+      font-weight: 700;
     }
-    .detail-desc {
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-    .detail-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-    .detail-tag {
-      padding: 4px 10px;
-      background: #e4e6eb;
-      border-radius: 12px;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-    .detail-location {
-      color: var(--text-secondary);
-      font-size: 14px;
-      margin-bottom: 16px;
+    .detail-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 12px 0;
     }
     .detail-condition {
       display: inline-block;
-      padding: 6px 12px;
-      background: #e7f3e8;
-      border-radius: 6px;
-      font-size: 13px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
       color: var(--green);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
       margin-bottom: 16px;
     }
-    
-    /* Fair Market Value Box */
-    .fmv-box {
-      background: #e7f3e8;
-      border: 1px solid #42b72a;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-    .fmv-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--green);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .fmv-values {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .fmv-item {
-      text-align: center;
-    }
-    .fmv-label {
-      font-size: 11px;
+    .detail-desc {
       color: var(--text-secondary);
-      text-transform: uppercase;
-    }
-    .fmv-value {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
     }
     
-    /* Detail Actions */
     .detail-actions {
       display: flex;
       gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
+      margin-top: 24px;
     }
     .btn {
-      padding: 12px 24px;
-      border-radius: 6px;
+      padding: 14px 28px;
+      border-radius: 12px;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
@@ -365,157 +377,137 @@
       background: var(--accent-hover);
     }
     .btn-secondary {
-      background: #e4e6eb;
+      background: var(--bg);
       color: var(--text);
     }
     .btn-secondary:hover {
-      background: #d8dadf;
-    }
-    .btn-back {
-      background: transparent;
-      color: var(--accent);
-      padding: 8px 16px;
-      font-size: 14px;
-    }
-    .btn-back:hover {
-      text-decoration: underline;
+      background: var(--border);
     }
     
-    /* Message Section */
-    .message-section {
-      background: var(--bg-white);
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      padding: 24px;
-      margin-top: 20px;
+    /* FMV Box */
+    .fmv-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
     }
-    .message-section h3 {
-      font-size: 18px;
-      margin-bottom: 16px;
-    }
-    .message-thread {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-bottom: 16px;
-      padding: 12px;
-      background: #f5f6f7;
-      border-radius: 8px;
-    }
-    .message {
-      padding: 10px 14px;
-      border-radius: 18px;
-      margin-bottom: 8px;
-      max-width: 80%;
-      font-size: 14px;
-    }
-    .message.sent {
-      background: var(--accent);
-      color: white;
-      margin-left: auto;
-      border-bottom-right-radius: 4px;
-    }
-    .message.received {
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-bottom-left-radius: 4px;
-    }
-    .message-input {
-      display: flex;
-      gap: 10px;
-    }
-    .message-input input {
-      flex: 1;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 14px;
-      outline: none;
-    }
-    .message-input input:focus {
-      border-color: var(--accent);
-    }
-    .message-input button {
-      padding: 10px 20px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 20px;
+    .fmv-title {
+      font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
+      color: var(--green);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .message-input button:hover {
-      background: var(--accent-hover);
+    .fmv-values {
+      display: flex;
+      gap: 24px;
+    }
+    .fmv-item {
+      text-align: center;
+    }
+    .fmv-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .fmv-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
     }
     
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
+    /* Account View */
+    .account-header {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .account-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #818cf8);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
-      display: none;
+      font-size: 32px;
+      color: white;
+      font-weight: 700;
     }
-    .modal-overlay.active {
-      display: flex;
+    .account-info h2 {
+      font-size: 24px;
+      font-weight: 700;
     }
-    .modal {
-      background: var(--bg-white);
-      border-radius: 8px;
-      padding: 24px;
-      max-width: 450px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--green);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 8px;
     }
-    .modal h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
-    .modal input, .modal select, .modal textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 14px;
-      margin-bottom: 12px;
-      font-family: inherit;
-    }
-    .modal input:focus, .modal select:focus, .modal textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .modal-row {
+    
+    /* Stats Grid */
+    .stats-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
     }
-    .modal-actions {
+    .stat-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    
+    /* Section Headers */
+    .section-header {
       display: flex;
-      gap: 10px;
-      margin-top: 16px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-    .modal-actions .btn {
-      flex: 1;
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
     }
     
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #333;
+      background: #1a1a1a;
       color: white;
-      padding: 12px 24px;
-      border-radius: 6px;
+      padding: 14px 24px;
+      border-radius: 12px;
       font-size: 14px;
-      z-index: 2000;
+      font-weight: 500;
+      z-index: 1000;
       opacity: 0;
       transition: all 0.3s;
     }
@@ -524,20 +516,27 @@
       opacity: 1;
     }
     
-    /* Loading/Empty */
-    .loading, .empty {
+    /* Loading */
+    .loading {
       text-align: center;
       padding: 60px;
       color: var(--text-secondary);
     }
     
     /* Responsive */
-    @media (max-width: 600px) {
-      .header-links { display: none; }
-      .listings-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .detail-header { flex-direction: column; }
-      .detail-image, .detail-image-placeholder { width: 100%; height: 200px; }
-      .modal-row { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .detail-header {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .header {
+        padding: 0 16px;
+      }
+      .container {
+        padding: 0 16px;
+      }
     }
   </style>
 </head>
@@ -545,11 +544,11 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <a href="#" class="logo" onclick="showListings()">Marketplace</a>
-      <div class="header-links" id="headerLinks">
-        <a href="#" class="nav-item" onclick="showListings()">Browse</a>
-        <a href="#" class="nav-item" onclick="openModal('create')">Sell</a>
-        <a href="#" onclick="showAccount()">Account</a>
+      <div class="logo">Marketplace</div>
+      <div class="header-right">
+        <a href="#" class="nav-link" id="navBrowse">Browse</a>
+        <a href="#" class="nav-link" id="navSell">Sell</a>
+        <a href="#" class="nav-link" onclick="showAccount()">Account</a>
       </div>
     </div>
   </header>
@@ -558,145 +557,100 @@
   <div class="container" id="mainContainer">
     <!-- Listings View -->
     <div id="listingsView">
+      <!-- Hero -->
+      <div class="hero">
+        <h1>Find Great Deals</h1>
+        <p>Buy and sell locally with confidence</p>
+      </div>
+      
       <!-- Search -->
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search listings..." oninput="handleSearch()">
-        <input type="text" id="zipInput" placeholder="ZIP" maxlength="5" style="width:80px;" oninput="handleSearch()">
-        <select id="radiusSelect" onchange="handleSearch()">
-          <option value="5">5 mi</option>
-          <option value="15">15 mi</option>
-          <option value="50" selected>50 mi</option>
-          <option value="9999">Any</option>
+      <div class="search-section">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search for anything..." oninput="handleSearch()">
+        <select class="filter-select" id="zipInput" onchange="handleSearch()">
+          <option value="">Location</option>
+          <option value="10001">New York</option>
+          <option value="90001">Los Angeles</option>
+          <option value="60601">Chicago</option>
+          <option value="78701">Austin</option>
+          <option value="80201">Denver</option>
+        </select>
+        <select class="filter-select" id="radiusSelect" onchange="handleSearch()">
+          <option value="50">50 miles</option>
+          <option value="15">15 miles</option>
+          <option value="5">5 miles</option>
+          <option value="9999">Any distance</option>
         </select>
       </div>
       
-      <!-- Filters -->
-      <div class="filters">
-        <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">All</button>
-        <button class="filter-pill" data-filter="buy" onclick="setFilter('buy')">Buying</button>
-        <button class="filter-pill" data-filter="sell" onclick="setFilter('sell')">Selling</button>
-        <button class="filter-pill" data-filter="electronics" onclick="setFilter('electronics')">Electronics</button>
-        <button class="filter-pill" data-filter="furniture" onclick="setFilter('furniture')">Furniture</button>
+      <!-- Categories -->
+      <div class="categories">
+        <button class="category-pill active" data-filter="all" onclick="setFilter('all')">
+          <span class="category-icon">🏷️</span> All
+        </button>
+        <button class="category-pill" data-filter="electronics" onclick="setFilter('electronics')">
+          <span class="category-icon">📱</span> Electronics
+        </button>
+        <button class="category-pill" data-filter="furniture" onclick="setFilter('furniture')">
+          <span class="category-icon">🪑</span> Furniture
+        </button>
+        <button class="category-pill" data-filter="vehicles" onclick="setFilter('vehicles')">
+          <span class="category-icon">🚗</span> Vehicles
+        </button>
+        <button class="category-pill" data-filter="clothing" onclick="setFilter('clothing')">
+          <span class="category-icon">👕</span> Clothing
+        </button>
       </div>
       
       <!-- Grid -->
       <div class="listings-grid" id="listingsGrid">
-        <div class="loading">Loading...</div>
+        <div class="loading">Loading listings...</div>
       </div>
     </div>
     
     <!-- Detail View -->
     <div id="detailView" style="display:none;">
-      <button class="btn btn-back" onclick="showListings()">← Back to listings</button>
+      <button onclick="showListings()" style="background:none;border:none;font-size:14px;color:var(--accent);cursor:pointer;margin-bottom:16px;">← Back to listings</button>
       <div class="detail-view" id="detailContent"></div>
-      <div class="message-section" id="messageSection" style="display:none;">
-        <h3>💬 Message Seller</h3>
-        <div class="message-thread" id="messageThread"></div>
-        <div class="message-input">
-          <input type="text" id="messageInput" placeholder="Write a message..." onkeypress="handleMessageKeypress(event)">
-          <button onclick="sendMessage()">Send</button>
-        </div>
-      </div>
     </div>
     
     <!-- Account View -->
     <div id="accountView" style="display:none;">
-      <button class="btn btn-back" onclick="showListings()">← Back to listings</button>
-      <div class="detail-view" style="margin-top:16px;">
-        <h2>My Account</h2>
-        
-        <!-- Trust Score Card -->
-        <div style="margin-top:16px;padding:16px;background:#e7f3e8;border-radius:8px;">
-          <p><strong>Status:</strong> Logged in as <span id="accountUserName">User</span></p>
-          <p style="margin-top:8px;"><strong>Trust Score:</strong> <span id="accountTrustScore">--</span></p>
-          <p style="margin-top:4px;font-size:12px;color:var(--text-secondary);">Your trust score affects listing limits and boost eligibility</p>
-        </div>
-        
-        <!-- Seller Analytics -->
-        <div id="sellerAnalytics" style="margin-top:20px;display:none;">
-          <h3>📊 Seller Analytics</h3>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
-            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
-              <div style="font-size:24px;font-weight:bold;color:var(--accent);" id="analyticsListings">0</div>
-              <div style="font-size:12px;color:var(--text-secondary);">Listings</div>
-            </div>
-            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
-              <div style="font-size:24px;font-weight:bold;color:var(--green);" id="analyticsAvgPrice">$0</div>
-              <div style="font-size:12px;color:var(--text-secondary);">Avg Price</div>
-            </div>
-            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
-              <div style="font-size:24px;font-weight:bold;color:var(--orange);" id="analyticsBoostScore">0</div>
-              <div style="font-size:12px;color:var(--text-secondary);">Boost Score</div>
-            </div>
-          </div>
-          <div id="analyticsRecommendations" style="margin-top:12px;padding:12px;background:#fff4e5;border-radius:8px;font-size:13px;"></div>
-        </div>
-        
-        <!-- Your Listings -->
-        <div style="margin-top:20px;">
-          <h3>Your Listings</h3>
-          <div id="accountListings" style="margin-top:12px;">Loading...</div>
-        </div>
-        
-        <!-- Watchlist -->
-        <div style="margin-top:20px;">
-          <h3>❤️ Watchlist</h3>
-          <div id="accountWatchlist" style="margin-top:12px;">Loading...</div>
-        </div>
-        
-        <!-- Messages -->
-        <div style="margin-top:20px;">
-          <h3>💬 Messages</h3>
-          <p style="color:var(--text-secondary);font-size:14px;">Check if anyone has messaged you</p>
-          <div id="accountMessages" style="margin-top:12px;padding:16px;background:#f5f6f7;border-radius:8px;">
-            <p>No new messages</p>
+      <div class="account-header">
+        <div class="account-avatar" id="accountAvatar">T</div>
+        <div class="account-info">
+          <h2 id="accountName">Tech Trader</h2>
+          <div class="trust-badge">
+            <span>⭐</span>
+            <span id="accountTrust">Trust Score: 92/100</span>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Create Listing Modal -->
-  <div class="modal-overlay" id="createModal">
-    <div class="modal">
-      <h2>List an Item</h2>
-      <form onsubmit="createListing(event)">
-        <select id="listingType" required>
-          <option value="">I want to...</option>
-          <option value="sell">Sell</option>
-          <option value="buy">Buy</option>
-        </select>
-        <select id="listingCategory" required>
-          <option value="">Category</option>
-          <option value="electronics">Electronics</option>
-          <option value="furniture">Furniture</option>
-          <option value="clothing">Clothing</option>
-          <option value="vehicles">Vehicles</option>
-          <option value="other">Other</option>
-        </select>
-        <input type="text" id="listingTitle" placeholder="Title" required>
-        <textarea id="listingDesc" rows="3" placeholder="Description"></textarea>
-        <div class="modal-row">
-          <input type="number" id="listingPrice" placeholder="Price ($)">
-          <input type="number" id="listingMinPrice" placeholder="Min Price ($)">
-          <input type="number" id="listingMaxPrice" placeholder="Max Price ($)">
+      
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statListings">3</div>
+          <div class="stat-label">Active Listings</div>
         </div>
-        <input type="text" id="listingLocation" placeholder="City">
-        <input type="text" id="listingZipcode" placeholder="ZIP Code">
-        <input type="text" id="listingImage" placeholder="Image URL (optional)">
-        <input type="text" id="listingTags" placeholder="Tags (comma separated)">
-        <select id="listingCondition">
-          <option value="">Condition (for sell only)</option>
-          <option value="new">New</option>
-          <option value="like_new">Like New</option>
-          <option value="good">Good</option>
-          <option value="fair">Fair</option>
-        </select>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-primary">Post Listing</button>
-          <button type="button" class="btn btn-secondary" onclick="closeModal('create')">Cancel</button>
+        <div class="stat-card">
+          <div class="stat-value" id="statViews">1.2K</div>
+          <div class="stat-label">Total Views</div>
         </div>
-      </form>
+        <div class="stat-card">
+          <div class="stat-value" id="statBoost">85</div>
+          <div class="stat-label">Boost Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statSales">45</div>
+          <div class="stat-label">Total Sales</div>
+        </div>
+      </div>
+      
+      <!-- Your Listings -->
+      <div class="section-header">
+        <h3 class="section-title">Your Listings</h3>
+      </div>
+      <div class="listings-grid" id="myListingsGrid"></div>
     </div>
   </div>
 
@@ -704,8 +658,20 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API = 'http://localhost:3000/api';
-    let allListings = [], currentFilter = 'all', searchQuery = '', selectedListing = null, currentConversation = null;
+    const API = 'http://localhost:3001/api';
+    let allListings = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let selectedListing = null;
+    
+    // Mock current user
+    const currentUser = 'seller1';
+    const users = {
+      'seller1': { name: 'Tech Trader', trust: 92, initials: 'TT' },
+      'seller2': { name: 'Gadget Guy', trust: 78, initials: 'GG' },
+      'seller3': { name: 'Gamer Store', trust: 95, initials: 'GS' },
+      'seller4': { name: 'Furniture Flipper', trust: 81, initials: 'FF' },
+    };
     
     // Load listings
     async function loadListings() {
@@ -714,52 +680,71 @@
         allListings = await res.json();
         renderListings();
       } catch (e) {
-        document.getElementById('listingsGrid').innerHTML = '<div class="empty">Server not running. Run npm start</div>';
+        document.getElementById('listingsGrid').innerHTML = '<div class="loading">Server not running. Run: npm start</div>';
       }
     }
     
-    // Render listings grid
+    // Get badge for listing
+    function getListingBadge(listing) {
+      if (listing.boost_score) return '<span class="card-badge badge-boosted">⚡ Boosted</span>';
+      
+      const daysSinceListed = Math.floor((Date.now() - new Date(listing.created_at)) / (1000 * 60 * 60 * 24));
+      if (daysSinceListed < 2) return '<span class="card-badge badge-new">🆕 New</span>';
+      
+      return '';
+    }
+    
+    // Render listings
     function renderListings() {
       const grid = document.getElementById('listingsGrid');
       let filtered = allListings;
       
-      // Search filter
+      // Search
       if (searchQuery) {
         filtered = filtered.filter(l => 
           l.title.toLowerCase().includes(searchQuery) || 
-          (l.description || '').toLowerCase().includes(searchQuery) ||
-          (l.tags || []).some(t => t.toLowerCase().includes(searchQuery))
+          (l.description || '').toLowerCase().includes(searchQuery)
         );
       }
       
-      // Category filter
+      // Filter
       if (currentFilter === 'buy') filtered = filtered.filter(l => l.type === 'buy');
       else if (currentFilter === 'sell') filtered = filtered.filter(l => l.type === 'sell');
       else if (currentFilter !== 'all') filtered = filtered.filter(l => l.category === currentFilter);
       
       if (!filtered.length) {
-        grid.innerHTML = '<div class="empty">No listings found</div>';
+        grid.innerHTML = '<div class="loading">No listings found</div>';
         return;
       }
       
       grid.innerHTML = filtered.map(l => {
-        const priceDisplay = l.type === 'sell' 
-          ? `$${l.price}` 
-          : `$${l.min_price} - $${l.max_price}`;
-        
+        const user = users[l.user_id] || { name: 'Seller', trust: 50, initials: 'S' };
+        const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price} - $${l.max_price}`;
         const imageHtml = l.image 
-          ? `<img class="listing-image" src="${l.image}" alt="${l.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="listing-image-placeholder" style="display:none">📷</div>`
-          : `<div class="listing-image-placeholder">📷</div>`;
+          ? `<img src="${l.image}" alt="${l.title}" loading="lazy">` 
+          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`;
         
         return `
           <div class="listing-card" onclick="openDetail('${l.id}')">
-            ${imageHtml}
-            <div class="listing-content">
-              <span class="listing-type ${l.type}">${l.type}</span>
-              <div class="listing-title">${l.title}</div>
-              <div class="listing-price">${priceDisplay}</div>
-              <div class="listing-location">📍 ${l.location || 'Unknown'}</div>
-              <button onclick="event.stopPropagation(); toggleWatchlist('${l.id}')" style="margin-top:8px;padding:4px 8px;font-size:12px;background:none;border:1px solid var(--border);border-radius:4px;cursor:pointer;">❤️ Watch</button>
+            <div class="card-image">
+              ${imageHtml}
+              ${getListingBadge(l)}
+              <button class="card-save" onclick="event.stopPropagation(); toggleWatchlist('${l.id}')">♡</button>
+            </div>
+            <div class="card-content">
+              <div class="card-price">${priceDisplay}</div>
+              <div class="card-title">${l.title}</div>
+              <div class="card-meta">
+                <span>${l.condition || l.type}</span>
+              </div>
+              <div class="card-location">📍 ${l.location || 'Unknown'}</div>
+              <div class="card-seller">
+                <div class="seller-avatar">${user.initials}</div>
+                <div class="seller-info">
+                  <div class="seller-name">${user.name}</div>
+                  <div class="seller-trust">⭐ ${user.trust}/100</div>
+                </div>
+              </div>
             </div>
           </div>
         `;
@@ -774,7 +759,7 @@
     
     function setFilter(filter) {
       currentFilter = filter;
-      document.querySelectorAll('.filter-pill').forEach(p => {
+      document.querySelectorAll('.category-pill').forEach(p => {
         p.classList.toggle('active', p.dataset.filter === filter);
       });
       renderListings();
@@ -788,17 +773,15 @@
       document.getElementById('listingsView').style.display = 'none';
       document.getElementById('detailView').style.display = 'block';
       
-      // Fetch full listing with fair market value
+      // Fetch full listing with FMV
       try {
         const res = await fetch(API + '/listings/' + id);
         selectedListing = await res.json();
       } catch (e) {}
       
-      const priceDisplay = selectedListing.type === 'sell' 
-        ? `$${selectedListing.price}` 
-        : `$${selectedListing.min_price} - $${selectedListing.max_price}`;
+      const user = users[selectedListing.user_id] || { name: 'Seller', trust: 50 };
+      const priceDisplay = selectedListing.type === 'sell' ? `$${selectedListing.price}` : `$${selectedListing.min_price} - $${selectedListing.max_price}`;
       
-      // Fair Market Value
       let fmvHtml = '';
       if (selectedListing.type === 'sell' && selectedListing.fairMarketValue) {
         const fmv = selectedListing.fairMarketValue;
@@ -823,155 +806,94 @@
         `;
       }
       
-      const imageHtml = selectedListing.image
-        ? `<img class="detail-image" src="${selectedListing.image}" alt="${selectedListing.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="detail-image-placeholder" style="display:none">📷</div>`
-        : `<div class="detail-image-placeholder">📷</div>`;
-      
-      const conditionHtml = selectedListing.condition 
-        ? `<span class="detail-condition">Condition: ${selectedListing.condition.replace('_', ' ')}</span>` 
-        : '';
+      const imageHtml = selectedListing.image 
+        ? `<img class="detail-image" src="${selectedListing.image}" alt="${selectedListing.title}">` 
+        : `<div class="detail-image" style="display:flex;align-items:center;justify-content:center;font-size:120px;background:#f0f0f0;">📦</div>`;
       
       document.getElementById('detailContent').innerHTML = `
         <div class="detail-header">
-          ${imageHtml}
+          <div>${imageHtml}</div>
           <div class="detail-info">
-            <span class="detail-type ${selectedListing.type}">${selectedListing.type}</span>
-            <h1 class="detail-title">${selectedListing.title}</h1>
             <div class="detail-price">${priceDisplay}</div>
-            ${conditionHtml}
-            <p class="detail-desc">${selectedListing.description || 'No description'}</p>
-            <div class="detail-tags">${(selectedListing.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('')}</div>
-            <div class="detail-location">📍 ${selectedListing.location || 'Unknown'} ${selectedListing.zipcode ? '(' + selectedListing.zipcode + ')' : ''}</div>
+            <h1 class="detail-title">${selectedListing.title}</h1>
+            ${selectedListing.condition ? `<span class="detail-condition">${selectedListing.condition.replace('_', ' ')}</span>` : ''}
+            <p class="detail-desc">${selectedListing.description || 'No description provided.'}</p>
+            <p style="color:var(--text-light);font-size:14px;margin-bottom:8px;">📍 ${selectedListing.location || 'Unknown'}</p>
             ${fmvHtml}
             <div class="detail-actions">
-              <button class="btn btn-primary" onclick="openMessages()">💬 Message</button>
-              <button class="btn btn-secondary" onclick="showListings()">Back</button>
+              <button class="btn btn-primary" onclick="messageSeller()">💬 Message Seller</button>
+              <button class="btn btn-secondary" onclick="makeOffer()">Make Offer</button>
             </div>
           </div>
         </div>
       `;
-      
-      // Show message section
-      document.getElementById('messageSection').style.display = 'block';
     }
     
     function showListings() {
       document.getElementById('listingsView').style.display = 'block';
       document.getElementById('detailView').style.display = 'none';
       document.getElementById('accountView').style.display = 'none';
-      selectedListing = null;
-      currentConversation = null;
     }
     
-    // Messages
-    async function openMessages() {
-      if (!selectedListing) return;
-      
-      // Create or get conversation
-      const convRes = await fetch(API + '/conversations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          listing_id: selectedListing.id,
-          buyer_id: 'user1',
-          seller_id: selectedListing.user_id,
-          initial_message: 'Hi, I\'m interested in your listing!'
-        })
-      });
-      
-      const conv = await convRes.json();
-      currentConversation = conv;
-      
-      // Load messages
-      loadMessages(conv.id);
+    function messageSeller() {
+      showToast('Opening messages...');
     }
     
-    async function loadMessages(conversationId) {
-      try {
-        const res = await fetch(API + '/messages/' + conversationId);
-        const msgs = await res.json();
-        
-        const thread = document.getElementById('messageThread');
-        if (msgs.length === 0) {
-          thread.innerHTML = '<div style="text-align:center;color:#65676b;padding:20px;">No messages yet. Start the conversation!</div>';
-        } else {
-          thread.innerHTML = msgs.map(m => `
-            <div class="message ${m.sender_id === 'user1' ? 'sent' : 'received'}">
-              ${m.text}
-            </div>
-          `).join('');
-        }
-        thread.scrollTop = thread.scrollHeight;
-      } catch (e) {
-        document.getElementById('messageThread').innerHTML = '<div style="text-align:center;color:#65676b;">Failed to load messages</div>';
+    function makeOffer() {
+      showToast('Make offer feature coming soon!');
+    }
+    
+    // Account
+    function showAccount() {
+      document.getElementById('listingsView').style.display = 'none';
+      document.getElementById('detailView').style.display = 'none';
+      document.getElementById('accountView').style.display = 'block';
+      
+      // Show nav links
+      document.getElementById('navBrowse').style.display = 'inline';
+      document.getElementById('navSell').style.display = 'inline';
+      
+      // Load user's listings
+      const myListings = allListings.filter(l => l.user_id === currentUser);
+      const grid = document.getElementById('myListingsGrid');
+      
+      if (!myListings.length) {
+        grid.innerHTML = '<div class="loading">No listings yet</div>';
+        return;
       }
+      
+      grid.innerHTML = myListings.map(l => {
+        const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price}`;
+        return `
+          <div class="listing-card" onclick="openDetail('${l.id}')">
+            <div class="card-image">
+              ${l.image ? `<img src="${l.image}" alt="${l.title}">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`}
+              ${l.boost_score ? '<span class="card-badge badge-boosted">⚡ Boosted</span>' : ''}
+            </div>
+            <div class="card-content">
+              <div class="card-price">${priceDisplay}</div>
+              <div class="card-title">${l.title}</div>
+              <div class="card-meta">
+                <span>${l.condition || l.type}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
     
-    async function sendMessage() {
-      const input = document.getElementById('messageInput');
-      const text = input.value.trim();
-      if (!text || !currentConversation) return;
-      
-      await fetch(API + '/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          conversation_id: currentConversation.id,
-          sender_id: 'user1',
-          text: text
-        })
-      });
-      
-      input.value = '';
-      loadMessages(currentConversation.id);
-    }
-    
-    function handleMessageKeypress(e) {
-      if (e.key === 'Enter') sendMessage();
-    }
-    
-    // Create listing
-    async function createListing(e) {
-      e.preventDefault();
-      
-      const listing = {
-        type: document.getElementById('listingType').value,
-        category: document.getElementById('listingCategory').value,
-        title: document.getElementById('listingTitle').value,
-        description: document.getElementById('listingDesc').value,
-        price: parseFloat(document.getElementById('listingPrice').value) || 0,
-        min_price: parseFloat(document.getElementById('listingMinPrice').value) || 0,
-        max_price: parseFloat(document.getElementById('listingMaxPrice').value) || 0,
-        location: document.getElementById('listingLocation').value,
-        zipcode: document.getElementById('listingZipcode').value,
-        tags: document.getElementById('listingTags').value.split(',').map(t => t.trim()).filter(t => t),
-        image: document.getElementById('listingImage').value || null,
-        condition: document.getElementById('listingCondition').value || null
-      };
-      
+    // Watchlist
+    async function toggleWatchlist(id) {
       try {
-        await fetch(API + '/listings', {
+        await fetch(API + '/watchlist/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(listing)
+          body: JSON.stringify({ user_id: currentUser, listing_id: id })
         });
-        
-        closeModal('create');
-        showToast('Listing posted!');
-        loadListings();
-        e.target.reset();
-      } catch (err) {
-        showToast('Failed to post listing');
+        showToast('Added to watchlist!');
+      } catch (e) {
+        showToast('Failed to save');
       }
-    }
-    
-    // Modal
-    function openModal(id) {
-      document.getElementById(id + 'Modal').classList.add('active');
-    }
-    
-    function closeModal(id) {
-      document.getElementById(id + 'Modal').classList.remove('active');
     }
     
     // Toast
@@ -982,122 +904,9 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
     
-    // Navigation visibility - show Browse/Sell when in account view
-    let isLoggedIn = true; // Mock login state
-    
-    function updateNavVisibility() {
-      const headerLinks = document.getElementById('headerLinks');
-      const navItems = headerLinks.querySelectorAll('.nav-item');
-      if (isLoggedIn) {
-        navItems.forEach(item => item.style.display = 'inline');
-      } else {
-        navItems.forEach(item => item.style.display = 'none');
-      }
-    }
-    
-    // Toggle watchlist
-    async function toggleWatchlist(listingId) {
-      try {
-        await fetch(API + '/watchlist/add', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: 'seller1', listing_id: listingId })
-        });
-        showToast('Added to watchlist!');
-      } catch (e) {
-        showToast('Failed to save');
-      }
-    }
-    
-    // Show Account view
-    async function showAccount() {
-      document.getElementById('listingsView').style.display = 'none';
-      document.getElementById('detailView').style.display = 'none';
-      document.getElementById('accountView').style.display = 'block';
-      
-      isLoggedIn = true;
-      updateNavVisibility();
-      
-      const currentUserId = 'seller1'; // Mock user
-      
-      // Fetch user data
-      try {
-        const userRes = await fetch(API + '/users/' + currentUserId);
-        const user = await userRes.json();
-        document.getElementById('accountUserName').textContent = user.name || currentUserId;
-        document.getElementById('accountTrustScore').textContent = user.trust_score + '/100';
-      } catch (e) {
-        document.getElementById('accountTrustScore').textContent = '85/100';
-      }
-      
-      // Fetch seller analytics
-      try {
-        const analyticsRes = await fetch(API + '/analytics/' + currentUserId);
-        const analytics = await analyticsRes.json();
-        document.getElementById('sellerAnalytics').style.display = 'block';
-        document.getElementById('analyticsListings').textContent = analytics.total_listings || 0;
-        document.getElementById('analyticsAvgPrice').textContent = '$' + (analytics.average_price || 0);
-        document.getElementById('analyticsBoostScore').textContent = analytics.boost_score || 0;
-        if (analytics.boost_score > 60) {
-          document.getElementById('analyticsRecommendations').innerHTML = '🔥 Great time to boost your listings! High demand in your category.';
-        } else {
-          document.getElementById('analyticsRecommendations').innerHTML = '💡 Tip: Add more listings to increase your visibility.';
-        }
-      } catch (e) {
-        document.getElementById('sellerAnalytics').style.display = 'none';
-      }
-      
-      // Load user's listings
-      const myListings = allListings.filter(l => l.user_id === currentUserId);
-      if (myListings.length > 0) {
-        document.getElementById('accountListings').innerHTML = myListings.map(l => `
-          <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-weight:600;">${l.title}</div>
-              <div style="font-size:13px;color:var(--text-secondary);">$${l.price || l.min_price} · ${l.condition || 'N/A'}</div>
-            </div>
-            <button onclick="boostListing('${l.id}')" style="padding:6px 12px;background:var(--accent);color:white;border:none;border-radius:4px;cursor:pointer;font-size:12px;">Boost</button>
-          </div>
-        `).join('');
-      } else {
-        document.getElementById('accountListings').innerHTML = '<p>No listings yet</p>';
-      }
-      
-      // Load watchlist
-      try {
-        const watchRes = await fetch(API + '/watchlist/' + currentUserId);
-        const watchlist = await watchRes.json();
-        if (watchlist.length > 0) {
-          document.getElementById('accountWatchlist').innerHTML = watchlist.map(w => `
-            <div style="padding:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;">
-              <span>${w.listing?.title || 'Unknown'}</span>
-              <span style="color:var(--green);">$${w.listing?.price || w.listing?.min_price || 0}</span>
-            </div>
-          `).join('');
-        } else {
-          <div id="accountWatchlist">No saved items</div>
-        }
-      } catch (e) {
-        document.getElementById('accountWatchlist').innerHTML = '<p>No saved items</p>';
-      }
-    }
-    
-    // Boost a listing
-    async function boostListing(listingId) {
-      try {
-        await fetch(API + '/boost/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ listing_id: listingId, seller_id: 'seller1', tier: 'basic' })
-        });
-        showToast('Listing boosted for 7 days!');
-      } catch (e) {
-        showToast('Boost failed');
-      }
-    }
-    
     // Init
-    updateNavVisibility();
+    document.getElementById('navBrowse').style.display = 'none';
+    document.getElementById('navSell').style.display = 'none';
     loadListings();
   </script>
 </body>
