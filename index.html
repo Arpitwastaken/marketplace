@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-font-smoothing: subpixel-antialiased; }
+    html {
+      scroll-behavior: smooth;
+    }
+    :root {
+      --bg: #000;
+      --bg-secondary: #1d1d1f;
+      --text: #f5f5f7;
+      --text-secondary: #86868b;
+      --text-tertiary: #636366;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --green: #30d158;
+      --orange: #ff9f0a;
+    }
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    /* Nav */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .navbar-inner {
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+    }
+    .navbar-left, .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+    .navbar-left { justify-content: flex-start; }
+    .navbar-right {
+      justify-content: flex-end;
+    }
+    .navbar-logo {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff !important;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      transition: all 0.3s;
+      white-space: nowrap;
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+    .navbar-logo:hover {
+      text-shadow: 0 0 20px rgba(0,113,227,0.8);
+    }
+    @keyframes logoGlow {
+      0%, 100% { text-shadow: 0 0 10px rgba(0,113,227,0.3); }
+      50% { text-shadow: 0 0 20px rgba(0,113,227,0.6); }
+    }
+    .navbar a {
+      color: #d6d6d6 !important;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      transition: all 0.3s;
+      position: relative;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .navbar a { font-size: 10px !important; padding: 0 4px; }
+    .navbar a:hover { 
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    .navbar a:hover::after { width: 100%; }
+    
+    /* Hero Banner - Apple Style */
+    .hero-banner {
+      margin-top: 44px;
+      padding: 60px 20px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, #1d1d1f 0%, #000 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0,113,227,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-title {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      position: relative;
+      animation: heroFadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-subtitle {
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      animation: heroFadeIn 1s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .cta-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 19px;
+      font-weight: 400;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: rgba(0,113,227,0.1);
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+    .cta-link:hover { 
+      background: rgba(0,113,227,0.2); 
+      transform: translateX(4px);
+    }
+    .cta-link span:last-child {
+      font-size: 22px;
+      transition: transform 0.3s;
+    }
+    .cta-link:hover span:last-child {
+      transform: translateX(4px);
+    }
+    /* Search */
+    .search-section {
+      max-width: 680px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+      position: relative;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 12px 16px;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .search-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
+    }
+      gap: 10px;
+      transition: all 0.3s;
+    }
+    .search-box:focus-within {
+      background: #2d2d2f;
+      box-shadow: 0 0 0 4px rgba(0,113,227,0.3);
+    }
+    .search-box svg { color: var(--text-tertiary); }
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 17px;
+      outline: none;
+    }
+    .search-box select {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+    }
+    /* Pills */
+    .pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      padding: 0 20px;
+      animation: fadeInUp 0.5s ease-out 0.3s backwards;
+    }
+    .pill {
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+      border: 1px solid transparent;
+    }
+    .pill:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border-color: rgba(255,255,255,0.1);
+    }
+      transform: translateY(-2px);
+    }
+    .pill.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0,113,227,0.4);
+    }
+    /* Grid - Apple Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+    .card {
+      background: var(--bg-secondary);
+      border-radius: 18px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25,0.1,0.25,1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.5s ease-out;
+      animation-fill-mode: both;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .card:hover {
+      transform: scale(1.01) translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0,113,227,0.2);
+    }
+    .card-type {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .card-type.buy { background: rgba(48,209,88,0.15); color: var(--green); }
+    .card-type.sell { background: rgba(255,159,10,0.15); color: var(--orange); }
+    .card-type.agent { background: rgba(88,86,214,0.2); color: #a78bfa; }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .card-save {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 50%;
+      transition: all 0.3s;
+      opacity: 0.7;
+      z-index: 5;
+      color: #fff;
+      line-height: 1;
+    }
+    .card-save:hover { opacity: 1; transform: scale(1.15); background: rgba(0,0,0,0.5); }
+    .card-save.saved { opacity: 1; color: #FFD60A; animation: savedPop 0.3s; }
+    @keyframes savedPop { 50% { transform: scale(1.3); } }
+    .card { position: relative; padding-right: 40px; }
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .card-title:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .card-tag {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .card-price {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-price .range { font-size: 14px; font-weight: 400; color: var(--text-secondary); }
+    .card-location { font-size: 13px; color: var(--text-tertiary); margin-bottom: 14px; }
+    .card-actions { display: flex; gap: 8px; margin-top: auto; }
+    .card-actions .btn { flex: 1; text-align: center; }
+    .btn {
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+      border: none;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(transparent, rgba(255,255,255,0.1));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .btn:hover::before { opacity: 1; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,113,227,0.4); }
+    .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      transform: scale(0.9) translateY(20px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .modal-overlay.active .modal { 
+      transform: scale(1) translateY(0); 
+      opacity: 1;
+    }
+    .modal h2 { font-size: 24px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+    .modal p { color: var(--text-secondary); margin-bottom: 20px; font-size: 14px; }
+    .modal input, .modal select, .modal textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 14px;
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+    .modal input:focus, .modal select:focus, .modal textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(0,113,227,0.1);
+    }
+    .modal input::placeholder, .modal textarea::placeholder { color: var(--text-tertiary); }
+    .modal input:focus, .modal select:focus, .modal textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-actions .btn { flex: 1; }
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      padding: 14px 24px;
+      border-radius: 20px;
+      font-size: 14px;
+      z-index: 10001;
+      opacity: 0;
+      transition: all 0.4s;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast.success { border: 1px solid var(--green); color: var(--green); }
+    
+    /* Account Page */
+    .account-page {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    .account-page.active { 
+      display: block; 
+    }
+    #settingsPage { display: none; }
+    #settingsPage.active { display: block; }
+    #listingsGrid {
+      display: grid;
+    }
+    #listingsGrid.hidden {
+      display: none;
+    }
+    .account-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+    .account-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #0a84ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .account-info { flex: 1; min-width: 0; }
+    .account-info h2 { font-size: 28px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+    .account-info p { color: #8e8e93; font-size: 14px; }
+    .account-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-card h3 { font-size: 32px; font-weight: 700; color: var(--accent); }
+    .stat-card p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .account-section { margin-bottom: 40px; }
+    .account-section h3 { font-size: 20px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: #fff; }
+    .account-section .btn { margin-left: auto; }
+    .empty-state {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+    .signout-btn {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    .signout-btn:hover { background: rgba(255,255,255,0.2); }
+    
+    /* Reviews */
+    .reviews-section {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .reviews-title {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .stars {
+      color: #FFD60A;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .review-count {
+      color: var(--text-tertiary);
+      font-size: 11px;
+    }
+    .review-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    .review-badge.bought { background: rgba(48,209,88,0.2); color: var(--green); }
+    .review-badge.sold { background: rgba(255,159,10,0.2); color: var(--orange); }
+    
+    /* Settings */
+    .settings-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .settings-item > div strong { color: #fff; }
+    .settings-item:last-child { border-bottom: none; }
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 28px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.2);
+      transition: 0.3s;
+      border-radius: 28px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--accent); }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(22px); }
+    
+    @media (max-width: 600px) {
+      .account-header { flex-direction: column; text-align: center; }
+      .account-stats { grid-template-columns: 1fr; }
+      .account-section h3 { flex-wrap: wrap; }
+    }
+    
+    /* Loading */
+    .loading, .empty { text-align: center; padding: 60px; color: var(--text-secondary); font-size: 17px; }
+    
+    /* Better Responsive Scaling */
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    
+    @media (max-width: 600px) {
+      .navbar-inner { padding: 0 12px !important; }
+      .navbar a { font-size: 11px !important; }
+      .navbar { gap: 12px !important; }
+      .hero-banner { padding: 40px 16px 50px !important; }
+      .hero-title { font-size: 32px !important; }
+      .hero-subtitle { font-size: 16px !important; }
+      .search-section { padding: 0 12px 20px !important; }
+      .search-box { padding: 8px 12px !important; }
+      .search-box input { font-size: 14px !important; }
+      .search-box select { font-size: 11px !important; }
+      .pills { gap: 6px !important; padding: 0 12px 20px !important; }
+      .pill { font-size: 11px !important; padding: 6px 12px !important; }
+      .grid { grid-template-columns: 1fr; gap: 12px; padding: 0 12px 40px; }
+      .card { padding: 16px !important; }
+      .card-title { font-size: 16px !important; }
+      .card-price { font-size: 18px !important; }
+      .card-actions { flex-direction: column; }
+      .card-actions .btn { width: 100%; }
+      .modal { padding: 20px !important; }
+      .modal h2 { font-size: 20px !important; }
+      .modal input, .modal select, .modal textarea { padding: 10px 12px !important; font-size: 14px !important; }
+      .modal-row { grid-template-columns: 1fr !important; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .btn { width: 100%; }
+      .hero-cta { flex-direction: column; gap: 8px !important; }
+      .cta-link { font-size: 15px !important; }
+    }
+    
+    /* Small phones */
+    @media (max-width: 380px) {
+      .navbar { height: 40px !important; }
+      .logo { font-size: 14px !important; }
+      .hero-title { font-size: 26px !important; }
+      .card { padding: 14px !important; }
+      .card-title { font-size: 14px !important; }
+      .card-desc { font-size: 12px !important; }
+      .card-tag { font-size: 10px !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Apple-style Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <a href="#" onclick="showPage('listings')">Browse</a>
+        <a href="#" onclick="showPage('matches')">Matches</a>
+      </div>
+      <div class="navbar-logo">
+        <a href="#" onclick="showPage('listings')" style="color:#fff;text-decoration:none;font-weight:600;font-size:15px;">Marketplace</a>
+      </div>
+      <div class="navbar-right">
+        <a href="#" onclick="requireAuth('list')">List</a>
+        <a href="#" id="accountLink" onclick="handleAccountClick(event)">Account</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Required Overlay -->
+  <div class="modal-overlay" id="loginOverlay">
+    <div class="modal" style="text-align:center;">
+      <h2>Welcome to Marketplace</h2>
+      <p style="margin-bottom:24px;">Sign in to list items, save favorites, and make offers</p>
+      <button class="btn btn-primary" onclick="openModal('auth')" style="width:100%;padding:14px;">Sign In or Register</button>
+      <p style="margin-top:16px;font-size:12px;color:var(--text-tertiary);">Or continue browsing as a guest</p>
+      <button class="btn btn-secondary" onclick="closeLoginOverlay()" style="width:100%;margin-top:8px;">Continue Browsing</button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero-banner">
+    <h1 class="hero-title">Marketplace</h1>
+    <p class="hero-subtitle">Find exactly what you need.</p>
+    <div class="hero-cta">
+      <a href="#" class="cta-link" onclick="openModal('create')">List an Item ›</a>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <div class="search-section">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search listings..." oninput="handleSearch()">
+      <span style="color:var(--text-tertiary);font-size:13px;">📍</span>
+      <input type="text" id="zipInput" placeholder="ZIP" maxlength="5" style="width:60px;background:transparent;border:none;color:var(--text);font-size:14px;outline:none;" oninput="handleZipChange()">
+      <select id="radiusSelect" onchange="handleZipChange()">
+        <option value="5">5 mi</option>
+        <option value="15">15 mi</option>
+        <option value="50" selected>50 mi</option>
+        <option value="150">150 mi</option>
+        <option value="9999">Any</option>
+      </select>
+    </div>
+    <div id="zipSuggestions" style="position:absolute;background:var(--bg-secondary);border-radius:10px;margin-top:4px;max-width:400px;display:none;z-index:100;box-shadow:0 10px 40px rgba(0,0,0,0.5);overflow:hidden;"></div>
+  </div>
+
+  <!-- Filter Pills -->
+  <div class="pills">
+    <button class="pill active" data-filter="all" onclick="setFilter('all')">All</button>
+    <button class="pill" data-filter="buy" onclick="setFilter('buy')">Buying</button>
+    <button class="pill" data-filter="sell" onclick="setFilter('sell')">Selling</button>
+    <button class="pill" data-filter="electronics" onclick="setFilter('electronics')">Electronics</button>
+    <button class="pill" data-filter="vehicles" onclick="setFilter('vehicles')">Vehicles</button>
+    <button class="pill" data-filter="furniture" onclick="setFilter('furniture')">Furniture</button>
+    <button class="pill" data-filter="agents" onclick="setFilter('agents')">🤖 Agents</button>
+  </div>
+
+  <!-- Listings Grid -->
+  <div class="grid" id="listingsGrid">
+    <div class="loading">Loading...</div>
+  </div>
+
+  <!-- Create Listing Modal -->
+  <div class="modal-overlay" id="createModal">
+    <div class="modal">
+      <h2>List an Item</h2>
+      <p>What are you offering?</p>
+      <form onsubmit="createListing(event)">
+        <select id="listingCategory" required>
+          <option value="">Select Category</option>
+          <option value="electronics">Electronics</option>
+          <option value="vehicles">Vehicles</option>
+          <option value="furniture">Furniture</option>
+          <option value="clothing">Clothing</option>
+          <option value="books">Books</option>
+          <option value="other">Other</option>
+        </select>
+        <input type="text" id="listingTitle" placeholder="Title" required>
+        <textarea id="listingDesc" rows="2" placeholder="Description"></textarea>
+        <div class="modal-row">
+          <input type="number" id="listingPrice" placeholder="Asking Price ($)">
+          <input type="text" id="listingLocation" placeholder="City" required>
+        </div>
+        <input type="text" id="listingZipcode" placeholder="ZIP Code">
+        <input type="text" id="listingTags" placeholder="Tags (comma separated)">
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">List Item</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal('create')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <h2>Welcome</h2>
+      <p>Sign in to your account</p>
+      <!-- Google OAuth - Requires Setup -->
+      <button class="btn btn-primary" onclick="handleGoogleAuth()" style="width:100%;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <div id="googleAuthError" style="display:none;background:rgba(255,59,48,0.1);border:1px solid rgba(255,59,48,0.3);border-radius:10px;padding:12px;margin-bottom:16px;font-size:13px;color:#ff453a;">
+        <strong>Google OAuth Not Configured</strong><br>
+        <span style="color:var(--text-secondary);">Follow the setup guide to enable Google sign-in.</span>
+        <button onclick="showGoogleSetupGuide()" style="margin-top:8px;background:var(--accent);border:none;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;">View Setup Guide</button>
+      </div>
+      <div style="text-align:center;color:var(--text-tertiary);margin:12px 0;font-size:12px;">or sign in with email</div>
+      <input type="email" id="authEmail" placeholder="Email (try: admin)">
+      <input type="password" id="authPassword" placeholder="Password (try: admin)">
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="handleAuth()">Sign In</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('auth')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offer Modal -->
+  <div class="modal-overlay" id="offerModal">
+    <div class="modal">
+      <h2>Make an Offer</h2>
+      <p id="offerSubtitle">Send your offer</p>
+      <input type="number" id="offerAmount" placeholder="Your Offer ($)" required>
+      <textarea id="offerMessage" rows="2" placeholder="Message (optional)"></textarea>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="submitOffer()">Send</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('offer')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal" style="max-width:550px; width:95%;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <span class="card-type" id="productType" style="margin:0;">sell</span>
+        <button class="card-save" id="productSaveBtn" onclick="toggleProductSave()" style="font-size:28px;opacity:1;">☆</button>
+      </div>
+      <h2 id="productTitle" style="font-size:24px;margin-bottom:12px;color:#fff;">Product Title</h2>
+      <div id="productPrice" style="font-size:36px;font-weight:700;color:var(--accent);margin-bottom:16px;">$0</div>
+      <p id="productDesc" style="color:var(--text-secondary);margin-bottom:16px;line-height:1.6;font-size:15px;">Description</p>
+      <div id="productTags" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"></div>
+      <div id="productLocation" style="color:var(--text-tertiary);margin-bottom:16px;font-size:14px;">📍 Location</div>
+      <div id="productReviews" style="margin-bottom:24px;"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="closeModal('product'); setTimeout(() => openOfferModal(selectedListing?.id), 100)">Make Offer</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('product')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google OAuth Setup Guide Modal -->
+  <div class="modal-overlay" id="googleSetupModal">
+    <div class="modal" style="max-width:500px;max-height:80vh;overflow-y:auto;">
+      <h2>🔧 Google OAuth Setup</h2>
+      <p>Follow these steps to enable Google sign-in:</p>
+      <div style="text-align:left;font-size:13px;line-height:1.6;color:var(--text-secondary);">
+        <ol style="padding-left:20px;margin:16px 0;">
+          <li style="margin-bottom:12px;">Go to <a href="https://console.cloud.google.com/" target="_blank" style="color:var(--accent);">Google Cloud Console</a></li>
+          <li style="margin-bottom:12px;">Create a new project or select an existing one</li>
+          <li style="margin-bottom:12px;">Navigate to <strong>APIs & Services → OAuth consent screen</strong></li>
+          <li style="margin-bottom:12px;">Configure the OAuth consent screen:
+            <ul style="margin-top:8px;padding-left:16px;">
+              <li>User Type: External</li>
+              <li>Fill in required fields (app name, email)</li>
+            </ul>
+          </li>
+          <li style="margin-bottom:12px;">Go to <strong>Credentials</strong> and click <strong>Create Credentials → OAuth client ID</strong></li>
+          <li style="margin-bottom:12px;">Application type: <strong>Web application</strong></li>
+          <li style="margin-bottom:12px;">Add authorized redirect URI: <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">http://localhost:3000/auth/google/callback</code></li>
+          <li style="margin-bottom:12px;">Copy your <strong>Client ID</strong> and <strong>Client Secret</strong></li>
+          <li style="margin-bottom:12px;">Add them to your server's environment variables:
+            <pre style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;margin-top:8px;overflow-x:auto;font-size:11px;">GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret</pre>
+          </li>
+        </ol>
+      </div>
+      <p style="margin-top:16px;font-size:12px;color:var(--text-tertiary);">For localhost, you may also need to add <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">http://localhost</code> to authorized JavaScript origins.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="closeModal('googleSetup')">Got It</button>
+        <button type="button" class="btn btn-secondary" onclick="openGoogleDocs()">View Full Docs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Page -->
+  <div id="accountPage" class="account-page">
+    <div class="account-header">
+      <div class="account-avatar" id="accountAvatar">👤</div>
+      <div class="account-info">
+        <h2 id="accountName">Guest</h2>
+        <p id="accountEmail">Sign in to access your account</p>
+      </div>
+      <button class="signout-btn" onclick="signOut()" id="signoutBtn" style="display:none;">Sign Out</button>
+    </div>
+    
+    <div class="account-stats">
+      <div class="stat-card">
+        <h3 id="statListings">0</h3>
+        <p>My Listings</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="statSaved">0</h3>
+        <p>Saved</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="statOffers">0</h3>
+        <p>Offers Made</p>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>💰 My Listings</h3>
+      <div id="myListings">
+        <div class="empty-state">No listings yet. <a href="#" onclick="showPage('listings')" style="color:var(--accent);">Browse items</a> to get started!</div>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>❤️ Saved Items</h3>
+      <div id="savedItems">
+        <div class="empty-state">No saved items. Click ❤️ on listings to save them!</div>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>📨 My Offers</h3>
+      <div id="myOffers">
+        <div class="empty-state">No offers yet. Make an offer on items you like!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Page -->
+  <div id="settingsPage" class="account-page">
+    <div class="account-header">
+      <div class="account-avatar">⚙️</div>
+      <div class="account-info">
+        <h2>Settings</h2>
+        <p>Manage your preferences</p>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>🔒 Privacy</h3>
+      <div class="settings-item">
+        <div>
+          <strong>Show transaction history</strong>
+          <p style="font-size:12px;color:var(--text-tertiary);margin:0;">Let others see what you've bought or sold</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="settingShowHistory" checked onchange="saveSettings()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="settings-item">
+        <div>
+          <strong>Show ratings & reviews</strong>
+          <p style="font-size:12px;color:var(--text-tertiary);margin:0;">Display your star rating on listings</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="settingShowRatings" checked onchange="saveSettings()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="settings-item">
+        <div>
+          <strong>Show location</strong>
+          <p style="font-size:12px;color:var(--text-tertiary);margin:0;">Display your city/region to other users</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="settingShowLocation" checked onchange="saveSettings()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>🔔 Notifications</h3>
+      <div class="settings-item">
+        <div>
+          <strong>Email notifications</strong>
+          <p style="font-size:12px;color:var(--text-tertiary);margin:0;">Get notified about new offers and messages</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="settingEmailNotif" checked onchange="saveSettings()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="account-section">
+      <h3>👤 Account</h3>
+      <div style="margin-top:16px;">
+        <button class="btn btn-secondary" onclick="showPage('account')">← Back to Account</button>
+        <button class="btn btn-primary" onclick="signOut()" style="margin-left:12px;">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent Configuration Modal -->
+  <div class="modal-overlay" id="agentModal">
+    <div class="modal" style="max-width:550px; width:95%;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+        <span class="card-type" style="background:rgba(88,86,214,0.2);color:#a78bfa;margin:0;">🤖 Agent</span>
+        <button class="card-save" onclick="toggleAgentSave()" style="font-size:28px;opacity:1;">☆</button>
+      </div>
+      <h2 id="agentTitle" style="font-size:24px;margin-bottom:16px;color:#fff;">Agent Team Orchestration</h2>
+      <p style="color:var(--text-secondary);margin-bottom:20px;line-height:1.5;">Configure your AI agent team. Define roles, tasks, and coordination settings.</p>
+      
+      <div style="margin-bottom:20px;">
+        <label style="display:block;margin-bottom:8px;color:#fff;font-size:14px;font-weight:500;">Agent Task</label>
+        <textarea id="agentTaskInput" rows="3" placeholder="Describe what you want the agent to do..." style="width:100%;padding:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-size:14px;margin-bottom:14px;"></textarea>
+      </div>
+      
+      <div style="margin-bottom:20px;">
+        <label style="display:block;margin-bottom:8px;color:#fff;font-size:14px;font-weight:500;">Number of Agents</label>
+        <select id="agentCount" style="width:100%;padding:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-size:14px;margin-bottom:14px;">
+          <option value="1">1 Agent</option>
+          <option value="2">2 Agents</option>
+          <option value="3">3 Agents</option>
+          <option value="5">5 Agents</option>
+        </select>
+      </div>
+      
+      <div style="margin-bottom:20px;">
+        <label style="display:block;margin-bottom:8px;color:#fff;font-size:14px;font-weight:500;">Agent Roles (comma separated)</label>
+        <input type="text" id="agentRoles" placeholder="e.g., researcher, coder, reviewer" style="width:100%;padding:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-size:14px;margin-bottom:14px;">
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="runAgent()">🚀 Launch Agents</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('agent')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+    let allListings = [], matches = [], currentFilter = 'all', searchQuery = '', currentUser = null, selectedListing = null;
+    
+    // ZIP code database
+    const zipDatabase = [
+      { zip: '10001', city: 'New York', state: 'NY' },
+      { zip: '10002', city: 'New York', state: 'NY' },
+      { zip: '10003', city: 'New York', state: 'NY' },
+      { zip: '10011', city: 'New York', state: 'NY' },
+      { zip: '10012', city: 'New York', state: 'NY' },
+      { zip: '10013', city: 'New York', state: 'NY' },
+      { zip: '10014', city: 'New York', state: 'NY' },
+      { zip: '10016', city: 'New York', state: 'NY' },
+      { zip: '10017', city: 'New York', state: 'NY' },
+      { zip: '10018', city: 'New York', state: 'NY' },
+      { zip: '10019', city: 'New York', state: 'NY' },
+      { zip: '10020', city: 'New York', state: 'NY' },
+      { zip: '10021', city: 'New York', state: 'NY' },
+      { zip: '10022', city: 'New York', state: 'NY' },
+      { zip: '10023', city: 'New York', state: 'NY' },
+      { zip: '10024', city: 'New York', state: 'NY' },
+      { zip: '10025', city: 'New York', state: 'NY' },
+      { zip: '90001', city: 'Los Angeles', state: 'CA' },
+      { zip: '90002', city: 'Los Angeles', state: 'CA' },
+      { zip: '90003', city: 'Los Angeles', state: 'CA' },
+      { zip: '90004', city: 'Los Angeles', state: 'CA' },
+      { zip: '90005', city: 'Los Angeles', state: 'CA' },
+      { zip: '90006', city: 'Los Angeles', state: 'CA' },
+      { zip: '90007', city: 'Los Angeles', state: 'CA' },
+      { zip: '90008', city: 'Los Angeles', state: 'CA' },
+      { zip: '90010', city: 'Los Angeles', state: 'CA' },
+      { zip: '90011', city: 'Los Angeles', state: 'CA' },
+      { zip: '90012', city: 'Los Angeles', state: 'CA' },
+      { zip: '90013', city: 'Los Angeles', state: 'CA' },
+      { zip: '90014', city: 'Los Angeles', state: 'CA' },
+      { zip: '90015', city: 'Los Angeles', state: 'CA' },
+      { zip: '90016', city: 'Los Angeles', state: 'CA' },
+      { zip: '90017', city: 'Los Angeles', state: 'CA' },
+      { zip: '90018', city: 'Los Angeles', state: 'CA' },
+      { zip: '90019', city: 'Los Angeles', state: 'CA' },
+      { zip: '90020', city: 'Los Angeles', state: 'CA' },
+      { zip: '60601', city: 'Chicago', state: 'IL' },
+      { zip: '60602', city: 'Chicago', state: 'IL' },
+      { zip: '60603', city: 'Chicago', state: 'IL' },
+      { zip: '60604', city: 'Chicago', state: 'IL' },
+      { zip: '60605', city: 'Chicago', state: 'IL' },
+      { zip: '60606', city: 'Chicago', state: 'IL' },
+      { zip: '60607', city: 'Chicago', state: 'IL' },
+      { zip: '60608', city: 'Chicago', state: 'IL' },
+      { zip: '60609', city: 'Chicago', state: 'IL' },
+      { zip: '60610', city: 'Chicago', state: 'IL' },
+      { zip: '60611', city: 'Chicago', state: 'IL' },
+      { zip: '60612', city: 'Chicago', state: 'IL' },
+      { zip: '60613', city: 'Chicago', state: 'IL' },
+      { zip: '60614', city: 'Chicago', state: 'IL' },
+      { zip: '78701', city: 'Austin', state: 'TX' },
+      { zip: '78702', city: 'Austin', state: 'TX' },
+      { zip: '78703', city: 'Austin', state: 'TX' },
+      { zip: '78704', city: 'Austin', state: 'TX' },
+      { zip: '78705', city: 'Austin', state: 'TX' },
+      { zip: '80201', city: 'Denver', state: 'CO' },
+      { zip: '80202', city: 'Denver', state: 'CO' },
+      { zip: '80203', city: 'Denver', state: 'CO' },
+      { zip: '80204', city: 'Denver', state: 'CO' },
+      { zip: '80205', city: 'Denver', state: 'CO' },
+      { zip: '98101', city: 'Seattle', state: 'WA' },
+      { zip: '98102', city: 'Seattle', state: 'WA' },
+      { zip: '98103', city: 'Seattle', state: 'WA' },
+      { zip: '98104', city: 'Seattle', state: 'WA' },
+      { zip: '98105', city: 'Seattle', state: 'WA' },
+      { zip: '77001', city: 'Houston', state: 'TX' },
+      { zip: '77002', city: 'Houston', state: 'TX' },
+      { zip: '77003', city: 'Houston', state: 'TX' },
+      { zip: '77004', city: 'Houston', state: 'TX' },
+      { zip: '77005', city: 'Houston', state: 'TX' },
+      { zip: '33101', city: 'Miami', state: 'FL' },
+      { zip: '33102', city: 'Miami', state: 'FL' },
+      { zip: '33125', city: 'Miami', state: 'FL' },
+      { zip: '33126', city: 'Miami', state: 'FL' },
+      { zip: '33127', city: 'Miami', state: 'FL' },
+      { zip: '02101', city: 'Boston', state: 'MA' },
+      { zip: '02102', city: 'Boston', state: 'MA' },
+      { zip: '02103', city: 'Boston', state: 'MA' },
+      { zip: '02108', city: 'Boston', state: 'MA' },
+      { zip: '02109', city: 'Boston', state: 'MA' },
+      { zip: '19101', city: 'Philadelphia', state: 'PA' },
+      { zip: '19102', city: 'Philadelphia', state: 'PA' },
+      { zip: '19103', city: 'Philadelphia', state: 'PA' },
+      { zip: '19104', city: 'Philadelphia', state: 'PA' },
+      { zip: '85001', city: 'Phoenix', state: 'AZ' },
+      { zip: '85002', city: 'Phoenix', state: 'AZ' },
+      { zip: '85003', city: 'Phoenix', state: 'AZ' },
+      { zip: '85004', city: 'Phoenix', state: 'AZ' },
+    ];
+    
+    // Distance matrix (simplified - in production use an API)
+    function getDistance(zip1, zip2) {
+      if (!zip1 || !zip2) return 999;
+      const z1 = zipDatabase.find(z => z.zip === zip1);
+      const z2 = zipDatabase.find(z => z.zip === zip2);
+      if (!z1 || !z2) return 999;
+      if (z1.city === z2.city) return 5;
+      const cityDist = {
+        'New York': { 'Los Angeles': 2790, 'Chicago': 790, 'Austin': 1620, 'Denver': 1770, 'Seattle': 2800, 'Houston': 1620, 'Miami': 1280, 'Boston': 210, 'Philadelphia': 95, 'Phoenix': 2150 },
+        'Los Angeles': { 'New York': 2790, 'Chicago': 2015, 'Austin': 1235, 'Denver': 835, 'Seattle': 955, 'Houston': 1550, 'Miami': 2750, 'Boston': 3000, 'Philadelphia': 2700, 'Phoenix': 370 },
+        'Chicago': { 'New York': 790, 'Los Angeles': 2015, 'Austin': 980, 'Denver': 995, 'Seattle': 1720, 'Houston': 940, 'Miami': 1390, 'Boston': 850, 'Philadelphia': 670, 'Phoenix': 1740 },
+        'Austin': { 'New York': 1620, 'Los Angeles': 1235, 'Chicago': 980, 'Denver': 925, 'Seattle': 2000, 'Houston': 160, 'Miami': 1180, 'Boston': 1800, 'Philadelphia': 1500, 'Phoenix': 870 },
+        'Denver': { 'New York': 1770, 'Los Angeles': 835, 'Chicago': 995, 'Austin': 925, 'Seattle': 1300, 'Houston': 1000, 'Miami': 2100, 'Boston': 2000, 'Philadelphia': 1800, 'Phoenix': 640 },
+        'Seattle': { 'New York': 2800, 'Los Angeles': 955, 'Chicago': 1720, 'Austin': 2000, 'Denver': 1300, 'Houston': 2000, 'Miami': 3300, 'Boston': 3000, 'Philadelphia': 2800, 'Phoenix': 1100 },
+      };
+      return cityDist[z1.city]?.[z2.city] || 500;
+    }
+
+    // ZIP autocomplete
+    function handleZipChange() {
+      const input = document.getElementById('zipInput');
+      const val = input.value.trim();
+      const suggestions = document.getElementById('zipSuggestions');
+      
+      if (val.length < 1) {
+        suggestions.style.display = 'none';
+        applyFilters();
+        return;
+      }
+      
+      // Search by ZIP or city
+      const matches = zipDatabase.filter(z => 
+        z.zip.startsWith(val) || 
+        z.city.toLowerCase().includes(val.toLowerCase())
+      ).slice(0, 6);
+      
+      if (matches.length > 0) {
+        suggestions.innerHTML = matches.map(z => 
+          `<div onclick="selectZip('${z.zip}', '${z.city}, ${z.state}')" style="padding:12px 16px;cursor:pointer;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">📍 ${z.zip} - ${z.city}, ${z.state}</div>`
+        ).join('');
+        suggestions.style.display = 'block';
+      } else {
+        suggestions.style.display = 'none';
+      }
+      
+      applyFilters();
+    }
+
+    function selectZip(zip, label) {
+      document.getElementById('zipInput').value = zip;
+      document.getElementById('zipSuggestions').style.display = 'none';
+      applyFilters();
+    }
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-section')) {
+        document.getElementById('zipSuggestions').style.display = 'none';
+      }
+    });
+
+    // Load
+    async function loadListings() {
+      try {
+        const res = await fetch(API + '/listings?limit=50');
+        let listings = await res.json();
+        
+        // Add mock reviews to listings (in production this comes from API)
+        const mockReviews = {
+          '1': [{rating: 5, type: 'bought'}, {rating: 4, type: 'sold'}],
+          '2': [{rating: 5, type: 'bought'}],
+          '3': [{rating: 4, type: 'bought'}, {rating: 5, type: 'bought'}, {rating: 4, type: 'sold'}],
+          '4': [{rating: 3, type: 'bought'}],
+          '5': [{rating: 5, type: 'sold'}, {rating: 5, type: 'sold'}]
+        };
+        
+        allListings = listings.map(l => ({
+          ...l,
+          reviews: mockReviews[l.id] || []
+        }));
+        
+        // Add Agent card
+        allListings.push({
+          id: 'agent-team-orchestration',
+          type: 'agent',
+          title: '🤖 Agent Team Orchestration',
+          description: 'Spawn and manage multiple AI agents to work on complex tasks. Configure agent roles, tasks, and coordinate their work.',
+          price: 0,
+          location: 'Cloud',
+          tags: ['AI', 'Automation', 'Productivity'],
+          category: 'agents',
+          reviews: [{rating: 5, type: 'bought'}, {rating: 5, type: 'bought'}, {rating: 4, type: 'sold'}]
+        });
+        
+        applyFilters();
+      } catch (e) {
+        document.getElementById('listingsGrid').innerHTML = '<div class="empty">Make sure the server is running</div>';
+      }
+    }
+
+    // Search & Filter
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      applyFilters();
+    }
+
+    function handleZipChange() {
+      // ZIP autocomplete handled separately
+    }
+
+    function applyFilters() {
+      const zip = document.getElementById('zipInput').value;
+      const radius = parseInt(document.getElementById('radiusSelect').value);
+      renderListings(allListings, zip, radius);
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p.dataset.filter === filter));
+      applyFilters();
+    }
+
+    // Render
+    function renderListings(listings, filterZip = null, filterRadius = 50) {
+      const grid = document.getElementById('listingsGrid');
+      let filtered = listings;
+
+      // Search
+      if (searchQuery) {
+        filtered = filtered.filter(l => 
+          l.title.toLowerCase().includes(searchQuery) || 
+          (l.description || '').toLowerCase().includes(searchQuery) ||
+          (l.tags || []).some(t => t.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      // Filter by ZIP/radius (skip for agents)
+      if (filterZip && filterRadius < 9999 && currentFilter !== 'agents') {
+        filtered = filtered.filter(l => {
+          const dist = getDistance(filterZip, l.zipcode);
+          return dist <= filterRadius;
+        });
+      }
+
+      // Category filter
+      if (currentFilter === 'buy') filtered = filtered.filter(l => l.type === 'buy');
+      else if (currentFilter === 'sell') filtered = filtered.filter(l => l.type === 'sell');
+      else if (currentFilter === 'agents') filtered = filtered.filter(l => l.type === 'agent');
+      else if (currentFilter !== 'all') filtered = filtered.filter(l => l.category === currentFilter);
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty">No listings found</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((l, i) => {
+        const dist = filterZip && filterRadius < 9999 ? getDistance(filterZip, l.zipcode) : null;
+        const distStr = dist !== null && dist < 900 ? ` · ${dist} mi` : '';
+        const typeLabel = l.type === 'agent' ? '🤖 Agent' : l.type;
+        return `
+        <div class="card" style="animation-delay: ${i * 0.1}s">
+          <span class="card-type ${l.type}">${typeLabel}</span>
+          <button class="card-save ${isSaved(l.id) ? 'saved' : ''}" onclick="event.stopPropagation(); toggleSave('${l.id}')">${isSaved(l.id) ? '★' : '☆'}</button>
+          <h3 class="card-title" onclick="event.stopPropagation(); openProductModal('${l.id}')">${l.title}</h3>
+          <p class="card-desc">${l.description || ''}</p>
+          <div class="card-tags">${(l.tags || []).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+          ${l.type !== 'agent' ? `<div class="card-price">${l.type === 'sell' ? '$' + l.price : '<span class="range">$' + (l.min_price || 0) + ' - $' + (l.max_price || 0) + '</span>'}</div>` : ''}
+          ${l.type !== 'agent' ? `<div class="card-location">📍 ${l.location || 'Unknown'}${distStr}</div>` : ''}
+          ${renderReviews(l)}
+          <div class="card-actions">
+            ${l.type === 'agent' ? 
+              `<button class="btn btn-primary" onclick="event.stopPropagation(); openAgentModal('${l.id}')">Configure Agent</button>
+               <button class="btn btn-secondary" onclick="event.stopPropagation(); openProductModal('${l.id}')">Learn More</button>` :
+              `<button class="btn btn-primary" onclick="event.stopPropagation(); openOfferModal('${l.id}')">Make Offer</button>
+               <button class="btn btn-secondary" onclick="event.stopPropagation(); openProductModal('${l.id}')">View Details</button>`
+            }
+          </div>
+        </div>
+      `}).join('');
+    }
+
+    // Open agent configuration modal
+    function openAgentModal(id) {
+      const listing = allListings.find(l => l.id === id);
+      if (!listing) return;
+      selectedListing = listing;
+      document.getElementById('agentTitle').textContent = listing.title;
+      document.getElementById('agentModal').classList.add('active');
+    }
+
+    // Toggle agent save
+    function toggleAgentSave() {
+      if (!selectedListing) return;
+      toggleSave(selectedListing.id);
+    }
+
+    // Run agent with configuration
+    function runAgent() {
+      const task = document.getElementById('agentTaskInput').value;
+      const count = document.getElementById('agentCount').value;
+      const roles = document.getElementById('agentRoles').value;
+      
+      if (!task) {
+        showToast('Please enter a task description');
+        return;
+      }
+      
+      closeModal('agent');
+      showToast(`🚀 Launching ${count} agent${count > 1 ? 's' : ''}...`, 'success');
+      
+      // In production, this would spawn actual agents
+      console.log('Agent Task:', task);
+      console.log('Agent Count:', count);
+      console.log('Agent Roles:', roles);
+    }
+
+    // Check if saved
+    function isSaved(id) {
+      const saved = JSON.parse(localStorage.getItem('saved') || '[]');
+      return saved.includes(id);
+    }
+
+    // Toggle save
+    function toggleSave(id) {
+      let saved = JSON.parse(localStorage.getItem('saved') || '[]');
+      if (saved.includes(id)) {
+        saved = saved.filter(s => s !== id);
+      } else {
+        saved.push(id);
+      }
+      localStorage.setItem('saved', JSON.stringify(saved));
+      applyFilters();
+    }
+
+    // Open product detail modal
+    function openProductModal(id) {
+      const listing = allListings.find(l => l.id === id);
+      if (!listing) return;
+      selectedListing = listing;
+      document.getElementById('productTitle').textContent = listing.title;
+      document.getElementById('productType').textContent = listing.type;
+      document.getElementById('productType').className = 'card-type ' + listing.type;
+      document.getElementById('productPrice').textContent = listing.type === 'sell' ? '$' + listing.price : '$' + (listing.min_price || 0) + ' - $' + (listing.max_price || 0);
+      document.getElementById('productDesc').textContent = listing.description || 'No description';
+      document.getElementById('productLocation').textContent = '📍 ' + (listing.location || 'Unknown');
+      document.getElementById('productTags').innerHTML = (listing.tags || []).map(t => `<span class="card-tag">${t}</span>`).join('');
+      document.getElementById('productReviews').innerHTML = renderReviews(listing);
+      
+      // Update save button
+      const saveBtn = document.getElementById('productSaveBtn');
+      if (isSaved(listing.id)) {
+        saveBtn.textContent = '★';
+        saveBtn.classList.add('saved');
+      } else {
+        saveBtn.textContent = '☆';
+        saveBtn.classList.remove('saved');
+      }
+      
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    // Toggle save from product modal
+    function toggleProductSave() {
+      if (!selectedListing) return;
+      toggleSave(selectedListing.id);
+      const saveBtn = document.getElementById('productSaveBtn');
+      if (isSaved(selectedListing.id)) {
+        saveBtn.textContent = '★';
+        saveBtn.classList.add('saved');
+      } else {
+        saveBtn.textContent = '☆';
+        saveBtn.classList.remove('saved');
+      }
+    }
+
+    // Render reviews on card
+    function renderReviews(listing) {
+      const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+      if (settings.showRatings === false) return '';
+      
+      // Mock reviews data - in production this would come from API
+      const reviews = listing.reviews || [];
+      if (reviews.length === 0) {
+        return `<div class="reviews-section">
+          <div class="reviews-title">
+            <span class="stars">☆☆☆☆☆</span>
+            <span class="review-count">No reviews yet</span>
+          </div>
+        </div>`;
+      }
+      
+      const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+      const stars = '★'.repeat(Math.round(avgRating)) + '☆'.repeat(5 - Math.round(avgRating));
+      const boughtCount = reviews.filter(r => r.type === 'bought').length;
+      const soldCount = reviews.filter(r => r.type === 'sold').length;
+      
+      let badge = '';
+      if (settings.showHistory !== false) {
+        if (boughtCount > 0) badge += `<span class="review-badge bought">${boughtCount} bought</span>`;
+        if (soldCount > 0) badge += `<span class="review-badge sold">${soldCount} sold</span>`;
+      }
+      
+      return `<div class="reviews-section">
+        <div class="reviews-title">
+          <span class="stars">${stars}</span>
+          <span class="review-count">${reviews.length} review${reviews.length !== 1 ? 's' : ''}</span>
+          ${badge}
+        </div>
+      </div>`;
+    }
+
+    // Modal
+    function openModal(type, data) {
+      document.getElementById(type + 'Modal').classList.add('active');
+      if (type === 'create') {
+        document.getElementById('createTitle').textContent = data === 'buy' ? 'Buy Something' : 'Sell Something';
+        document.getElementById('listingType').value = data || 'sell';
+      }
+    }
+
+    function closeModal(type) {
+      document.getElementById(type + 'Modal').classList.remove('active');
+    }
+
+    // Require Auth
+    function requireAuth(action) {
+      if (currentUser) {
+        if (action === 'list') openModal('create');
+        return true;
+      }
+      document.getElementById('loginOverlay').classList.add('active');
+      return false;
+    }
+
+    function closeLoginOverlay() {
+      document.getElementById('loginOverlay').classList.remove('active');
+    }
+
+    // Show page (listings, matches, account, settings)
+    function showPage(page) {
+      const grid = document.getElementById('listingsGrid');
+      const accountPage = document.getElementById('accountPage');
+      const settingsPage = document.getElementById('settingsPage');
+      const hero = document.querySelector('.hero-banner');
+      const search = document.querySelector('.search-section');
+      const pills = document.querySelector('.pills');
+      
+      // Hide all special pages first
+      accountPage.classList.remove('active');
+      settingsPage.classList.remove('active');
+      
+      if (page === 'account') {
+        grid.classList.add('hidden');
+        accountPage.classList.add('active');
+        hero.style.display = 'none';
+        search.style.display = 'none';
+        pills.style.display = 'none';
+        loadAccountPage();
+      } else if (page === 'settings') {
+        grid.classList.add('hidden');
+        settingsPage.classList.add('active');
+        hero.style.display = 'none';
+        search.style.display = 'none';
+        pills.style.display = 'none';
+        loadSettings();
+      } else {
+        grid.classList.remove('hidden');
+        hero.style.display = 'block';
+        search.style.display = 'block';
+        pills.style.display = 'flex';
+        
+        if (page === 'matches') {
+          showMatches();
+        }
+      }
+      
+      // Update nav
+      document.querySelectorAll('.navbar a').forEach(a => a.classList.remove('active'));
+      event?.target?.classList?.add('active');
+    }
+
+    // Show matches page
+    async function showMatches() {
+      const grid = document.getElementById('listingsGrid');
+      grid.innerHTML = '<div class="loading">Loading matches...</div>';
+      
+      try {
+        // Get current user or use default
+        const userId = currentUser?.id || 'default';
+        const res = await fetch(API + '/matches?user_id=' + encodeURIComponent(userId));
+        const matchData = await res.json();
+        
+        if (!matchData || matchData.length === 0) {
+          grid.innerHTML = '<div class="empty">No matches yet. Create a listing to get matched!</div>';
+          return;
+        }
+        
+        // Render matches
+        grid.innerHTML = matchData.map((m, i) => {
+          const listing = m.seller_listing || m.buyer_listing;
+          if (!listing) return '';
+          return `
+          <div class="card" style="animation-delay: ${i * 0.1}s; border-left: 3px solid var(--green);">
+            <span class="card-type ${listing.type}">${listing.type}</span>
+            <h3 class="card-title">${listing.title}</h3>
+            <p class="card-desc">Match Score: <strong style="color:var(--green);">${m.score}%</strong></p>
+            <div class="card-tags">${(listing.tags || []).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+            <div class="card-price">${listing.type === 'sell' ? '$' + listing.price : '$' + (listing.min_price || 0) + ' - $' + (listing.max_price || 0)}</div>
+            <div class="card-location">📍 ${listing.location || 'Unknown'}</div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openOfferModal('${listing.id}')">Make Offer</button>
+              <button class="btn btn-secondary" onclick="openProductModal('${listing.id}')">View</button>
+            </div>
+          </div>
+        `}).join('');
+      } catch (e) {
+        grid.innerHTML = '<div class="empty">Error loading matches. Make sure server is running.</div>';
+      }
+    }
+
+    // Load settings
+    function loadSettings() {
+      const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+      document.getElementById('settingShowHistory').checked = settings.showHistory !== false;
+      document.getElementById('settingShowRatings').checked = settings.showRatings !== false;
+      document.getElementById('settingShowLocation').checked = settings.showLocation !== false;
+      document.getElementById('settingEmailNotif').checked = settings.emailNotif !== false;
+    }
+
+    // Save settings
+    function saveSettings() {
+      const settings = {
+        showHistory: document.getElementById('settingShowHistory').checked,
+        showRatings: document.getElementById('settingShowRatings').checked,
+        showLocation: document.getElementById('settingShowLocation').checked,
+        emailNotif: document.getElementById('settingEmailNotif').checked
+      };
+      localStorage.setItem('settings', JSON.stringify(settings));
+      showToast('Settings saved!', 'success');
+    }
+
+    // Load account page data
+    function loadAccountPage() {
+      if (!currentUser) {
+        // Not logged in
+        document.getElementById('accountAvatar').textContent = '👤';
+        document.getElementById('accountName').textContent = 'Guest';
+        document.getElementById('accountEmail').textContent = 'Sign in to access your account';
+        document.getElementById('signoutBtn').style.display = 'none';
+        document.getElementById('statListings').textContent = '0';
+        document.getElementById('statSaved').textContent = '0';
+        document.getElementById('statOffers').textContent = '0';
+        document.getElementById('myListings').innerHTML = '<div class="empty-state">Please sign in to see your listings</div>';
+        document.getElementById('savedItems').innerHTML = '<div class="empty-state">Please sign in to see saved items</div>';
+        document.getElementById('myOffers').innerHTML = '<div class="empty-state">Please sign in to see your offers</div>';
+        return;
+      }
+      
+      // Logged in
+      document.getElementById('accountAvatar').textContent = currentUser.name?.[0]?.toUpperCase() || currentUser.email[0].toUpperCase() || '👤';
+      document.getElementById('accountName').textContent = currentUser.name || currentUser.email.split('@')[0];
+      document.getElementById('accountEmail').textContent = currentUser.email;
+      document.getElementById('signoutBtn').style.display = 'block';
+      
+      // Get saved items
+      const saved = JSON.parse(localStorage.getItem('saved') || '[]');
+      document.getElementById('statSaved').textContent = saved.length;
+      
+      // Render saved items
+      if (saved.length > 0) {
+        const savedListings = allListings.filter(l => saved.includes(l.id));
+        document.getElementById('savedItems').innerHTML = savedListings.map(l => `
+          <div class="card" style="margin-bottom:12px;">
+            <span class="card-type ${l.type}">${l.type}</span>
+            <h3 class="card-title">${l.title}</h3>
+            <div class="card-price">${l.type === 'sell' ? '$' + l.price : '$' + (l.min_price || 0) + ' - $' + (l.max_price || 0)}</div>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('savedItems').innerHTML = '<div class="empty-state">No saved items. Click ❤️ on listings to save them!</div>';
+      }
+      
+      // My listings (filter by current user - demo)
+      document.getElementById('statListings').textContent = '0';
+      document.getElementById('myListings').innerHTML = '<div class="empty-state">No listings yet. List an item to get started!</div>';
+      
+      // Offers
+      document.getElementById('statOffers').textContent = '0';
+      document.getElementById('myOffers').innerHTML = '<div class="empty-state">No offers yet. Make an offer on items you like!</div>';
+    }
+
+    // Sign out
+    function signOut() {
+      currentUser = null;
+      localStorage.removeItem('user');
+      updateAccountLink();
+      showPage('listings');
+      showToast('Signed out', 'success');
+    }
+
+    // Update account link when logged in
+    function updateAccountLink() {
+      const link = document.getElementById('accountLink');
+      if (currentUser) {
+        link.textContent = currentUser.email.split('@')[0];
+      } else {
+        link.textContent = 'Account';
+      }
+    }
+    
+    // Handle account link click vs hover
+    let accountHoverTimer = null;
+    function handleAccountClick(event) {
+      if (currentUser) {
+        // If logged in, click goes to settings
+        showPage('settings');
+      } else {
+        // If not logged in, click opens auth
+        openModal('auth');
+      }
+    }
+    
+    // Update account link on hover - show Settings when logged in
+    document.getElementById('accountLink').addEventListener('mouseenter', function() {
+      if (currentUser) {
+        this.textContent = 'Settings';
+      }
+    });
+    
+    document.getElementById('accountLink').addEventListener('mouseleave', function() {
+      if (currentUser) {
+        this.textContent = currentUser.email.split('@')[0];
+      } else {
+        this.textContent = 'Account';
+      }
+    });
+    
+    // Show settings page
+    function showSettings() {
+      showPage('settings');
+    }
+
+    // Auth
+    function signInWithGoogle() {
+      const user = { id: 'google_' + Date.now(), email: 'user@gmail.com', source: 'google' };
+      currentUser = user;
+      localStorage.setItem('user', JSON.stringify(user));
+      closeModal('auth');
+      closeLoginOverlay();
+      updateAccountLink();
+      showToast('Signed in with Google!', 'success');
+    }
+
+    function handleAuth() {
+      const email = document.getElementById('authEmail').value;
+      const password = document.getElementById('authPassword').value;
+      
+      // Check for admin
+      if (email === 'admin' && password === 'admin') {
+        currentUser = { id: 'admin', email: 'admin@marketplace.com', name: 'Admin' };
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        closeModal('auth');
+        closeLoginOverlay();
+        updateAccountLink();
+        showToast('Welcome, Admin!', 'success');
+        return;
+      }
+      
+      // Demo login
+      const user = { id: 'user_' + Date.now(), email: email };
+      currentUser = user;
+      localStorage.setItem('user', JSON.stringify(user));
+      closeModal('auth');
+      closeLoginOverlay();
+      updateAccountLink();
+      showToast('Signed in!', 'success');
+    }
+
+    // Make Offer
+    function openOfferModal(id) {
+      if (!requireAuth('offer')) return;
+      selectedListing = allListings.find(l => l.id === id);
+      document.getElementById('offerSubtitle').textContent = 'Offer for: ' + selectedListing?.title;
+      openModal('offer');
+    }
+
+    function submitOffer() {
+      const amount = document.getElementById('offerAmount').value;
+      showToast('Offer sent: $' + amount, 'success');
+      closeModal('offer');
+    }
+
+    // Save
+    function saveListing(id) {
+      if (!requireAuth('save')) return;
+      let saved = JSON.parse(localStorage.getItem('saved') || '[]');
+      if (!saved.includes(id)) {
+        saved.push(id);
+        localStorage.setItem('saved', JSON.stringify(saved));
+        showToast('Saved!', 'success');
+      }
+    }
+
+    // Create Listing
+    async function createListing(e) {
+      e.preventDefault();
+      const listing = {
+        type: 'sell',
+        category: document.getElementById('listingCategory').value,
+        title: document.getElementById('listingTitle').value,
+        description: document.getElementById('listingDesc').value,
+        location: document.getElementById('listingLocation').value,
+        zipcode: document.getElementById('listingZipcode').value,
+        tags: document.getElementById('listingTags').value.split(',').map(t => t.trim()).filter(t => t),
+        price: parseInt(document.getElementById('listingPrice').value) || 0
+      };
+      
+      try {
+        const res = await fetch(API + '/listings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(listing)
+        });
+        if (res.ok) {
+          closeModal('create');
+          showToast('Listed!', 'success');
+          loadListings();
+        }
+      } catch (err) {
+        showToast('Error creating listing');
+      }
+    }
+
+    // Toast
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show' + (type ? ' ' + type : '');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Init
+    function init() {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateAccountLink();
+      }
+      loadListings();
+      
+      // Hide account page initially
+      document.getElementById('accountPage').classList.remove('active');
+    }
+    init();
+  </script>
+</body>
+</html>

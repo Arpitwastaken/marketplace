@@ -1,0 +1,6 @@
+@echo off
+cd /d C:\Users\arpit\.openclaw\workspace\projects\marketplace
+echo Installing deps...
+call npm install
+echo Starting server...
+node src\index.js

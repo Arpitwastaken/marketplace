@@ -1,0 +1,14 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "marketplace_db",
+    "user": "marketplace_user",
+    "password": "password"
+  },
+  "matching": {
+    "minScore": 0.5,
+    "maxDistance": 100,
+    "priceTolerance": 0.1
+  }
+}
