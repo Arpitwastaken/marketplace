@@ -138,9 +138,9 @@ function getDistance(zip1, zip2) {
   const z1 = zipcodeCoords[zip1] || { lat: 0, lng: 0 };
   const z2 = zipcodeCoords[zip2] || { lat: 0, lng: 0 };
   
-  if (!z1.lat || !z2.lat) return 9999; // Unknown distance
+  if (!z1.lat || !z2.lat) return 9999;
   
-  const R = 3959; // Earth's radius in miles
+  const R = 3959;
   const dLat = (z2.lat - z1.lat) * Math.PI / 180;
   const dLng = (z2.lng - z1.lng) * Math.PI / 180;
   const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -150,40 +150,77 @@ function getDistance(zip1, zip2) {
   return R * c;
 }
 
-// Get location score based on distance
 function getLocationScore(zip1, zip2, buyerZip, sellerZip) {
   const distance = getDistance(zip1 || buyerZip, zip2 || sellerZip);
   
-  if (distance <= 5) return 20;      // Same zip - max
-  if (distance <= 15) return 15;     // Very close
-  if (distance <= 50) return 10;    // Same metro
-  if (distance <= 150) return 5;   // Same state/region
-  return 0;                         // Far away
+  if (distance <= 5) return 20;
+  if (distance <= 15) return 15;
+  if (distance <= 50) return 10;
+  if (distance <= 150) return 5;
+  return 0;
 }
 
-// Listings with zipcode support
+// Listings with images
 const listings = [
-  { id: '1', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'iPhone 15 Pro', description: 'Looking for iPhone 15 Pro Max', min_price: 800, max_price: 1200, location: 'New York', zipcode: '10001', status: 'active', tags: ['iphone', 'iphone_15'] },
-  { id: '2', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'RTX 4080 GPU', description: 'Need graphics card', min_price: 800, max_price: 1200, location: 'Los Angeles', zipcode: '90001', status: 'active', tags: ['gpu', 'rtx_4080'] },
-  { id: '3', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'iPhone 15 Pro Max 256GB', description: 'Excellent condition', price: 950, condition: 'like_new', location: 'New York', zipcode: '10012', status: 'active', tags: ['iphone', 'iphone_15'] },
-  { id: '4', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'RTX 4080 Super', description: 'Brand new in box', price: 1100, condition: 'new', location: 'Los Angeles', zipcode: '90012', status: 'active', tags: ['gpu', 'rtx_4080'] },
-  { id: '5', user_id: 'buyer2', type: 'buy', category: 'electronics', title: 'MacBook Pro 14"', description: 'Need M3 for work', min_price: 1400, max_price: 2000, location: 'Chicago', zipcode: '60601', status: 'active', tags: ['macbook', 'apple', 'laptop'] },
-  { id: '6', user_id: 'seller2', type: 'sell', category: 'electronics', title: 'MacBook Pro M3 16GB', description: 'Like new, Silver', price: 1850, condition: 'like_new', location: 'Chicago', zipcode: '60614', status: 'active', tags: ['macbook', 'apple', 'laptop'] },
-  { id: '7', user_id: 'buyer3', type: 'buy', category: 'electronics', title: 'PS5 Disc Edition', description: 'Looking for console', min_price: 350, max_price: 500, location: 'Austin', zipcode: '78701', status: 'active', tags: ['ps5', 'playstation', 'gaming'] },
-  { id: '8', user_id: 'seller3', type: 'sell', category: 'electronics', title: 'PS5 Digital', description: 'Brand new, unopened', price: 380, condition: 'new', location: 'Austin', zipcode: '78704', status: 'active', tags: ['ps5', 'playstation', 'gaming'] },
-  { id: '9', user_id: 'buyer4', type: 'buy', category: 'furniture', title: 'Standing Desk', description: 'Electric height adjustable', min_price: 300, max_price: 600, location: 'Denver', zipcode: '80201', status: 'active', tags: ['desk', 'standing', 'office'] },
-  { id: '10', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Uplift V2 Standing Desk', description: 'Excellent condition, bamboo top', price: 450, condition: 'good', location: 'Denver', zipcode: '80203', status: 'active', tags: ['desk', 'standing', 'office'] },
+  { id: '1', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'iPhone 15 Pro', description: 'Looking for iPhone 15 Pro Max', min_price: 800, max_price: 1200, location: 'New York', zipcode: '10001', status: 'active', tags: ['iphone', 'iphone_15'], image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop' },
+  { id: '2', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'RTX 4080 GPU', description: 'Need graphics card', min_price: 800, max_price: 1200, location: 'Los Angeles', zipcode: '90001', status: 'active', tags: ['gpu', 'rtx_4080'], image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=300&fit=crop' },
+  { id: '3', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'iPhone 15 Pro Max 256GB', description: 'Excellent condition, barely used', price: 950, condition: 'like_new', location: 'New York', zipcode: '10012', status: 'active', tags: ['iphone', 'iphone_15'], image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop' },
+  { id: '4', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'RTX 4080 Super', description: 'Brand new in box, unopened', price: 1100, condition: 'new', location: 'Los Angeles', zipcode: '90012', status: 'active', tags: ['gpu', 'rtx_4080'], image: 'https://images.unsplash.com/photo-1555685812-4b943f3e9942?w=400&h=300&fit=crop' },
+  { id: '5', user_id: 'buyer2', type: 'buy', category: 'electronics', title: 'MacBook Pro 14"', description: 'Need M3 for work', min_price: 1400, max_price: 2000, location: 'Chicago', zipcode: '60601', status: 'active', tags: ['macbook', 'apple', 'laptop'], image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop' },
+  { id: '6', user_id: 'seller2', type: 'sell', category: 'electronics', title: 'MacBook Pro M3 16GB', description: 'Like new, Silver, includes charger', price: 1850, condition: 'like_new', location: 'Chicago', zipcode: '60614', status: 'active', tags: ['macbook', 'apple', 'laptop'], image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&h=300&fit=crop' },
+  { id: '7', user_id: 'buyer3', type: 'buy', category: 'electronics', title: 'PS5 Disc Edition', description: 'Looking for console', min_price: 350, max_price: 500, location: 'Austin', zipcode: '78701', status: 'active', tags: ['ps5', 'playstation', 'gaming'], image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop' },
+  { id: '8', user_id: 'seller3', type: 'sell', category: 'electronics', title: 'PS5 Digital Edition', description: 'Brand new, unopened', price: 380, condition: 'new', location: 'Austin', zipcode: '78704', status: 'active', tags: ['ps5', 'playstation', 'gaming'], image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop' },
+  { id: '9', user_id: 'buyer4', type: 'buy', category: 'furniture', title: 'Standing Desk', description: 'Electric height adjustable', min_price: 300, max_price: 600, location: 'Denver', zipcode: '80201', status: 'active', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&h=300&fit=crop' },
+  { id: '10', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Uplift V2 Standing Desk', description: 'Excellent condition, bamboo top', price: 450, condition: 'good', location: 'Denver', zipcode: '80203', status: 'active', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop' },
 ];
 
 const offers = [];
 const transactions = [];
+
+// Messages/Conversations system
+const conversations = [];
+const messages = [];
+
+// Fair Market Value calculation
+function calculateFairMarketValue(listing) {
+  // Find similar listings (same category and at least one matching tag)
+  const similar = listings.filter(l => 
+    l.type === 'sell' && 
+    l.status === 'active' &&
+    l.id !== listing.id &&
+    l.category === listing.category &&
+    l.price > 0 &&
+    (l.tags || []).some(t => (listing.tags || []).includes(t))
+  );
+  
+  if (similar.length === 0) {
+    return null;
+  }
+  
+  const prices = similar.map(l => l.price);
+  const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  
+  return {
+    average: Math.round(avg),
+    low: min,
+    high: max,
+    count: similar.length,
+    similar: similar.map(s => ({
+      id: s.id,
+      title: s.title,
+      price: s.price,
+      condition: s.condition
+    }))
+  };
+}
 
 // Routes
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Get zipcode info
 app.get('/api/zipcode/:zip', (req, res) => {
   const info = zipcodeCoords[req.params.zip];
   if (!info) {
@@ -192,14 +229,12 @@ app.get('/api/zipcode/:zip', (req, res) => {
   res.json({ zipcode: req.params.zip, ...info });
 });
 
-// Get all supported zipcodes/cities
 app.get('/api/locations', (req, res) => {
   const locations = Object.entries(zipcodeCoords).map(([zip, info]) => ({
     zipcode: zip,
     city: info.city,
     state: info.state || ''
   }));
-  // Remove duplicates by city
   const unique = [];
   const seen = new Set();
   for (const loc of locations) {
@@ -219,7 +254,6 @@ app.get('/api/listings', (req, res) => {
   if (type) result = result.filter(l => l.type === type);
   if (status) result = result.filter(l => l.status === status);
   
-  // Filter by radius if zipcode provided
   if (zipcode && radius) {
     const maxDist = parseInt(radius);
     result = result.filter(l => {
@@ -234,10 +268,113 @@ app.get('/api/listings', (req, res) => {
 app.get('/api/listings/:id', (req, res) => {
   const listing = listings.find(l => l.id === req.params.id);
   if (!listing) return res.status(404).json({ error: 'Not found' });
-  res.json(listing);
+  
+  // Add fair market value to listing response
+  const fmv = listing.type === 'sell' ? calculateFairMarketValue(listing) : null;
+  
+  res.json({ ...listing, fairMarketValue: fmv });
 });
 
-// Matches with zipcode proximity scoring
+// Fair Market Value endpoint
+app.get('/api/fair-market-value/:id', (req, res) => {
+  const listing = listings.find(l => l.id === req.params.id);
+  if (!listing) return res.status(404).json({ error: 'Not found' });
+  
+  const fmv = calculateFairMarketValue(listing);
+  if (!fmv) {
+    return res.json({ error: 'No similar listings found', listing });
+  }
+  
+  res.json(fmv);
+});
+
+// Conversations
+app.get('/api/conversations', (req, res) => {
+  const { user_id } = req.query;
+  let result = conversations;
+  if (user_id) {
+    result = conversations.filter(c => c.buyer_id === user_id || c.seller_id === user_id);
+  }
+  res.json(result);
+});
+
+app.post('/api/conversations', (req, res) => {
+  const { listing_id, buyer_id, seller_id, initial_message } = req.body;
+  
+  if (!listing_id || !buyer_id || !seller_id) {
+    return res.status(400).json({ error: 'listing_id, buyer_id, seller_id required' });
+  }
+  
+  // Check if conversation already exists
+  const existing = conversations.find(c => 
+    c.listing_id === listing_id && 
+    c.buyer_id === buyer_id && 
+    c.seller_id === seller_id
+  );
+  
+  if (existing) {
+    return res.json(existing);
+  }
+  
+  const conversation = {
+    id: String(conversations.length + 1),
+    listing_id,
+    buyer_id,
+    seller_id,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  
+  conversations.push(conversation);
+  
+  // Add initial message if provided
+  if (initial_message) {
+    const msg = {
+      id: String(messages.length + 1),
+      conversation_id: conversation.id,
+      sender_id: buyer_id,
+      text: initial_message,
+      created_at: new Date().toISOString()
+    };
+    messages.push(msg);
+  }
+  
+  res.status(201).json(conversation);
+});
+
+// Messages
+app.get('/api/messages/:conversation_id', (req, res) => {
+  const conversationMessages = messages.filter(m => m.conversation_id === req.params.conversation_id);
+  res.json(conversationMessages);
+});
+
+app.post('/api/messages', (req, res) => {
+  const { conversation_id, sender_id, text } = req.body;
+  
+  if (!conversation_id || !sender_id || !text) {
+    return res.status(400).json({ error: 'conversation_id, sender_id, text required' });
+  }
+  
+  const message = {
+    id: String(messages.length + 1),
+    conversation_id,
+    sender_id,
+    text,
+    created_at: new Date().toISOString()
+  };
+  
+  messages.push(message);
+  
+  // Update conversation timestamp
+  const conv = conversations.find(c => c.id === conversation_id);
+  if (conv) {
+    conv.updated_at = new Date().toISOString();
+  }
+  
+  res.status(201).json(message);
+});
+
+// Matches
 app.get('/api/matches', (req, res) => {
   const { user_id, zipcode } = req.query;
   const buys = listings.filter(l => l.type === 'buy' && l.status === 'active');
@@ -248,23 +385,17 @@ app.get('/api/matches', (req, res) => {
     for (const sell of sells) {
       if (buy.category !== sell.category) continue;
       
-      // Tag matching (40 pts)
       const matchingTags = buy.tags.filter(t => sell.tags.includes(t));
       const tagScore = matchingTags.length > 0 ? 40 : 0;
       
-      // Price matching (25 pts)
       let priceScore = 0;
       if (sell.price >= buy.min_price && sell.price <= buy.max_price) {
         priceScore = 25;
       } else if (sell.price > buy.max_price) {
-        // Slightly over budget
         priceScore = 10;
       }
       
-      // Location/zipcode proximity (20 pts)
       const locScore = getLocationScore(buy.zipcode, sell.zipcode, buy.zipcode, sell.zipcode);
-      
-      // Condition bonus (5 pts)
       const conditionScore = sell.condition === 'new' || sell.condition === 'like_new' ? 5 : 0;
       
       const totalScore = tagScore + priceScore + locScore + conditionScore;
@@ -286,14 +417,13 @@ app.get('/api/matches', (req, res) => {
     }
   }
   
-  // Sort by score descending
   matches.sort((a, b) => b.score - a.score);
   res.json(matches);
 });
 
-// Create listing with zipcode
+// Create listing
 app.post('/api/listings', (req, res) => {
-  const { type, category, title, description, price, min_price, max_price, condition, location, zipcode, tags } = req.body;
+  const { type, category, title, description, price, min_price, max_price, condition, location, zipcode, tags, image } = req.body;
   
   if (!type || !category || !title) {
     return res.status(400).json({ error: 'Type, category, title required' });
@@ -313,7 +443,8 @@ app.post('/api/listings', (req, res) => {
     location: location || '',
     zipcode: zipcode || '',
     status: 'active',
-    tags: tags || []
+    tags: tags || [],
+    image: image || null
   };
   
   listings.push(listing);
