@@ -66,6 +66,12 @@
     .header-links a:hover {
       color: var(--accent);
     }
+    .header-links .nav-item {
+      display: none;
+    }
+    .header-links.show-nav .nav-item {
+      display: block;
+    }
     
     /* Main Container */
     .container {
@@ -540,10 +546,10 @@
   <header class="header">
     <div class="header-content">
       <a href="#" class="logo" onclick="showListings()">Marketplace</a>
-      <div class="header-links">
-        <a href="#" onclick="showListings()">Browse</a>
-        <a href="#" onclick="openModal('create')">Sell</a>
-        <a href="#" onclick="showListings()">Messages</a>
+      <div class="header-links" id="headerLinks">
+        <a href="#" class="nav-item" onclick="showListings()">Browse</a>
+        <a href="#" class="nav-item" onclick="openModal('create')">Sell</a>
+        <a href="#" onclick="showAccount()">Account</a>
       </div>
     </div>
   </header>
@@ -589,6 +595,29 @@
         <div class="message-input">
           <input type="text" id="messageInput" placeholder="Write a message..." onkeypress="handleMessageKeypress(event)">
           <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Account View -->
+    <div id="accountView" style="display:none;">
+      <button class="btn btn-back" onclick="showListings()">← Back to listings</button>
+      <div class="detail-view" style="margin-top:16px;">
+        <h2>My Account</h2>
+        <div style="margin-top:16px;padding:16px;background:#e7f3e8;border-radius:8px;">
+          <p><strong>Status:</strong> Logged in as <span id="accountUserName">User</span></p>
+          <p style="margin-top:8px;"><strong>Trust Score:</strong> <span id="accountTrustScore">--</span></p>
+        </div>
+        <div style="margin-top:20px;">
+          <h3>Your Listings</h3>
+          <div id="accountListings" style="margin-top:12px;">Loading...</div>
+        </div>
+        <div style="margin-top:20px;">
+          <h3>Messages</h3>
+          <p style="color:var(--text-secondary);font-size:14px;">Check if anyone has messaged you about your listings</p>
+          <div id="accountMessages" style="margin-top:12px;padding:16px;background:#f5f6f7;border-radius:8px;">
+            <p>No new messages</p>
+          </div>
         </div>
       </div>
     </div>
@@ -795,6 +824,7 @@
     function showListings() {
       document.getElementById('listingsView').style.display = 'block';
       document.getElementById('detailView').style.display = 'none';
+      document.getElementById('accountView').style.display = 'none';
       selectedListing = null;
       currentConversation = null;
     }
@@ -918,7 +948,43 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
     
+    // Navigation visibility - show Browse/Sell when in account view
+    let isLoggedIn = true; // Mock login state
+    
+    function updateNavVisibility() {
+      const headerLinks = document.getElementById('headerLinks');
+      const navItems = headerLinks.querySelectorAll('.nav-item');
+      if (isLoggedIn) {
+        navItems.forEach(item => item.style.display = 'inline');
+      } else {
+        navItems.forEach(item => item.style.display = 'none');
+      }
+    }
+    
+    // Show Account view
+    async function showAccount() {
+      document.getElementById('listingsView').style.display = 'none';
+      document.getElementById('detailView').style.display = 'none';
+      document.getElementById('accountView').style.display = 'block';
+      
+      // Update nav to show Browse/Sell
+      isLoggedIn = true;
+      updateNavVisibility();
+      
+      // Load user data
+      document.getElementById('accountUserName').textContent = 'seller1';
+      document.getElementById('accountTrustScore').textContent = '92';
+      
+      // Load user's listings
+      const myListings = allListings.filter(l => l.user_id === 'seller1');
+      const listingsHtml = myListings.length > 0 
+        ? myListings.map(l => `<div style="padding:8px;border-bottom:1px solid var(--border);">${l.title} - $${l.price || l.min_price}</div>`).join('')
+        : '<p>No listings yet</p>';
+      document.getElementById('accountListings').innerHTML = listingsHtml;
+    }
+    
     // Init
+    updateNavVisibility();
     loadListings();
   </script>
 </body>
