@@ -12,7 +12,6 @@ app.use(express.static('../'));
 // Zipcode mapping
 const zipcodeCoords = {
   '10001': { city: 'New York', lat: 40.7501, lng: -73.9971 },
-  '10002': { city: 'New York', lat: 40.7157, lng: -73.9863 },
   '10011': { city: 'New York', lat: 40.7401, lng: -74.0006 },
   '10012': { city: 'New York', lat: 40.7258, lng: -73.9983 },
   '10013': { city: 'New York', lat: 40.7204, lng: -74.0028 },
@@ -28,73 +27,37 @@ const zipcodeCoords = {
   '10024': { city: 'New York', lat: 40.7914, lng: -73.9722 },
   '10025': { city: 'New York', lat: 40.7979, lng: -73.9668 },
   '90001': { city: 'Los Angeles', lat: 33.9731, lng: -118.2479 },
-  '90002': { city: 'Los Angeles', lat: 33.9491, lng: -118.2453 },
-  '90003': { city: 'Los Angeles', lat: 33.9642, lng: -118.2729 },
-  '90004': { city: 'Los Angeles', lat: 34.0769, lng: -118.3090 },
-  '90005': { city: 'Los Angeles', lat: 34.0599, lng: -118.3089 },
-  '90006': { city: 'Los Angeles', lat: 34.0489, lng: -118.2933 },
-  '90007': { city: 'Los Angeles', lat: 34.0269, lng: -118.2851 },
-  '90008': { city: 'Los Angeles', lat: 33.9857, lng: -118.3387 },
-  '90010': { city: 'Los Angeles', lat: 34.0661, lng: -118.3142 },
-  '90011': { city: 'Los Angeles', lat: 33.9871, lng: -118.2567 },
   '90012': { city: 'Los Angeles', lat: 34.0633, lng: -118.2378 },
-  '90013': { city: 'Los Angeles', lat: 34.0444, lng: -118.2467 },
   '90014': { city: 'Los Angeles', lat: 34.0444, lng: -118.2525 },
   '90015': { city: 'Los Angeles', lat: 34.0395, lng: -118.2661 },
-  '90016': { city: 'Los Angeles', lat: 34.0307, lng: -118.3528 },
-  '90017': { city: 'Los Angeles', lat: 34.0527, lng: -118.2637 },
-  '90018': { city: 'Los Angeles', lat: 34.0269, lng: -118.3089 },
-  '90019': { city: 'Los Angeles', lat: 34.0463, lng: -118.3441 },
-  '90020': { city: 'Los Angeles', lat: 34.0678, lng: -118.3094 },
   '60601': { city: 'Chicago', lat: 41.8819, lng: -87.6278 },
   '60602': { city: 'Chicago', lat: 41.8829, lng: -87.6269 },
   '60603': { city: 'Chicago', lat: 41.8808, lng: -87.6273 },
-  '60604': { city: 'Chicago', lat: 41.8773, lng: -87.6283 },
-  '60605': { city: 'Chicago', lat: 41.8695, lng: -87.6187 },
-  '60606': { city: 'Chicago', lat: 41.8831, lng: -87.6391 },
-  '60607': { city: 'Chicago', lat: 41.8743, lng: -87.6477 },
-  '60608': { city: 'Chicago', lat: 41.8538, lng: -87.6710 },
-  '60609': { city: 'Chicago', lat: 41.8098, lng: -87.6534 },
-  '60610': { city: 'Chicago', lat: 41.9021, lng: -87.6351 },
-  '60611': { city: 'Chicago', lat: 41.8958, lng: -87.6232 },
-  '60612': { city: 'Chicago', lat: 41.8809, lng: -87.6884 },
-  '60613': { city: 'Chicago', lat: 41.9503, lng: -87.6521 },
   '60614': { city: 'Chicago', lat: 41.9218, lng: -87.6513 },
   '78701': { city: 'Austin', lat: 30.2672, lng: -97.7431 },
-  '78702': { city: 'Austin', lat: 30.2600, lng: -97.7234 },
-  '78703': { city: 'Austin', lat: 30.2834, lng: -97.7324 },
   '78704': { city: 'Austin', lat: 30.2435, lng: -97.7699 },
   '78705': { city: 'Austin', lat: 30.2859, lng: -97.7341 },
   '80201': { city: 'Denver', lat: 39.7392, lng: -104.9903 },
   '80202': { city: 'Denver', lat: 39.7514, lng: -104.9900 },
   '80203': { city: 'Denver', lat: 39.7307, lng: -104.9810 },
-  '80204': { city: 'Denver', lat: 39.7392, lng: -105.0124 },
-  '80205': { city: 'Denver', lat: 39.7608, lng: -104.9700 },
   '98101': { city: 'Seattle', lat: 47.6062, lng: -122.3321 },
-  '98102': { city: 'Seattle', lat: 47.6300, lng: -122.3217 },
-  '98103': { city: 'Seattle', lat: 47.6694, lng: -122.3417 },
   'NYC': { city: 'New York', lat: 40.7128, lng: -74.0060 },
   'LA': { city: 'Los Angeles', lat: 34.0522, lng: -118.2437 },
   'Chicago': { city: 'Chicago', lat: 41.8781, lng: -87.6298 },
-  'Houston': { city: 'Houston', lat: 29.7604, lng: -95.3698 },
-  'Phoenix': { city: 'Phoenix', lat: 33.4484, lng: -112.0740 },
   'Austin': { city: 'Austin', lat: 30.2672, lng: -97.7431 },
   'Denver': { city: 'Denver', lat: 39.7392, lng: -104.9903 },
   'Seattle': { city: 'Seattle', lat: 47.6062, lng: -122.3321 },
   'Miami': { city: 'Miami', lat: 25.7617, lng: -80.1918 },
   'Boston': { city: 'Boston', lat: 42.3601, lng: -71.0589 },
   'Atlanta': { city: 'Atlanta', lat: 33.7490, lng: -84.3880 },
-  'Portland': { city: 'Portland', lat: 45.5152, lng: -122.6784 },
-  'Nashville': { city: 'Nashville', lat: 36.1627, lng: -86.7816 },
-  'Minneapolis': { city: 'Minneapolis', lat: 44.9778, lng: -93.2650 },
 };
 
+// Category weights
 const categoryWeights = {
   electronics: { tag: 35, price: 30, location: 15, condition: 20 },
   furniture: { tag: 20, price: 25, location: 30, condition: 25 },
   vehicles: { tag: 25, price: 25, location: 20, condition: 30 },
   clothing: { tag: 30, price: 30, location: 15, condition: 25 },
-  books: { tag: 40, price: 30, location: 15, condition: 15 },
   other: { tag: 30, price: 30, location: 20, condition: 20 }
 };
 
@@ -105,9 +68,7 @@ function getDistance(zip1, zip2) {
   const R = 3959;
   const dLat = (z2.lat - z1.lat) * Math.PI / 180;
   const dLng = (z2.lng - z1.lng) * Math.PI / 180;
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(z1.lat * Math.PI / 180) * Math.cos(z2.lat * Math.PI / 180) *
-    Math.sin(dLng/2) * Math.sin(dLng/2);
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(z1.lat * Math.PI / 180) * Math.cos(z2.lat * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   return R * c;
 }
@@ -121,6 +82,7 @@ function getLocationScore(zip1, zip2) {
   return 0;
 }
 
+// Data stores
 const listings = [
   { id: '1', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'iPhone 15 Pro', description: 'Looking for iPhone 15 Pro Max', min_price: 800, max_price: 1200, location: 'New York', zipcode: '10001', status: 'active', tags: ['iphone', 'iphone_15'], image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop', created_at: '2026-02-10T10:00:00Z' },
   { id: '2', user_id: 'buyer1', type: 'buy', category: 'electronics', title: 'RTX 4080 GPU', description: 'Need graphics card', min_price: 800, max_price: 1200, location: 'Los Angeles', zipcode: '90001', status: 'active', tags: ['gpu', 'rtx_4080'], image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=300&fit=crop', created_at: '2026-02-12T10:00:00Z' },
@@ -132,223 +94,189 @@ const listings = [
   { id: '8', user_id: 'seller3', type: 'sell', category: 'electronics', title: 'PS5 Digital Edition', description: 'Brand new, unopened', price: 380, condition: 'new', location: 'Austin', zipcode: '78704', status: 'active', tags: ['ps5', 'playstation', 'gaming'], image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop', created_at: '2026-02-15T10:00:00Z' },
   { id: '9', user_id: 'buyer4', type: 'buy', category: 'furniture', title: 'Standing Desk', description: 'Electric height adjustable', min_price: 300, max_price: 600, location: 'Denver', zipcode: '80201', status: 'active', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&h=300&fit=crop', created_at: '2026-02-09T10:00:00Z' },
   { id: '10', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Uplift V2 Standing Desk', description: 'Excellent condition, bamboo top', price: 450, condition: 'good', location: 'Denver', zipcode: '80203', status: 'active', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop', created_at: '2026-02-14T10:00:00Z' },
-  { id: '11', user_id: 'seller5', type: 'sell', category: 'electronics', title: 'iPhone 14 Pro 128GB', description: 'Good condition, minor scratches', price: 650, condition: 'good', location: 'New York', zipcode: '10001', status: 'active', tags: ['iphone', 'iphone_14'], image: 'https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=400&h=300&fit=crop', created_at: '2026-02-08T10:00:00Z' },
-  { id: '12', user_id: 'seller6', type: 'sell', category: 'furniture', title: 'IKEA Desk - White', description: 'Used for 1 year, good condition', price: 80, condition: 'good', location: 'Seattle', zipcode: '98101', status: 'active', tags: ['desk', 'ikea', 'office'], image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&h=300&fit=crop', created_at: '2026-02-05T10:00:00Z' },
-];
-
-const buyerIntents = [
-  { id: '1', user_id: 'buyer1', title: 'iPhone 15 Pro Max', category: 'electronics', budget_min: 800, budget_max: 1200, condition_preference: 'like_new', urgency: 'high', description: 'Need it for work ASAP', tags: ['iphone', 'iphone_15'], created_at: '2026-02-10T10:00:00Z' },
-  { id: '2', user_id: 'buyer1', title: 'RTX 4080 Graphics Card', category: 'electronics', budget_min: 800, budget_max: 1200, condition_preference: 'new', urgency: 'medium', description: 'For gaming build', tags: ['gpu', 'rtx_4080'], created_at: '2026-02-12T10:00:00Z' },
-  { id: '3', user_id: 'buyer2', title: 'MacBook Pro 14 inch', category: 'electronics', budget_min: 1400, budget_max: 2000, condition_preference: 'like_new', urgency: 'high', description: 'Need for software development', tags: ['macbook', 'apple', 'laptop'], created_at: '2026-02-13T10:00:00Z' },
-  { id: '4', user_id: 'buyer3', title: 'PS5 Console', category: 'electronics', budget_min: 350, budget_max: 500, condition_preference: 'new', urgency: 'low', description: 'Looking for a deal', tags: ['ps5', 'playstation'], created_at: '2026-02-11T10:00:00Z' },
-  { id: '5', user_id: 'buyer4', title: 'Standing Desk', category: 'furniture', budget_min: 300, budget_max: 600, condition_preference: 'good', urgency: 'medium', description: 'Home office setup', tags: ['desk', 'standing'], created_at: '2026-02-09T10:00:00Z' },
 ];
 
 const users = {
   'buyer1': { id: 'buyer1', name: 'John Buyer', trust_score: 85, response_speed: 90, completion_rate: 95, cancellation_rate: 5, dispute_rate: 0, total_sales: 0, total_purchases: 12, joined: '2025-06-15' },
   'buyer2': { id: 'buyer2', name: 'Sarah Shopper', trust_score: 72, response_speed: 65, completion_rate: 80, cancellation_rate: 15, dispute_rate: 5, total_sales: 0, total_purchases: 8, joined: '2025-09-20' },
-  'buyer3': { id: 'buyer3', name: 'Mike Bargainer', trust_score: 91, response_speed: 95, completion_rate: 98, cancellation_rate: 2, dispute_rate: 0, total_sales: 0, total_purchases: 25, joined: '2025-01-10' },
-  'buyer4': { id: 'buyer4', name: 'Lisa Home', trust_score: 68, response_speed: 50, completion_rate: 75, cancellation_rate: 20, dispute_rate: 5, total_sales: 0, total_purchases: 5, joined: '2025-11-05' },
   'seller1': { id: 'seller1', name: 'Tech Trader', trust_score: 92, response_speed: 88, completion_rate: 97, cancellation_rate: 3, dispute_rate: 0, total_sales: 45, total_purchases: 0, joined: '2024-08-01' },
   'seller2': { id: 'seller2', name: 'Gadget Guy', trust_score: 78, response_speed: 70, completion_rate: 82, cancellation_rate: 12, dispute_rate: 6, total_sales: 18, total_purchases: 0, joined: '2025-03-15' },
   'seller3': { id: 'seller3', name: 'Gamer Store', trust_score: 95, response_speed: 98, completion_rate: 99, cancellation_rate: 1, dispute_rate: 0, total_sales: 120, total_purchases: 0, joined: '2024-05-20' },
   'seller4': { id: 'seller4', name: 'Furniture Flipper', trust_score: 81, response_speed: 75, completion_rate: 85, cancellation_rate: 10, dispute_rate: 5, total_sales: 22, total_purchases: 0, joined: '2025-02-10' },
-  'seller5': { id: 'seller5', name: 'Phone Pro', trust_score: 88, response_speed: 82, completion_rate: 93, cancellation_rate: 5, dispute_rate: 2, total_sales: 35, total_purchases: 0, joined: '2024-12-01' },
-  'seller6': { id: 'seller6', name: 'Home Goods', trust_score: 70, response_speed: 60, completion_rate: 78, cancellation_rate: 15, dispute_rate: 7, total_sales: 12, total_purchases: 0, joined: '2025-07-20' },
 };
 
-const offers = [];
-const transactions = [];
 const conversations = [];
 const messages = [];
-
-// ESCROW SYSTEM
 const escrows = [];
-
-function createEscrow(listing, buyerId, sellerId, amount) {
-  const escrow = {
-    id: 'escrow_' + Date.now(),
-    listing_id: listing.id,
-    listing_title: listing.title,
-    buyer_id: buyerId,
-    seller_id: sellerId,
-    amount: amount,
-    platform_fee: Math.round(amount * 0.03),
-    status: 'pending',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    timeline: [{ status: 'pending', note: 'Escrow created, waiting for buyer payment', timestamp: new Date().toISOString() }]
-  };
-  escrows.push(escrow);
-  return escrow;
-}
-
-// BOOSTING ENGINE
 const boosts = [];
-
-function createBoost(listingId, sellerId, tier) {
-  const boostTiers = {
-    'basic': { price: 2.99, multiplier: 1.5, duration_days: 7 },
-    'premium': { price: 5.99, multiplier: 2.5, duration_days: 14 },
-    'featured': { price: 9.99, multiplier: 5, duration_days: 30 }
-  };
-  const tierData = boostTiers[tier] || boostTiers.basic;
-  const boost = {
-    id: 'boost_' + Date.now(),
-    listing_id: listingId,
-    seller_id: sellerId,
-    tier: tier,
-    price: tierData.price,
-    multiplier: tierData.multiplier,
-    duration_days: tierData.duration_days,
-    started_at: new Date().toISOString(),
-    expires_at: new Date(Date.now() + tierData.duration_days * 24 * 60 * 60 * 1000).toISOString(),
-    status: 'active'
-  };
-  boosts.push(boost);
-  const listing = listings.find(l => l.id === listingId);
-  if (listing) {
-    listing.boost_score = tierData.multiplier;
-    listing.boost_expires = boost.expires_at;
-  }
-  return boost;
-}
-
-function getBoostStatus(listingId) {
-  const boost = boosts.find(b => b.listing_id === listingId && b.status === 'active');
-  if (!boost) return { boosted: false };
-  const isExpired = new Date(boost.expires_at) < new Date();
-  if (isExpired) {
-    boost.status = 'expired';
-    const listing = listings.find(l => l.id === listingId);
-    if (listing) { listing.boost_score = 0; listing.boost_expires = null; }
-    return { boosted: false, expired: true };
-  }
-  return { boosted: true, tier: boost.tier, multiplier: boost.multiplier, expires_at: boost.expires_at, days_remaining: Math.ceil((new Date(boost.expires_at) - new Date()) / (1000 * 60 * 60 * 24)) };
-}
-
-// WATCHLIST
 const watchlists = [];
 
-function addToWatchlist(userId, listingId) {
-  const existing = watchlists.find(w => w.user_id === userId && w.listing_id === listingId);
-  if (existing) return existing;
-  const watch = { id: 'watch_' + Date.now(), user_id: userId, listing_id: listingId, added_at: new Date().toISOString() };
-  watchlists.push(watch);
-  return watch;
-}
-
-function removeFromWatchlist(userId, listingId) {
-  const idx = watchlists.findIndex(w => w.user_id === userId && w.listing_id === listingId);
-  if (idx > -1) { watchlists.splice(idx, 1); return true; }
-  return false;
-}
-
-function getUserWatchlist(userId) {
-  const userWatches = watchlists.filter(w => w.user_id === userId);
-  return userWatches.map(w => { const listing = listings.find(l => l.id === w.listing_id); return { watch: w, listing }; }).filter(w => w.listing);
-}
-
-// PRICE ALERTS
-const priceAlerts = [];
-
-function createPriceAlert(userId, searchQuery, targetPrice, category) {
-  const alert = { id: 'alert_' + Date.now(), user_id: userId, search_query: searchQuery, target_price: targetPrice, category: category, created_at: new Date().toISOString(), triggered: false };
-  priceAlerts.push(alert);
-  return alert;
-}
-
-// RISK-ADAPTIVE LIMITS
-function getUserListingLimit(userId) {
-  const user = users[userId];
-  if (!user) return 2;
-  if (user.trust_score >= 90) return 'unlimited';
-  if (user.trust_score >= 70) return 10;
-  return 2;
-}
-
-function getUserActiveListings(userId) {
-  return listings.filter(l => l.user_id === userId && l.status === 'active').length;
-}
-
-function canCreateListing(userId) {
-  const limit = getUserListingLimit(userId);
-  if (limit === 'unlimited') return { allowed: true };
-  const active = getUserActiveListings(userId);
-  return { allowed: active < limit, current: active, limit: limit };
-}
-
-// FAIR MARKET VALUE
+// Helper functions
 function calculateFairMarketValue(listing) {
   const similar = listings.filter(l => l.type === 'sell' && l.status === 'active' && l.id !== listing.id && l.category === listing.category && l.price > 0 && (l.tags || []).some(t => (listing.tags || []).includes(t)));
   if (similar.length === 0) return null;
   const prices = similar.map(l => l.price);
-  return { average: Math.round(prices.reduce((a, b) => a + b, 0) / prices.length), low: Math.min(...prices), high: Math.max(...prices), count: similar.length, similar: similar.map(s => ({ id: s.id, title: s.title, price: s.price, condition: s.condition })) };
+  return { average: Math.round(prices.reduce((a, b) => a + b, 0) / prices.length), low: Math.min(...prices), high: Math.max(...prices), count: similar.length };
 }
 
-// SMART NEGOTIATION AGENT
-function analyzeOffer(buyerOffer, listing, seller) {
-  const fmv = calculateFairMarketValue(listing);
-  const fmvAvg = fmv ? fmv.average : listing.price;
-  const percentBelowFmv = ((fmvAvg - buyerOffer) / fmvAvg) * 100;
-  let dealProbability = 50;
-  if (percentBelowFmv > 20) dealProbability += 20;
-  else if (percentBelowFmv > 10) dealProbability += 10;
-  else if (percentBelowFmv > 0) dealProbability += 5;
-  else if (percentBelowFmv < -10) dealProbability -= 15;
-  if (seller) { dealProbability += (seller.trust_score - 70) * 0.3; dealProbability += (seller.response_speed - 70) * 0.1; }
-  if (listing.condition === 'new') dealProbability += 5;
-  else if (listing.condition === 'like_new') dealProbability += 3;
-  dealProbability = Math.max(5, Math.min(95, Math.round(dealProbability)));
-  const suggestions = [];
-  suggestions.push({ type: 'fair', price: Math.round(fmvAvg * 0.95), message: 'Fair price - meets market value', confidence: 80 });
-  suggestions.push({ type: 'aggressive', price: Math.round(fmvAvg * 0.90), message: 'Strong negotiation - may lose buyer', confidence: 50 });
-  suggestions.push({ type: 'conservative', price: Math.round(fmvAvg * 0.98), message: 'Quick sale - motivated seller', confidence: 90 });
-  let recommended = suggestions[0];
-  if (dealProbability > 70) recommended = suggestions[2];
-  else if (dealProbability < 40) recommended = suggestions[1];
-  return { buyer_offer: buyerOffer, listing_price: listing.price, fair_market_value: fmvAvg, percent_below_fmv: Math.round(percentBelowFmv * 10) / 10, deal_probability: dealProbability, recommended_counter: recommended, suggestions: suggestions.sort((a, b) => b.confidence - a.confidence) };
-}
-
-// SELLER ANALYTICS
 function getSellerAnalytics(sellerId) {
   const sellerListings = listings.filter(l => l.user_id === sellerId && l.type === 'sell');
-  const categoryStats = {};
-  for (const l of sellerListings) {
-    if (!categoryStats[l.category]) categoryStats[l.category] = { count: 0, total_price: 0 };
-    categoryStats[l.category].count++;
-    categoryStats[l.category].total_price += l.price || 0;
-  }
-  const totalListings = sellerListings.length;
-  const avgPrice = totalListings > 0 ? Math.round(Object.values(categoryStats).reduce((a, c) => a + c.total_price, 0) / totalListings) : 0;
   const categoryDemand = {};
   for (const l of listings) { if (l.type === 'buy') categoryDemand[l.category] = (categoryDemand[l.category] || 0) + 1; }
-  const timeToSaleEstimate = { electronics: 5, furniture: 8, vehicles: 14, clothing: 6, books: 4, other: 7 };
-  const suggestedPricing = {};
-  for (const cat of Object.keys(categoryStats)) {
-    const catListings = listings.filter(l => l.category === cat && l.type === 'sell' && l.price > 0);
-    if (catListings.length > 0) {
-      const prices = catListings.map(l => l.price);
-      suggestedPricing[cat] = { min: Math.round(Math.min(...prices) * 0.9), optimal: Math.round(prices.reduce((a, b) => a + b, 0) / prices.length), max: Math.round(Math.max(...prices) * 1.1) };
-    }
-  }
   const boostScore = sellerListings.length > 0 ? Math.min(100, 50 + (categoryDemand[sellerListings[0].category] || 0) * 10) : 0;
-  return { seller_id: sellerId, user: users[sellerId] || null, total_listings: totalListings, total_active: sellerListings.filter(l => l.status === 'active').length, average_price: avgPrice, categories: categoryStats, demand_heat: categoryDemand, time_to_sale_estimate: timeToSaleEstimate, suggested_pricing: suggestedPricing, boost_score: boostScore };
+  return { seller_id: sellerId, user: users[sellerId] || null, total_listings: sellerListings.length, average_price: sellerListings.length > 0 ? Math.round(sellerListings.reduce((a, l) => a + (l.price || 0), 0) / sellerListings.length) : 0, demand_heat: categoryDemand, boost_score: boostScore };
 }
 
-// CATEGORY MATCHING
-function matchWithCategoryWeights(buy, sell) {
-  const weights = categoryWeights[sell.category] || categoryWeights.other;
-  const matchingTags = buy.tags.filter(t => sell.tags.includes(t));
-  const tagScore = matchingTags.length > 0 ? Math.min(weights.tag, matchingTags.length * (weights.tag / 3)) : 0;
-  let priceScore = 0;
-  if (sell.price >= (buy.budget_min || buy.min_price) && sell.price <= (buy.budget_max || buy.max_price)) priceScore = weights.price;
-  else if (sell.price > (buy.budget_max || buy.max_price)) priceScore = Math.max(0, weights.price - 20);
-  const locScore = getLocationScore(buy.zipcode || '10001', sell.zipcode || '10001');
-  let conditionScore = 0;
-  if (sell.condition === 'new') conditionScore = weights.condition;
-  else if (sell.condition === 'like_new') conditionScore = Math.round(weights.condition * 0.8);
-  else if (sell.condition === 'good') conditionScore = Math.round(weights.condition * 0.5);
-  const totalScore = tagScore + priceScore + locScore + conditionScore;
-  const maxScore = weights.tag + weights.price + 20 + weights.condition;
-  return { buyer_intent: buy, seller_listing: sell, score: Math.round(totalScore), max_score: maxScore, confidence: Math.round((totalScore / maxScore
+// ========== ROUTES ==========
+
+app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+
+// Listings
+app.get('/api/listings', (req, res) => {
+  const { type, status, category, zipcode, radius } = req.query;
+  let result = listings;
+  if (type) result = result.filter(l => l.type === type);
+  if (status) result = result.filter(l => l.status === status);
+  if (category) result = result.filter(l => l.category === category);
+  if (zipcode && radius) {
+    const maxDist = parseInt(radius);
+    result = result.filter(l =>, l.zipcode getDistance(zipcode) <= maxDist);
+  }
+  res.json(result);
+});
+
+app.get('/api/listings/:id', (req, res) => {
+  const listing = listings.find(l => l.id === req.params.id);
+  if (!listing) return res.status(404).json({ error: 'Not found' });
+  const fmv = listing.type === 'sell' ? calculateFairMarketValue(listing) : null;
+  res.json({ ...listing, fairMarketValue: fmv });
+});
+
+app.post('/api/listings', (req, res) => {
+  const { type, category, title, description, price, min_price, max_price, condition, location, zipcode, tags, image } = req.body;
+  if (!type || !category || !title) return res.status(400).json({ error: 'Type, category, title required' });
+  const listing = { id: String(listings.length + 1), user_id: 'user1', type, category, title, description: description || '', price: price || 0, min_price: min_price || 0, max_price: max_price || 0, condition: condition || null, location: location || '', zipcode: zipcode || '', status: 'active', tags: tags || [], image: image || null, created_at: new Date().toISOString() };
+  listings.push(listing);
+  res.status(201).json(listing);
+});
+
+// Users
+app.get('/api/users/:id', (req, res) => {
+  const user = users[req.params.id];
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.json(user);
+});
+
+// Fair Market Value
+app.get('/api/fair-market-value/:id', (req, res) => {
+  const listing = listings.find(l => l.id === req.params.id);
+  if (!listing) return res.status(404).json({ error: 'Not found' });
+  const fmv = calculateFairMarketValue(listing);
+  res.json(fmv || { error: 'No similar listings found' });
+});
+
+// Seller Analytics
+app.get('/api/analytics/:seller_id', (req, res) => {
+  res.json(getSellerAnalytics(req.params.seller_id));
+});
+
+// Offer Analysis
+app.post('/api/analyze-offer', (req, res) => {
+  const { offer_amount, listing_id } = req.body;
+  const listing = listings.find(l => l.id === listing_id);
+  if (!listing) return res.status(404).json({ error: 'Listing not found' });
+  const fmv = calculateFairMarketValue(listing);
+  const fmvAvg = fmv ? fmv.average : listing.price;
+  const percentBelowFmv = ((fmvAvg - offer_amount) / fmvAvg) * 100;
+  let dealProbability = 50 + (percentBelowFmv > 10 ? 15 : percentBelowFmv > 0 ? 5 : -10);
+  dealProbability = Math.max(5, Math.min(95, dealProbability));
+  res.json({ deal_probability: dealProbability, fair_market_value: fmvAvg, percent_below_fmv: Math.round(percentBelowFmv), recommended_counter: Math.round(fmvAvg * 0.95) });
+});
+
+// Conversations
+app.get('/api/conversations', (req, res) => {
+  const { user_id } = req.query;
+  let result = conversations;
+  if (user_id) result = conversations.filter(c => c.buyer_id === user_id || c.seller_id === user_id);
+  res.json(result);
+});
+
+app.post('/api/conversations', (req, res) => {
+  const { listing_id, buyer_id, seller_id, initial_message } = req.body;
+  if (!listing_id || !buyer_id || !seller_id) return res.status(400).json({ error: 'Required fields missing' });
+  const existing = conversations.find(c => c.listing_id === listing_id && c.buyer_id === buyer_id && c.seller_id === seller_id);
+  if (existing) return res.json(existing);
+  const conversation = { id: String(conversations.length + 1), listing_id, buyer_id, seller_id, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
+  conversations.push(conversation);
+  if (initial_message) {
+    messages.push({ id: String(messages.length + 1), conversation_id: conversation.id, sender_id: buyer_id, text: initial_message, created_at: new Date().toISOString() });
+  }
+  res.status(201).json(conversation);
+});
+
+// Messages
+app.get('/api/messages/:conversation_id', (req, res) => {
+  res.json(messages.filter(m => m.conversation_id === req.params.conversation_id));
+});
+
+app.post('/api/messages', (req, res) => {
+  const { conversation_id, sender_id, text } = req.body;
+  if (!conversation_id || !sender_id || !text) return res.status(400).json({ error: 'Required fields missing' });
+  const message = { id: String(messages.length + 1), conversation_id, sender_id, text, created_at: new Date().toISOString() };
+  messages.push(message);
+  res.status(201).json(message);
+});
+
+// Escrow
+app.post('/api/escrow/create', (req, res) => {
+  const { listing_id, buyer_id, seller_id, amount } = req.body;
+  const listing = listings.find(l => l.id === listing_id);
+  if (!listing) return res.status(404).json({ error: 'Listing not found' });
+  const escrow = { id: 'escrow_' + Date.now(), listing_id, listing_title: listing.title, buyer_id, seller_id, amount, platform_fee: Math.round(amount * 0.03), status: 'pending', created_at: new Date().toISOString(), timeline: [{ status: 'pending', note: 'Escrow created' }] };
+  escrows.push(escrow);
+  res.status(201).json(escrow);
+});
+
+app.get('/api/escrows/:user_id', (req, res) => {
+  res.json(escrows.filter(e => e.buyer_id === req.params.user_id || e.seller_id === req.params.user_id));
+});
+
+// Boost
+app.post('/api/boost/create', (req, res) => {
+  const { listing_id, seller_id, tier } = req.body;
+  const tiers = { basic: { price: 2.99, multiplier: 1.5, days: 7 }, premium: { price: 5.99, multiplier: 2.5, days: 14 }, featured: { price: 9.99, multiplier: 5, days: 30 } };
+  const t = tiers[tier] || tiers.basic;
+  const boost = { id: 'boost_' + Date.now(), listing_id, seller_id, tier: tier || 'basic', price: t.price, multiplier: t.multiplier, expires_at: new Date(Date.now() + t.days * 24 * 60 * 60 * 1000).toISOString() };
+  boosts.push(boost);
+  const listing = listings.find(l => l.id === listing_id);
+  if (listing) { listing.boost_score = t.multiplier; }
+  res.status(201).json(boost);
+});
+
+app.get('/api/boost/:listing_id', (req, res) => {
+  const boost = boosts.find(b => b.listing_id === req.params.listing_id && new Date(b.expires_at) > new Date());
+  res.json(boost || { boosted: false });
+});
+
+// Watchlist
+app.post('/api/watchlist/add', (req, res) => {
+  const { user_id, listing_id } = req.body;
+  if (watchlists.find(w => w.user_id === user_id && w.listing_id === listing_id)) return res.json({ exists: true });
+  watchlists.push({ id: 'watch_' + Date.now(), user_id, listing_id, added_at: new Date().toISOString() });
+  res.status(201).json({ success: true });
+});
+
+app.get('/api/watchlist/:user_id', (req, res) => {
+  const userWatches = watchlists.filter(w => w.user_id === req.params.user_id);
+  res.json(userWatches.map(w => ({ ...w, listing: listings.find(l => l.id === w.listing_id) })).filter(w => w.listing));
+});
+
+// Marketplace Health
+app.get('/api/health', (req, res) => {
+  const activeListings = listings.filter(l => l.status === 'active').length;
+  const activeSellers = new Set(listings.filter(l => l.type === 'sell').map(l => l.user_id)).size;
+  res.json({ health_score: Math.min(100, 50 + activeListings * 2 + activeSellers * 5), metrics: { total_listings: activeListings, active_sellers: activeSellers, total_users: Object.keys(users).length } });
+});
+
+const PORT2 = process.env.PORT || 3000;
+app.listen(PORT2, () => console.log(`Server running on http://localhost:${PORT2}`));
