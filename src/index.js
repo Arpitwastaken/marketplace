@@ -140,7 +140,7 @@ app.get('/api/listings', (req, res) => {
   if (category) result = result.filter(l => l.category === category);
   if (zipcode && radius) {
     const maxDist = parseInt(radius);
-    result = result.filter(l =>, l.zipcode getDistance(zipcode) <= maxDist);
+    result = result.filter(l => getDistance(zipcode, l.zipcode) <= maxDist);
   }
   res.json(result);
 });
