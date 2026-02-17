@@ -604,17 +604,50 @@
       <button class="btn btn-back" onclick="showListings()">← Back to listings</button>
       <div class="detail-view" style="margin-top:16px;">
         <h2>My Account</h2>
+        
+        <!-- Trust Score Card -->
         <div style="margin-top:16px;padding:16px;background:#e7f3e8;border-radius:8px;">
           <p><strong>Status:</strong> Logged in as <span id="accountUserName">User</span></p>
           <p style="margin-top:8px;"><strong>Trust Score:</strong> <span id="accountTrustScore">--</span></p>
+          <p style="margin-top:4px;font-size:12px;color:var(--text-secondary);">Your trust score affects listing limits and boost eligibility</p>
         </div>
+        
+        <!-- Seller Analytics -->
+        <div id="sellerAnalytics" style="margin-top:20px;display:none;">
+          <h3>📊 Seller Analytics</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
+            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
+              <div style="font-size:24px;font-weight:bold;color:var(--accent);" id="analyticsListings">0</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Listings</div>
+            </div>
+            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
+              <div style="font-size:24px;font-weight:bold;color:var(--green);" id="analyticsAvgPrice">$0</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Avg Price</div>
+            </div>
+            <div style="padding:16px;background:#f5f6f7;border-radius:8px;text-align:center;">
+              <div style="font-size:24px;font-weight:bold;color:var(--orange);" id="analyticsBoostScore">0</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Boost Score</div>
+            </div>
+          </div>
+          <div id="analyticsRecommendations" style="margin-top:12px;padding:12px;background:#fff4e5;border-radius:8px;font-size:13px;"></div>
+        </div>
+        
+        <!-- Your Listings -->
         <div style="margin-top:20px;">
           <h3>Your Listings</h3>
           <div id="accountListings" style="margin-top:12px;">Loading...</div>
         </div>
+        
+        <!-- Watchlist -->
         <div style="margin-top:20px;">
-          <h3>Messages</h3>
-          <p style="color:var(--text-secondary);font-size:14px;">Check if anyone has messaged you about your listings</p>
+          <h3>❤️ Watchlist</h3>
+          <div id="accountWatchlist" style="margin-top:12px;">Loading...</div>
+        </div>
+        
+        <!-- Messages -->
+        <div style="margin-top:20px;">
+          <h3>💬 Messages</h3>
+          <p style="color:var(--text-secondary);font-size:14px;">Check if anyone has messaged you</p>
           <div id="accountMessages" style="margin-top:12px;padding:16px;background:#f5f6f7;border-radius:8px;">
             <p>No new messages</p>
           </div>
@@ -726,6 +759,7 @@
               <div class="listing-title">${l.title}</div>
               <div class="listing-price">${priceDisplay}</div>
               <div class="listing-location">📍 ${l.location || 'Unknown'}</div>
+              <button onclick="event.stopPropagation(); toggleWatchlist('${l.id}')" style="margin-top:8px;padding:4px 8px;font-size:12px;background:none;border:1px solid var(--border);border-radius:4px;cursor:pointer;">❤️ Watch</button>
             </div>
           </div>
         `;
@@ -961,26 +995,105 @@
       }
     }
     
+    // Toggle watchlist
+    async function toggleWatchlist(listingId) {
+      try {
+        await fetch(API + '/watchlist/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: 'seller1', listing_id: listingId })
+        });
+        showToast('Added to watchlist!');
+      } catch (e) {
+        showToast('Failed to save');
+      }
+    }
+    
     // Show Account view
     async function showAccount() {
       document.getElementById('listingsView').style.display = 'none';
       document.getElementById('detailView').style.display = 'none';
       document.getElementById('accountView').style.display = 'block';
       
-      // Update nav to show Browse/Sell
       isLoggedIn = true;
       updateNavVisibility();
       
-      // Load user data
-      document.getElementById('accountUserName').textContent = 'seller1';
-      document.getElementById('accountTrustScore').textContent = '92';
+      const currentUserId = 'seller1'; // Mock user
+      
+      // Fetch user data
+      try {
+        const userRes = await fetch(API + '/users/' + currentUserId);
+        const user = await userRes.json();
+        document.getElementById('accountUserName').textContent = user.name || currentUserId;
+        document.getElementById('accountTrustScore').textContent = user.trust_score + '/100';
+      } catch (e) {
+        document.getElementById('accountTrustScore').textContent = '85/100';
+      }
+      
+      // Fetch seller analytics
+      try {
+        const analyticsRes = await fetch(API + '/analytics/' + currentUserId);
+        const analytics = await analyticsRes.json();
+        document.getElementById('sellerAnalytics').style.display = 'block';
+        document.getElementById('analyticsListings').textContent = analytics.total_listings || 0;
+        document.getElementById('analyticsAvgPrice').textContent = '$' + (analytics.average_price || 0);
+        document.getElementById('analyticsBoostScore').textContent = analytics.boost_score || 0;
+        if (analytics.boost_score > 60) {
+          document.getElementById('analyticsRecommendations').innerHTML = '🔥 Great time to boost your listings! High demand in your category.';
+        } else {
+          document.getElementById('analyticsRecommendations').innerHTML = '💡 Tip: Add more listings to increase your visibility.';
+        }
+      } catch (e) {
+        document.getElementById('sellerAnalytics').style.display = 'none';
+      }
       
       // Load user's listings
-      const myListings = allListings.filter(l => l.user_id === 'seller1');
-      const listingsHtml = myListings.length > 0 
-        ? myListings.map(l => `<div style="padding:8px;border-bottom:1px solid var(--border);">${l.title} - $${l.price || l.min_price}</div>`).join('')
-        : '<p>No listings yet</p>';
-      document.getElementById('accountListings').innerHTML = listingsHtml;
+      const myListings = allListings.filter(l => l.user_id === currentUserId);
+      if (myListings.length > 0) {
+        document.getElementById('accountListings').innerHTML = myListings.map(l => `
+          <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:600;">${l.title}</div>
+              <div style="font-size:13px;color:var(--text-secondary);">$${l.price || l.min_price} · ${l.condition || 'N/A'}</div>
+            </div>
+            <button onclick="boostListing('${l.id}')" style="padding:6px 12px;background:var(--accent);color:white;border:none;border-radius:4px;cursor:pointer;font-size:12px;">Boost</button>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('accountListings').innerHTML = '<p>No listings yet</p>';
+      }
+      
+      // Load watchlist
+      try {
+        const watchRes = await fetch(API + '/watchlist/' + currentUserId);
+        const watchlist = await watchRes.json();
+        if (watchlist.length > 0) {
+          document.getElementById('accountWatchlist').innerHTML = watchlist.map(w => `
+            <div style="padding:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;">
+              <span>${w.listing?.title || 'Unknown'}</span>
+              <span style="color:var(--green);">$${w.listing?.price || w.listing?.min_price || 0}</span>
+            </div>
+          `).join('');
+        } else {
+          <div id="accountWatchlist">No saved items</div>
+        }
+      } catch (e) {
+        document.getElementById('accountWatchlist').innerHTML = '<p>No saved items</p>';
+      }
+    }
+    
+    // Boost a listing
+    async function boostListing(listingId) {
+      try {
+        await fetch(API + '/boost/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ listing_id: listingId, seller_id: 'seller1', tier: 'basic' })
+        });
+        showToast('Listing boosted for 7 days!');
+      } catch (e) {
+        showToast('Boost failed');
+      }
     }
     
     // Init
