@@ -658,7 +658,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API = 'http://localhost:3001/api';
+    const API = 'http://localhost:3000/api';
     let allListings = [];
     let currentFilter = 'all';
     let searchQuery = '';
@@ -686,10 +686,10 @@
     
     // Get badge for listing
     function getListingBadge(listing) {
-      if (listing.boost_score) return '<span class="card-badge badge-boosted">⚡ Boosted</span>';
+      if (listing.boost_score) return '<span class="card-badge badge-boosted">Boosted</span>';
       
       const daysSinceListed = Math.floor((Date.now() - new Date(listing.created_at)) / (1000 * 60 * 60 * 24));
-      if (daysSinceListed < 2) return '<span class="card-badge badge-new">🆕 New</span>';
+      if (daysSinceListed < 2) return '<span class="card-badge badge-new">New</span>';
       
       return '';
     }
