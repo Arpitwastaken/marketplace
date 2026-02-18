@@ -625,9 +625,297 @@
     .nav-link:hover { color: var(--accent); }
     
     .logo:hover { transform: scale(1.05); text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+    
+    /* ========== ONBOARDING SCREEN ========== */
+    .onboarding-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b4e 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.5s ease;
+    }
+    .onboarding-overlay.hidden { display: none; }
+    
+    .onboarding-card {
+      background: white;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 500px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      animation: scaleIn 0.5s ease;
+    }
+    
+    .onboarding-progress {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e5e5e5;
+      transition: all 0.3s;
+    }
+    .progress-dot.active {
+      background: var(--accent);
+      width: 30px;
+      border-radius: 5px;
+    }
+    
+    .onboarding-step {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+    .onboarding-step.active { display: block; }
+    
+    .onboarding-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .onboarding-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    
+    .onboarding-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    
+    .feature-list {
+      text-align: left;
+      margin: 20px 0;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f8ff;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+    }
+    .feature-item:hover {
+      transform: translateX(8px);
+      background: #f0f0ff;
+    }
+    .feature-icon {
+      font-size: 24px;
+    }
+    .feature-text {
+      font-size: 15px;
+      font-weight: 500;
+    }
+    
+    .signup-form {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: white;
+      cursor: pointer;
+    }
+    
+    .btn-onboarding {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    
+    .trust-preview {
+      display: flex;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .trust-card {
+      flex: 1;
+      padding: 16px;
+      background: #f8f8ff;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .trust-score {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .trust-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .onboarding-skip {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .onboarding-skip:hover { opacity: 1; }
+    
+    .welcome-animation {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0); opacity: 1; }
+      100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+    }
+    .confetti {
+      position: absolute;
+      font-size: 24px;
+      animation: confetti 1s ease-out forwards;
+    }
   </style>
 </head>
 <body>
+  <!-- ONBOARDING SCREEN -->
+  <div class="onboarding-overlay" id="onboarding">
+    <div class="onboarding-card">
+      <button class="onboarding-skip" onclick="skipOnboarding()">Skip →</button>
+      
+      <!-- Progress -->
+      <div class="onboarding-progress">
+        <div class="progress-dot active" id="dot1"></div>
+        <div class="progress-dot" id="dot2"></div>
+        <div class="progress-dot" id="dot3"></div>
+        <div class="progress-dot" id="dot4"></div>
+      </div>
+      
+      <!-- Step 1: Welcome -->
+      <div class="onboarding-step active" id="step1">
+        <div class="onboarding-icon">🛒</div>
+        <h2 class="onboarding-title">Welcome to Marketplace</h2>
+        <p class="onboarding-desc">The smartest way to buy and sell. Connect with verified sellers, negotiate with AI assistance, and discover fair deals.</p>
+        <button class="btn btn-primary btn-onboarding" onclick="nextStep(2)">Discover How →</button>
+      </div>
+      
+      <!-- Step 2: Buy & Sell -->
+      <div class="onboarding-step" id="step2">
+        <div class="onboarding-icon">💰</div>
+        <h2 class="onboarding-title">Buy & Sell Smarter</h2>
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="feature-icon">🔍</span>
+            <span class="feature-text">Smart matching finds what you need</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🤖</span>
+            <span class="feature-text">AI negotiation for the best deals</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📊</span>
+            <span class="feature-text">Fair Market Value calculations</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-onboarding" onclick="nextStep(3)">Next →</button>
+      </div>
+      
+      <!-- Step 3: Trust System -->
+      <div class="onboarding-step" id="step3">
+        <div class="onboarding-icon">🛡️</div>
+        <h2 class="onboarding-title">Trade with Confidence</h2>
+        <p class="onboarding-desc">Every seller has a Trust Score based on reviews, response time, and completed deals.</p>
+        <div class="trust-preview">
+          <div class="trust-card">
+            <div class="trust-score">92</div>
+            <div class="trust-label">Tech Trader</div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-score">78</div>
+            <div class="trust-label">Gadget Guy</div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-score">95</div>
+            <div class="trust-label">Gamer Store</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-onboarding" onclick="nextStep(4)">See for yourself →</button>
+      </div>
+      
+      <!-- Step 4: Sign Up -->
+      <div class="onboarding-step" id="step4">
+        <div class="onboarding-icon">🎉</div>
+        <h2 class="onboarding-title">Join the Marketplace</h2>
+        <p class="onboarding-desc">Create your account in seconds and start trading immediately.</p>
+        <div class="signup-form">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" id="signupName" placeholder="Enter your name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">What do you want to do?</label>
+            <select class="form-select" id="signupType">
+              <option value="">Select...</option>
+              <option value="buy">Buy stuff</option>
+              <option value="sell">Sell stuff</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-input" id="signupLocation" placeholder="City or Zipcode" />
+          </div>
+        </div>
+        <button class="btn btn-primary btn-onboarding" onclick="completeSignup()">Create Account →</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="header">
     <div class="header-content">
@@ -745,14 +1033,112 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ========== ONBOARDING ==========
+    let currentStep = 1;
+    let userProfile = null;
+    
+    function nextStep(step) {
+      document.getElementById('step' + currentStep).classList.remove('active');
+      document.getElementById('dot' + currentStep).classList.remove('active');
+      
+      currentStep = step;
+      
+      document.getElementById('step' + currentStep).classList.add('active');
+      document.getElementById('dot' + currentStep).classList.add('active');
+    }
+    
+    function skipOnboarding() {
+      document.getElementById('onboarding').classList.add('hidden');
+      localStorage.setItem('onboardingComplete', 'true');
+    }
+    
+    function completeSignup() {
+      const name = document.getElementById('signupName').value.trim();
+      const type = document.getElementById('signupType').value;
+      const location = document.getElementById('signupLocation').value.trim();
+      
+      if (!name) {
+        showToast('Please enter your name');
+        return;
+      }
+      if (!type) {
+        showToast('Please select what you want to do');
+        return;
+      }
+      
+      // Create user profile
+      userProfile = {
+        name: name,
+        type: type,
+        location: location,
+        trust_score: 100,
+        initials: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2)
+      };
+      
+      // Save to localStorage
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
+      localStorage.setItem('onboardingComplete', 'true');
+      
+      // Show celebration
+      showConfetti();
+      
+      setTimeout(() => {
+        document.getElementById('onboarding').classList.add('hidden');
+        showToast('Welcome to Marketplace, ' + name + '!');
+        updateHeaderForUser();
+      }, 1500);
+    }
+    
+    function showConfetti() {
+      const emojis = ['🎉', '🎊', '✨', '🌟', '💫'];
+      const card = document.querySelector('.onboarding-card');
+      for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = Math.random() * 50 + '%';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        card.appendChild(confetti);
+      }
+    }
+    
+    function checkOnboarding() {
+      if (localStorage.getItem('onboardingComplete') === 'true') {
+        document.getElementById('onboarding').classList.add('hidden');
+        const saved = localStorage.getItem('userProfile');
+        if (saved) {
+          userProfile = JSON.parse(saved);
+          updateHeaderForUser();
+        }
+      }
+    }
+    
+    function updateHeaderForUser() {
+      if (userProfile) {
+        const right = document.querySelector('.header-right');
+        right.innerHTML = `
+          <a href="#" class="nav-link" id="navBrowse">Browse</a>
+          <a href="#" class="nav-link" id="navSell">Sell</a>
+          <a href="#" class="nav-link" onclick="showAccount()">
+            <span style="display:inline-flex;width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#818cf8);border-radius:50%;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:600;">${userProfile.initials}</span>
+          </a>
+        `;
+      }
+    }
+    
+    // ========== MAIN APP ==========
     const API = 'http://localhost:3000/api';
     let allListings = [];
     let currentFilter = 'all';
     let searchQuery = '';
     let selectedListing = null;
     
-    // Mock current user
-    const currentUser = 'seller1';
+    // Check onboarding on load
+    checkOnboarding();
+    
+    // Mock current user (or use profile)
+    let currentUser = userProfile ? null : 'seller1';
     const users = {
       'seller1': { name: 'Tech Trader', trust: 92, initials: 'TT' },
       'seller2': { name: 'Gadget Guy', trust: 78, initials: 'GG' },
