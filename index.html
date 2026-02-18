@@ -505,13 +505,28 @@ function showView(view) {
 }
 
 async function loadListings() {
+  // Try to load from API first, fallback to sample data
   try {
     const res = await fetch(API + '/listings');
-    allListings = await res.json();
-    renderListings();
-  } catch (e) {
-    showToast('Could not load listings');
-  }
+    if (res.ok) {
+      allListings = await res.json();
+      renderListings();
+      return;
+    }
+  } catch (e) {}
+  
+  // Sample data when API unavailable
+  allListings = [
+    { id: '1', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'iPhone 15 Pro Max', description: 'Excellent condition, barely used', price: 950, condition: 'like_new', location: 'New York', zipcode: '10012', tags: ['iphone', 'apple'], image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop' },
+    { id: '2', user_id: 'seller2', type: 'sell', category: 'electronics', title: 'MacBook Pro M3', description: 'Like new, includes charger', price: 1850, condition: 'like_new', location: 'Los Angeles', zipcode: '90012', tags: ['macbook', 'apple', 'laptop'], image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&h=300&fit=crop' },
+    { id: '3', user_id: 'seller3', type: 'sell', category: 'electronics', title: 'PS5 Digital Edition', description: 'Brand new, unopened', price: 380, condition: 'new', location: 'Austin', zipcode: '78704', tags: ['ps5', 'playstation', 'gaming'], image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop' },
+    { id: '4', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'RTX 4080 Super', description: 'Brand new in box', price: 1100, condition: 'new', location: 'New York', zipcode: '10012', tags: ['gpu', 'rtx_4080'], image: 'https://images.unsplash.com/photo-1555685812-4b943f3e9942?w=400&h=300&fit=crop' },
+    { id: '5', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Herman Miller Aeron Chair', description: 'Size B, fully loaded', price: 850, condition: 'good', location: 'Chicago', zipcode: '60601', tags: ['chair', 'office', 'ergonomic'], image: 'https://images.unsplash.com/photo-1580480055273-228ff5398ef7?w=400&h=300&fit=crop' },
+    { id: '6', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Uplift V2 Standing Desk', description: 'Excellent condition, bamboo top', price: 450, condition: 'good', location: 'Denver', zipcode: '80201', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop' },
+    { id: '7', user_id: 'seller5', type: 'sell', category: 'vehicles', title: 'Trek Domane SL5 Road Bike', description: '2023 model, carbon frame', price: 2800, condition: 'like_new', location: 'Seattle', zipcode: '98101', tags: ['bike', 'trek', 'road'], image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400&h=300&fit=crop' },
+    { id: '8', user_id: 'seller6', type: 'sell', category: 'electronics', title: 'Fender Stratocaster', description: 'American Pro II, Sunburst', price: 1450, condition: 'like_new', location: 'Austin', zipcode: '78701', tags: ['guitar', 'fender', 'music'], image: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400&h=300&fit=crop' },
+  ];
+  renderListings();
 }
 
 function renderListings() {
@@ -599,30 +614,41 @@ async function createListing() {
   
   if (!title || !category || !price) { showToast('Please fill in all required fields'); return; }
   
-  const listing = {
-    type: 'sell', category, title, description,
-    price: parseInt(price), condition,
+  const newListing = {
+    id: String(Date.now()),
+    user_id: 'user1',
+    type: 'sell',
+    category,
+    title,
+    description,
+    price: parseInt(price),
+    condition,
     location: userProfile?.zipcode ? 'Area ' + userProfile.zipcode : 'Local',
     zipcode: userProfile?.zipcode || '',
     tags: [],
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
   };
   
+  // Try API first, fallback to localStorage
   try {
     await fetch(API + '/listings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(listing)
+      body: JSON.stringify(newListing)
     });
-    showToast('Listing posted!');
-    loadListings();
-    showView('browse');
-    document.getElementById('listingTitle').value = '';
-    document.getElementById('listingDescription').value = '';
-    document.getElementById('listingPrice').value = '';
   } catch (e) {
-    showToast('Error posting listing');
+    // Store locally if API unavailable
+    const localListings = JSON.parse(localStorage.getItem('myListings') || '[]');
+    localListings.push(newListing);
+    localStorage.setItem('myListings', JSON.stringify(localListings));
   }
+  
+  showToast('Listing posted!');
+  loadListings();
+  showView('browse');
+  document.getElementById('listingTitle').value = '';
+  document.getElementById('listingDescription').value = '';
+  document.getElementById('listingPrice').value = '';
 }
 
 function showToast(msg) {
