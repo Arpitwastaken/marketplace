@@ -8,20 +8,20 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #f8f9fa;
-      --bg-white: #ffffff;
-      --text: #1a1a1a;
+      --bg: #09090b;
+      --bg-white: #18181b;
+      --text: #09090b;
       --text-secondary: #5a5a5a;
       --text-light: #888888;
-      --border: #e5e5e5;
-      --accent: #f59e0b;
+      --border: #27272a;
+      --accent: #3b82f6;
       --accent-hover: #d97706;
       --accent-light: #fef3c7;
       --green: #10b981;
       --green-light: #d1fae5;
-      --red: #ef4444;
+      --red: #ec4899;
       --red-light: #fee2e2;
-      --orange: #f97316;
+      --orange: #6366f1;
       --purple: #8b5cf6;
     }
     body {
@@ -523,7 +523,7 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #1a1a1a;
+      background: #09090b;
       color: white;
       padding: 14px 24px;
       border-radius: 12px;
@@ -622,7 +622,7 @@
     .video-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
     .video-badge::before { content:'▶'; font-size: 8px; }
     
-    .deal-meter { height: 8px; background: #e5e5e5; border-radius: 4px; overflow: hidden; }
+    .deal-meter { height: 8px; background: #27272a; border-radius: 4px; overflow: hidden; }
     .deal-meter-fill { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); background: linear-gradient(90deg, var(--red), var(--orange), var(--green)); }
     
     .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -664,7 +664,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(-45deg, #0f0f23, #1e1b4b, #312e81, #4f46e5, #f59e0b);
+      background: linear-gradient(-45deg, #0f0f23, #1e1b4b, #312e81, #4f46e5, #3b82f6);
       background-size: 400% 400%;
       animation: gradientMove 15s ease infinite;
       z-index: 9999;
@@ -676,7 +676,7 @@
     .onboarding-overlay.hidden { display: none; }
     
     .onboarding-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(24, 24, 27, 0.95);
       backdrop-filter: blur(20px);
       border-radius: 32px;
       width: 100%;
@@ -699,7 +699,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #e5e5e5;
+      background: #27272a;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
@@ -738,7 +738,7 @@
       font-size: 36px;
       font-weight: 800;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, #1e1b4b, #f59e0b);
+      background: linear-gradient(135deg, #1e1b4b, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -747,7 +747,7 @@
     
     .onboarding-desc {
       font-size: 18px;
-      color: #6b7280;
+      color: #a1a1aa;
       line-height: 1.7;
       margin-bottom: 32px;
     }
@@ -761,7 +761,7 @@
       align-items: center;
       gap: 16px;
       padding: 16px 20px;
-      background: linear-gradient(135deg, #f8f7ff, #eeedfc);
+      background: linear-gradient(135deg, #27272a, #3f3f46);
       border-radius: 16px;
       margin-bottom: 12px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -773,7 +773,7 @@
     .feature-item:nth-child(3) { animation-delay: 0.3s; }
     .feature-item:hover {
       transform: translateX(8px) scale(1.02);
-      background: linear-gradient(135deg, #f0f0ff, #e0e0ff);
+      background: linear-gradient(135deg, #52525b, #6366f1);
       border-color: rgba(99, 102, 241, 0.3);
       box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
     }
@@ -784,7 +784,7 @@
     .feature-text {
       font-size: 16px;
       font-weight: 600;
-      color: #374151;
+      color: #e4e4e7;
     }
     
     .signup-form {
@@ -799,18 +799,18 @@
       font-size: 14px;
       font-weight: 700;
       margin-bottom: 10px;
-      color: #374151;
+      color: #e4e4e7;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .form-input {
       width: 100%;
       padding: 16px 20px;
-      border: 2px solid #e5e5e5;
+      border: 2px solid #27272a;
       border-radius: 14px;
       font-size: 16px;
       transition: all 0.3s;
-      background: #fafafa;
+      background: #0a0a0a;
     }
     .form-input:focus {
       outline: none;
@@ -820,15 +820,15 @@
       transform: translateY(-2px);
     }
     .form-input::placeholder {
-      color: #9ca3af;
+      color: #71717a;
     }
     .form-select {
       width: 100%;
       padding: 16px 20px;
-      border: 2px solid #e5e5e5;
+      border: 2px solid #27272a;
       border-radius: 14px;
       font-size: 16px;
-      background: #fafafa;
+      background: #0a0a0a;
       cursor: pointer;
       transition: all 0.3s;
     }
@@ -870,10 +870,10 @@
     .trust-card {
       flex: 1;
       padding: 20px;
-      background: linear-gradient(135deg, #f8f7ff, #f0f0ff);
+      background: linear-gradient(135deg, #27272a, #52525b);
       border-radius: 16px;
       text-align: center;
-      border: 1px solid #e5e5e5;
+      border: 1px solid #27272a;
       transition: all 0.3s;
     }
     .trust-card:hover {
@@ -891,7 +891,7 @@
     }
     .trust-label {
       font-size: 13px;
-      color: #6b7280;
+      color: #a1a1aa;
       font-weight: 600;
       margin-top: 4px;
     }
@@ -902,7 +902,7 @@
       right: 20px;
       background: rgba(0,0,0,0.05);
       border: none;
-      color: #6b7280;
+      color: #a1a1aa;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
@@ -912,7 +912,7 @@
     }
     .onboarding-skip:hover {
       background: rgba(0,0,0,0.1);
-      color: #374151;
+      color: #e4e4e7;
     }
     
     .welcome-animation {
@@ -934,7 +934,7 @@
     /* Step indicator text */
     .step-indicator {
       font-size: 13px;
-      color: #9ca3af;
+      color: #71717a;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -943,7 +943,7 @@
     }
     .feature-item:hover {
       transform: translateX(8px);
-      background: #f0f0ff;
+      background: #52525b;
     }
     .feature-icon {
       font-size: 24px;
