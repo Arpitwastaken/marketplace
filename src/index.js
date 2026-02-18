@@ -9,6 +9,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('../'));
 
+// Serve index.html at root
+app.get('/', (req, res) => {
+  res.sendFile('../index.html', { root: __dirname });
+});
+
 // Zipcode mapping
 const zipcodeCoords = {
   '10001': { city: 'New York', lat: 40.7501, lng: -73.9971 },
