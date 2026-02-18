@@ -3,1679 +3,644 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace - Buy & Sell Near You</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #09090b;
-      --bg-white: #18181b;
-      --text: #09090b;
-      --text-secondary: #5a5a5a;
-      --text-light: #888888;
-      --border: #27272a;
-      --accent: #3b82f6;
-      --accent-hover: #d97706;
-      --accent-light: #fef3c7;
-      --green: #10b981;
-      --green-light: #d1fae5;
-      --red: #ec4899;
-      --red-light: #fee2e2;
-      --orange: #6366f1;
-      --purple: #8b5cf6;
+      --bg: #000000;
+      --surface: #1c1c1e;
+      --surface-secondary: #2c2c2e;
+      --surface-tertiary: #3a3a3c;
+      --text: #ffffff;
+      --text-secondary: #8e8e93;
+      --text-tertiary: #636366;
+      --accent: #0a84ff;
+      --green: #30d158;
+      --orange: #ff9f0a;
+      --red: #ff453a;
+      --purple: #bf5af2;
+      --border: #38383a;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
       background: var(--bg);
       color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    
-    /* Header */
+    a { color: var(--accent); text-decoration: none; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     .header {
-      background: var(--bg-white);
-      border-bottom: 1px solid var(--border);
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-    }
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .logo {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: -0.5px;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
-    .nav-link:hover {
-      background: var(--bg);
-      color: var(--text);
-    }
-    
-    /* MReal Peoplen ContReal Peoplener */
-    .contReal Peoplener {
-      max-width: 1200px;
-      margin: 84px auto 40px;
       padding: 0 24px;
     }
-    
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, var(--accent) 0%, #fbbf24 100%);
-      border-radius: 16px;
-      padding: 40px;
-      margin-bottom: 32px;
-      color: white;
-    }
-    .hero h1 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .hero p {
-      opacity: 0.9;
-      font-size: 16px;
-    }
-    
-    /* Search */
-    .search-section {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .search-input {
-      flex: 1;
-      min-width: 280px;
-      padding: 14px 20px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 15px;
-      background: var(--bg-white);
+    .logo { font-size: 20px; font-weight: 600; color: var(--text); }
+    .header-nav { display: flex; gap: 8px; }
+    .nav-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
       transition: all 0.2s;
     }
-    .search-input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    .nav-btn:hover { color: var(--text); background: var(--surface); }
+    .nav-btn.active { color: var(--accent); }
+    .main {
+      padding-top: 80px;
+      padding-bottom: 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
     }
-    .filter-select {
-      padding: 14px 20px;
+    .hero {
+      background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #8e8e93 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 17px; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+    .search-container { display: flex; gap: 12px; margin-bottom: 24px; }
+    .search-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 14px;
-      background: var(--bg-white);
-      cursor: pointer;
-      min-width: 140px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      color: var(--text);
+      transition: all 0.2s;
     }
-    
-    /* Category Pills */
+    .search-input::placeholder { color: var(--text-tertiary); }
+    .search-input:focus { outline: none; border-color: var(--accent); background: var(--surface-secondary); }
     .categories {
       display: flex;
       gap: 10px;
       margin-bottom: 28px;
-      flex-wrap: wrap;
+      overflow-x: auto;
+      padding-bottom: 8px;
     }
+    .categories::-webkit-scrollbar { display: none; }
     .category-pill {
-      padding: 10px 18px;
-      background: var(--bg-white);
+      padding: 12px 20px;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .category-pill:hover {
-      border-color: var(--accent);
-      background: rgba(99, 102, 241, 0.05);
-    }
-    .category-pill.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-    .category-icon {
-      font-size: 16px;
-    }
-    
-    /* Listings Grid - Card Style */
-    .listings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
-    
-    .listing-card {
-      background: var(--bg-white);
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border: 1px solid var(--border);
-    }
-    .listing-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-    }
-    
-    .card-image {
-      position: relative;
-      height: 180px;
-      background: #f0f0f0;
-      overflow: hidden;
-    }
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .card-image video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .listing-card:hover .card-image img {
-      transform: scale(1.05);
-    }
-    .card-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .badge-hot {
-      background: var(--red);
-      color: white;
-    }
-    .badge-new {
-      background: var(--green);
-      color: white;
-    }
-    .badge-great {
-      background: var(--orange);
-      color: white;
-    }
-    .badge-boosted {
-      background: var(--purple);
-      color: white;
-    }
-    .badge-nearby {
-      background: var(--green);
-      color: white;
-    }
-    .card-save {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.9);
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    .card-save:hover {
-      transform: scale(1.1);
-      background: white;
-    }
-    .card-save.saved {
-      color: var(--red);
-    }
-    
-    .card-content {
-      padding: 16px;
-    }
-    .card-price {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .card-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin: 6px 0 4px;
-      color: var(--text);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-    .card-location {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      color: var(--text-light);
-    }
-    
-    .card-seller {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-    .seller-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #fbbf24);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .seller-info {
-      flex: 1;
-    }
-    .seller-name {
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .seller-trust {
-      font-size: 11px;
-      color: var(--green);
-    }
-    
-    /* DetReal Peoplel View */
-    .detReal Peoplel-view {
-      background: var(--bg-white);
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .detReal Peoplel-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-    .detReal Peoplel-image {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: 16px;
-    }
-    .detReal Peoplel-image video {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: 16px;
-    }
-    .detReal Peoplel-info {
-      padding: 8px 0;
-    }
-    .detReal Peoplel-price {
-      font-size: 36px;
-      font-weight: 700;
-    }
-    .detReal Peoplel-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 12px 0;
-    }
-    .detReal Peoplel-condition {
-      display: inline-block;
-      padding: 6px 14px;
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--green);
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .detReal Peoplel-desc {
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    
-    .detReal Peoplel-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
-    .btn {
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-    .btn-primary:hover {
-      background: var(--accent-hover);
-    }
-    .btn-secondary {
-      background: var(--bg);
-      color: var(--text);
-    }
-    .btn-secondary:hover {
-      background: var(--border);
-    }
-    
-    /* FMV Box */
-    .fmv-box {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    .fmv-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--green);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .fmv-values {
-      display: flex;
-      gap: 24px;
-    }
-    .fmv-item {
-      text-align: center;
-    }
-    .fmv-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .fmv-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    
-    /* Account View */
-    .account-header {
-      background: var(--bg-white);
-      border-radius: 20px;
-      padding: 32px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    .account-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #fbbf24);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      color: white;
-      font-weight: 700;
-    }
-    .account-info h2 {
-      font-size: 24px;
-      font-weight: 700;
-    }
-    .trust-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--green);
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 8px;
-    }
-    
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    .stat-card {
-      background: var(--bg-white);
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-    }
-    .stat-value {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
-    
-    /* Section Headers */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .section-title {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: #09090b;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 12px;
       font-size: 14px;
       font-weight: 500;
-      z-index: 1000;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .category-pill:hover { background: var(--surface-secondary); color: var(--text); }
+    .category-pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .listing-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      animation: fadeInUp 0.4s ease backwards;
+    }
+    .listing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .card-image { position: relative; height: 200px; background: var(--surface-secondary); overflow: hidden; }
+    .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .listing-card:hover .card-image img { transform: scale(1.05); }
+    .card-badge { position: absolute; top: 12px; left: 12px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .badge-new { background: var(--green); color: black; }
+    .badge-hot { background: var(--red); color: white; }
+    .badge-nearby { background: var(--accent); color: white; }
+    .card-content { padding: 16px; }
+    .card-price { font-size: 24px; font-weight: 700; color: var(--text); }
+    .card-title { font-size: 16px; font-weight: 600; margin: 8px 0 4px; color: var(--text); }
+    .card-meta { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
+    .seller-info { display: flex; align-items: center; gap: 10px; }
+    .seller-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: white;
+    }
+    .seller-name { font-size: 14px; font-weight: 500; }
+    .seller-rating { font-size: 13px; color: var(--green); }
+    .onboarding {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.4s ease;
+    }
+    .onboarding.hidden { display: none; }
+    .onboarding-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      width: 100%; max-width: 440px;
+      padding: 40px;
+      text-align: center;
+      animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+    .onboarding-icon { font-size: 64px; margin-bottom: 20px; }
+    .onboarding-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .onboarding-desc { font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .onboarding-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
+    .progress-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-tertiary); transition: all 0.3s; }
+    .progress-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
+    .onboarding-step { display: none; animation: fadeInUp 0.4s ease; }
+    .onboarding-step.active { display: block; }
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
+    .form-input {
+      width: 100%; padding: 16px;
+      background: var(--surface-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 16px; color: var(--text);
+      transition: all 0.2s;
+    }
+    .form-input:focus { outline: none; border-color: var(--accent); }
+    .form-select {
+      width: 100%; padding: 16px;
+      background: var(--surface-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 16px; color: var(--text);
+      cursor: pointer;
+    }
+    .btn {
+      padding: 16px 32px;
+      border-radius: var(--radius-md);
+      font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #409cff; }
+    .btn-secondary { background: var(--surface-tertiary); color: var(--text); }
+    .btn-secondary:hover { background: var(--surface-secondary); }
+    .btn-full { width: 100%; }
+    .detail-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .detail-overlay.active { display: flex; }
+    .detail-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      width: 100%; max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: scaleIn 0.3s ease;
+      position: relative;
+    }
+    .detail-image { width: 100%; height: 350px; object-fit: cover; }
+    .detail-content { padding: 32px; }
+    .detail-price { font-size: 36px; font-weight: 700; }
+    .detail-title { font-size: 24px; font-weight: 600; margin: 12px 0; }
+    .detail-condition {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--green);
+      color: black;
+      border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+    }
+    .detail-desc { font-size: 16px; color: var(--text-secondary); margin: 20px 0; line-height: 1.7; }
+    .detail-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .detail-actions .btn { flex: 1; }
+    .close-btn {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .create-listing { background: var(--surface); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 32px; }
+    .create-listing h2 { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+    .image-upload {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 48px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .image-upload:hover { border-color: var(--accent); background: var(--surface-secondary); }
+    .image-upload-icon { font-size: 48px; margin-bottom: 12px; }
+    .toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--surface-secondary);
+      color: var(--text);
+      padding: 16px 24px;
+      border-radius: var(--radius-md);
+      font-size: 15px; font-weight: 500;
+      z-index: 10000;
       opacity: 0;
       transition: all 0.3s;
     }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-    
-    /* Loading */
-    .loading {
-      text-align: center;
-      padding: 60px;
-      color: var(--text-secondary);
-    }
-    
-    /* Responsive */
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-icon { font-size: 64px; margin-bottom: 16px; }
+    .empty-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .empty-desc { font-size: 15px; color: var(--text-secondary); }
     @media (max-width: 768px) {
-      .detReal Peoplel-header {
-        grid-template-columns: 1fr;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .header {
-        padding: 0 16px;
-      }
-      .contReal Peoplener {
-        padding: 0 16px;
-      }
-      .listings-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 12px;
-      }
-      .card-image {
-        height: 140px;
-      }
-    }
-    
-    /* ========== REMOTION ANIMATIONS ========== */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    
-    .stagger-1 { animation-delay: 0.05s; }
-    .stagger-2 { animation-delay: 0.1s; }
-    .stagger-3 { animation-delay: 0.15s; }
-    .stagger-4 { animation-delay: 0.2s; }
-    .stagger-5 { animation-delay: 0.25s; }
-    .stagger-6 { animation-delay: 0.3s; }
-    
-    .listing-card {
-      animation: fadeInUp 0.4s ease-out both;
-    }
-    .listing-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
-    }
-    
-    .category-pill:hover { transform: scale(1.05); }
-    .category-pill.active { transform: scale(1.05); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
-    
-    .hero { animation: fadeInUp 0.6s ease-out; }
-    .hero::before { content:''; position:absolute; top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,0.1)0%,transparent 70%);animation:float 6s ease-in-out infinite; }
-    .hero h1 { animation: fadeInUp 0.6s ease-out 0.1s both; }
-    .hero p { animation: fadeInUp 0.6s ease-out 0.2s both; }
-    
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); }
-    .btn:active { transform: translateY(0); }
-    
-    .card-save { opacity: 0; transition: all 0.3s; }
-    .listing-card:hover .card-save { opacity: 1; }
-    .card-save:hover { transform: scale(1.15) rotate(15deg); }
-    .card-save.saved { animation: pulse 0.5s ease; }
-    
-    .detReal Peoplel-view { animation: scaleIn 0.4s ease-out; }
-    .account-header { animation: fadeInUp 0.5s ease-out; }
-    .account-avatar { animation: float 3s ease-in-out infinite; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
-    .stat-card { animation: fadeInUp 0.4s ease-out both; }
-    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
-    .stat-card:hover .stat-value { transform: scale(1.1); }
-    
-    .search-input:focus { transform: translateY(-2px); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 0 8px 20px rgba(99, 102, 241, 0.1); }
-    
-    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-    
-    .video-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
-    .video-badge::before { content:'▶'; font-size: 8px; }
-    
-    .deal-meter { height: 8px; background: #27272a; border-radius: 4px; overflow: hidden; }
-    .deal-meter-fill { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); background: linear-gradient(90deg, var(--red), var(--orange), var(--green)); }
-    
-    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
-    
-    .nav-link::after { content:''; position:absolute; bottom:4px;left:12px;right:12px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 0.3s; }
-    .nav-link:hover::after { transform: scaleX(1); }
-    .nav-link:hover { color: var(--accent); }
-    
-    .logo:hover { transform: scale(1.05); text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
-    
-    /* ========== PREMIUM ONBOARDING (Cruip-style) ========== */
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes float3D {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-10px) rotate(2deg); }
-      75% { transform: translateY(5px) rotate(-1deg); }
-    }
-    @keyframes iconPop {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes cardSlide {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-    }
-    
-    .onboarding-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(-45deg, #0f0f23, #1e1b4b, #312e81, #4f46e5, #3b82f6);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .onboarding-overlay.hidden { display: none; }
-    
-    .onboarding-card {
-      background: rgba(24, 24, 27, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 32px;
-      width: 100%;
-      max-width: 560px;
-      padding: 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
-      animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    
-    .onboarding-progress {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-    }
-    .progress-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #27272a;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-    .progress-dot::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      transition: border-color 0.3s;
-    }
-    .progress-dot.active {
-      background: var(--accent);
-      transform: scale(1.2);
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-    }
-    .progress-dot.active::after {
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-    
-    .onboarding-step {
-      display: none;
-      animation: fadeInUp 0.5s ease both;
-    }
-    .onboarding-step.active { display: block; }
-    
-    .onboarding-icon {
-      font-size: 80px;
-      margin-bottom: 24px;
-      display: inline-block;
-      animation: float3D 4s ease-in-out infinite;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-    }
-    
-    .onboarding-title {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #1e1b4b, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-    }
-    
-    .onboarding-desc {
-      font-size: 18px;
-      color: #a1a1aa;
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-    
-    .feature-list {
-      text-align: left;
-      margin: 24px 0;
-    }
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 20px;
-      background: linear-gradient(135deg, #27272a, #3f3f46);
-      border-radius: 16px;
-      margin-bottom: 12px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid transparent;
-      animation: cardSlide 0.5s ease both;
-    }
-    .feature-item:nth-child(1) { animation-delay: 0.1s; }
-    .feature-item:nth-child(2) { animation-delay: 0.2s; }
-    .feature-item:nth-child(3) { animation-delay: 0.3s; }
-    .feature-item:hover {
-      transform: translateX(8px) scale(1.02);
-      background: linear-gradient(135deg, #52525b, #6366f1);
-      border-color: rgba(99, 102, 241, 0.3);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
-    }
-    .feature-icon {
-      font-size: 28px;
-      animation: iconPop 0.5s ease both;
-    }
-    .feature-text {
-      font-size: 16px;
-      font-weight: 600;
-      color: #e4e4e7;
-    }
-    
-    .signup-form {
-      text-align: left;
-      margin: 28px 0;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #e4e4e7;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .form-input {
-      width: 100%;
-      padding: 16px 20px;
-      border: 2px solid #27272a;
-      border-radius: 14px;
-      font-size: 16px;
-      transition: all 0.3s;
-      background: #0a0a0a;
-    }
-    .form-input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 0 4px 15px rgba(99, 102, 241, 0.1);
-      background: white;
-      transform: translateY(-2px);
-    }
-    .form-input::placeholder {
-      color: #71717a;
-    }
-    .form-select {
-      width: 100%;
-      padding: 16px 20px;
-      border: 2px solid #27272a;
-      border-radius: 14px;
-      font-size: 16px;
-      background: #0a0a0a;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .form-select:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-      background: white;
-    }
-    
-    .btn-onboarding {
-      width: 100%;
-      padding: 18px 32px;
-      font-size: 17px;
-      font-weight: 700;
-      margin-top: 16px;
-      background: linear-gradient(135deg, var(--accent), #fbbf24);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .btn-onboarding:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
-    }
-    .btn-onboarding:active {
-      transform: translateY(-1px);
-    }
-    
-    .trust-preview {
-      display: flex;
-      gap: 16px;
-      margin: 28px 0;
-    }
-    .trust-card {
-      flex: 1;
-      padding: 20px;
-      background: linear-gradient(135deg, #27272a, #52525b);
-      border-radius: 16px;
-      text-align: center;
-      border: 1px solid #27272a;
-      transition: all 0.3s;
-    }
-    .trust-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      border-color: var(--accent);
-    }
-    .trust-score {
-      font-size: 40px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #10b981, #34d399);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .trust-label {
-      font-size: 13px;
-      color: #a1a1aa;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    
-    .onboarding-skip {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.05);
-      border: none;
-      color: #a1a1aa;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 20px;
-      transition: all 0.3s;
-    }
-    .onboarding-skip:hover {
-      background: rgba(0,0,0,0.1);
-      color: #e4e4e7;
-    }
-    
-    .welcome-animation {
-      font-size: 100px;
-      margin-bottom: 24px;
-    }
-    
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-300px) rotate(720deg) scale(0.5); opacity: 0; }
-    }
-    .confetti {
-      position: absolute;
-      font-size: 28px;
-      animation: confetti 1.5s ease-out forwards;
-      pointer-events: none;
-    }
-    
-    /* Step indicator text */
-    .step-indicator {
-      font-size: 13px;
-      color: #71717a;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-    }
-    }
-    .feature-item:hover {
-      transform: translateX(8px);
-      background: #52525b;
-    }
-    .feature-icon {
-      font-size: 24px;
-    }
-    .feature-text {
-      font-size: 15px;
-      font-weight: 500;
-    }
-    
-    .signup-form {
-      text-align: left;
-      margin-top: 20px;
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .form-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      font-size: 15px;
-      transition: all 0.3s;
-    }
-    .form-input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    }
-    .form-select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      font-size: 15px;
-      background: white;
-      cursor: pointer;
-    }
-    
-    .btn-onboarding {
-      width: 100%;
-      padding: 16px;
-      font-size: 16px;
-      margin-top: 12px;
-    }
-    
-    .trust-preview {
-      display: flex;
-      gap: 16px;
-      margin: 20px 0;
-    }
-    .trust-card {
-      flex: 1;
-      padding: 16px;
-      background: #f8f8ff;
-      border-radius: 12px;
-      text-align: center;
-    }
-    .trust-score {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--green);
-    }
-    .trust-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-    
-    .onboarding-skip {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: none;
-      color: var(--text-light);
-      font-size: 14px;
-      cursor: pointer;
-      opacity: 0.6;
-      transition: opacity 0.3s;
-    }
-    .onboarding-skip:hover { opacity: 1; }
-    
-    .welcome-animation {
-      font-size: 80px;
-      margin-bottom: 20px;
-    }
-    
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0); opacity: 1; }
-      100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
-    }
-    .confetti {
-      position: absolute;
-      font-size: 24px;
-      animation: confetti 1s ease-out forwards;
+      .hero { padding: 32px 20px; }
+      .hero h1 { font-size: 28px; }
+      .listings-grid { grid-template-columns: 1fr; }
+      .detail-actions { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <!-- ONBOARDING SCREEN -->
-  <div class="onboarding-overlay" id="onboarding">
-    <div class="onboarding-card">
-      <button class="onboarding-skip" onclick="skipOnboarding()">Skip →</button>
-      
-      <!-- Progress -->
-      <div class="onboarding-progress">
-        <div class="progress-dot active" id="dot1"></div>
-        <div class="progress-dot" id="dot2"></div>
-        <div class="progress-dot" id="dot3"></div>
-        <div class="progress-dot" id="dot4"></div>
+
+<!-- ONBOARDING -->
+<div class="onboarding" id="onboarding">
+  <div class="onboarding-card">
+    <button onclick="skipOnboarding()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:14px;">Skip</button>
+    <div class="onboarding-progress">
+      <div class="progress-dot active" id="dot1"></div>
+      <div class="progress-dot" id="dot2"></div>
+      <div class="progress-dot" id="dot3"></div>
+      <div class="progress-dot" id="dot4"></div>
+    </div>
+    <div class="onboarding-step active" id="step1">
+      <div class="onboarding-icon">🛍️</div>
+      <h2 class="onboarding-title">Welcome to Marketplace</h2>
+      <p class="onboarding-desc">The easiest way to buy and sell items in your area. We handle everything.</p>
+      <button class="btn btn-primary btn-full" onclick="nextStep(2)">Get Started →</button>
+    </div>
+    <div class="onboarding-step" id="step2">
+      <div class="onboarding-icon">📦</div>
+      <h2 class="onboarding-title">List Once, We Do the Rest</h2>
+      <p class="onboarding-desc">Just drop off your items. We list them professionally, find buyers, and handle all the details.</p>
+      <button class="btn btn-primary btn-full" onclick="nextStep(3)">How It Works →</button>
+    </div>
+    <div class="onboarding-step" id="step3">
+      <div class="onboarding-icon">⭐</div>
+      <h2 class="onboarding-title">Trusted by Thousands</h2>
+      <p class="onboarding-desc">Every seller is rated. Transactions are secure. Your items are protected.</p>
+      <button class="btn btn-primary btn-full" onclick="nextStep(4)">Continue →</button>
+    </div>
+    <div class="onboarding-step" id="step4">
+      <div class="onboarding-icon">👋</div>
+      <h2 class="onboarding-title">Let's Get Started</h2>
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" id="signupName" placeholder="Enter your name">
       </div>
-      
-      <!-- Step 1: Welcome -->
-      <div class="onboarding-step active" id="step1">
-        <div class="onboarding-icon">🛒</div>
-        <h2 class="onboarding-title">Welcome to Marketplace</h2>
-        <p class="onboarding-desc">The smartest way to buy and sell. Connect with verified sellers, negotiate with Real People assistance, and discover fReal Peopler deals.</p>
-        <button class="btn btn-primary btn-onboarding" onclick="nextStep(2)">Discover How →</button>
+      <div class="form-group">
+        <label class="form-label">Your Zipcode</label>
+        <input type="text" class="form-input" id="signupZipcode" placeholder="e.g. 10001">
       </div>
-      
-      <!-- Step 2: Buy & Sell -->
-      <div class="onboarding-step" id="step2">
-        <div class="onboarding-icon">💰</div>
-        <h2 class="onboarding-title">Buy & Sell Smarter</h2>
-        <div class="feature-list">
-          <div class="feature-item">
-            <span class="feature-icon">🔍</span>
-            <span class="feature-text">Local finds finds what you need</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">🤖</span>
-            <span class="feature-text">real people for the best deals</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">📊</span>
-            <span class="feature-text">FReal Peopler Market Value calculations</span>
-          </div>
+      <button class="btn btn-primary btn-full" onclick="completeSignup()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">Marketplace</div>
+  <nav class="header-nav">
+    <button class="nav-btn active" onclick="showView('browse')" id="navBrowse">Browse</button>
+    <button class="nav-btn" onclick="showView('sell')" id="navSell">Sell</button>
+    <button class="nav-btn" onclick="showView('account')" id="navAccount">Account</button>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+  <div id="browseView">
+    <div class="hero">
+      <h1>Find Great Deals Near You</h1>
+      <p>Browse thousands of items from trusted sellers in your area</p>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search for anything..." id="searchInput" oninput="filterListings()">
+    </div>
+    <div class="categories" id="categories">
+      <button class="category-pill active" onclick="setCategory('all')">All</button>
+      <button class="category-pill" onclick="setCategory('electronics')">Electronics</button>
+      <button class="category-pill" onclick="setCategory('furniture')">Furniture</button>
+      <button class="category-pill" onclick="setCategory('vehicles')">Vehicles</button>
+      <button class="category-pill" onclick="setCategory('clothing')">Clothing</button>
+      <button class="category-pill" onclick="setCategory('books')">Books</button>
+    </div>
+    <div class="listings-grid" id="listingsGrid"></div>
+  </div>
+  
+  <div id="sellView" style="display:none;">
+    <div class="create-listing">
+      <h2>List an Item</h2>
+      <div class="form-group">
+        <label class="form-label">Photos</label>
+        <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+          <div class="image-upload-icon">📷</div>
+          <p>Click to upload photos</p>
+          <input type="file" id="imageInput" accept="image/*" multiple style="display:none">
         </div>
-        <button class="btn btn-primary btn-onboarding" onclick="nextStep(3)">Next →</button>
       </div>
-      
-      <!-- Step 3: Trust System -->
-      <div class="onboarding-step" id="step3">
-        <div class="onboarding-icon">🛡️</div>
-        <h2 class="onboarding-title">Trade with Confidence</h2>
-        <p class="onboarding-desc">Every seller has a Rating based on reviews, response time, and completed deals.</p>
-        <div class="trust-preview">
-          <div class="trust-card">
-            <div class="trust-score">92</div>
-            <div class="trust-label">Tech Trader</div>
-          </div>
-          <div class="trust-card">
-            <div class="trust-score">78</div>
-            <div class="trust-label">Gadget Guy</div>
-          </div>
-          <div class="trust-card">
-            <div class="trust-score">95</div>
-            <div class="trust-label">Gamer Store</div>
-          </div>
-        </div>
-        <button class="btn btn-primary btn-onboarding" onclick="nextStep(4)">See for yourself →</button>
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" id="listingTitle" placeholder="What are you selling?">
       </div>
-      
-      <!-- Step 4: Sign Up -->
-      <div class="onboarding-step" id="step4">
-        <div class="onboarding-icon">🎉</div>
-        <h2 class="onboarding-title">Join the Marketplace</h2>
-        <p class="onboarding-desc">Create your account in seconds and start trading immediately.</p>
-        <div class="signup-form">
-          <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input type="text" class="form-input" id="signupName" placeholder="Enter your name" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">What do you want to do?</label>
-            <select class="form-select" id="signupType">
-              <option value="">Select...</option>
-              <option value="buy">Buy stuff</option>
-              <option value="sell">Sell stuff</option>
-              <option value="both">Both</option>
-            </select>
-          </div>
-          <div class="form-group">
-              <label class="form-label">Your Zipcode</label>
-              <input type="text" class="form-input" id="signupLocation" placeholder="e.g. 10001" />
-            </div>
-        </div>
-        <button class="btn btn-primary btn-onboarding" onclick="completeSignup()">Create Account →</button>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-input" id="listingDescription" placeholder="Describe your item...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="listingCategory">
+          <option value="">Select a category</option>
+          <option value="electronics">Electronics</option>
+          <option value="furniture">Furniture</option>
+          <option value="vehicles">Vehicles</option>
+          <option value="clothing">Clothing</option>
+          <option value="books">Books</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price ($)</label>
+        <input type="number" class="form-input" id="listingPrice" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Condition</label>
+        <select class="form-select" id="listingCondition">
+          <option value="">Select condition</option>
+          <option value="new">New</option>
+          <option value="like_new">Like New</option>
+          <option value="good">Good</option>
+          <option value="fair">Fair</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="createListing()">Post Listing</button>
+    </div>
+  </div>
+  
+  <div id="accountView" style="display:none;">
+    <div class="create-listing" style="margin-bottom:24px;">
+      <h2>Your Account</h2>
+      <p style="color:var(--text-secondary);" id="accountName"></p>
+    </div>
+    <h3 style="font-size:18px;margin-bottom:16px;">Your Listings</h3>
+    <div class="listings-grid" id="myListingsGrid"></div>
+  </div>
+</main>
+
+<!-- DETAIL MODAL -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+  <div class="detail-card" onclick="event.stopPropagation()">
+    <button class="close-btn" onclick="closeDetail()">✕</button>
+    <img class="detail-image" id="detailImage" src="" alt="">
+    <div class="detail-content">
+      <div class="detail-price" id="detailPrice"></div>
+      <h2 class="detail-title" id="detailTitle"></h2>
+      <span class="detail-condition" id="detailCondition"></span>
+      <p class="detail-desc" id="detailDesc"></p>
+      <p style="color:var(--text-secondary);font-size:14px;" id="detailLocation"></p>
+      <div class="detail-actions">
+        <button class="btn btn-primary" onclick="contactSeller()">Contact Seller</button>
+        <button class="btn btn-secondary" onclick="makeOffer()">Make Offer</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <div class="logo">Marketplace</div>
-      <div class="header-right">
-        <a href="#" class="nav-link" id="navBrowse">Browse</a>
-        <a href="#" class="nav-link" id="navSell">Sell</a>
-        <a href="#" class="nav-link" onclick="showAccount()">Account</a>
-      </div>
-    </div>
-  </header>
+<div class="toast" id="toast"></div>
 
-  <!-- MReal Peoplen ContReal Peoplener -->
-  <div class="contReal Peoplener" id="mReal PeoplenContReal Peoplener">
-    <!-- Listings View -->
-    <div id="listingsView">
-      <!-- Hero -->
-      <div class="hero">
-        <h1>Find Great Deals</h1>
-        <p>Buy and sell locally with confidence</p>
-      </div>
-      
-      <!-- Search -->
-      <div class="search-section">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search for anything..." oninput="handleSearch()">
-        <select class="filter-select" id="zipInput" onchange="handleSearch()">
-          <option value="">Location</option>
-          <option value="10001">New York</option>
-          <option value="90001">Los Angeles</option>
-          <option value="60601">Chicago</option>
-          <option value="78701">Austin</option>
-          <option value="80201">Denver</option>
-        </select>
-        <select class="filter-select" id="radiusSelect" onchange="handleSearch()">
-          <option value="50">50 miles</option>
-          <option value="15">15 miles</option>
-          <option value="5">5 miles</option>
-          <option value="9999">Any distance</option>
-        </select>
-      </div>
-      
-      <!-- Categories -->
-      <div class="categories">
-        <button class="category-pill active" data-filter="all" onclick="setFilter('all')">
-          <span class="category-icon">🏷️</span> All
-        </button>
-        <button class="category-pill" data-filter="electronics" onclick="setFilter('electronics')">
-          <span class="category-icon">📱</span> Electronics
-        </button>
-        <button class="category-pill" data-filter="furniture" onclick="setFilter('furniture')">
-          <span class="category-icon">🪑</span> Furniture
-        </button>
-        <button class="category-pill" data-filter="vehicles" onclick="setFilter('vehicles')">
-          <span class="category-icon">🚗</span> Vehicles
-        </button>
-        <button class="category-pill" data-filter="clothing" onclick="setFilter('clothing')">
-          <span class="category-icon">👕</span> Clothing
-        </button>
-      </div>
-      
-      <!-- Grid -->
-      <div class="listings-grid" id="listingsGrid">
-        <div class="loading">Loading listings...</div>
-      </div>
-    </div>
-    
-    <!-- DetReal Peoplel View -->
-    <div id="detReal PeoplelView" style="display:none;">
-      <button onclick="showListings()" style="background:none;border:none;font-size:14px;color:var(--accent);cursor:pointer;margin-bottom:16px;">← Back to listings</button>
-      <div class="detReal Peoplel-view" id="detReal PeoplelContent"></div>
-    </div>
-    
-    <!-- Account View -->
-    <div id="accountView" style="display:none;">
-      <div class="account-header">
-        <div class="account-avatar" id="accountAvatar">T</div>
-        <div class="account-info">
-          <h2 id="accountName">Tech Trader</h2>
-          <div class="trust-badge">
-            <span>⭐</span>
-            <span id="accountTrust">Rating: 92/100</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-value" id="statListings">3</div>
-          <div class="stat-label">Active Listings</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="statViews">1.2K</div>
-          <div class="stat-label">Total Views</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="statBoost">85</div>
-          <div class="stat-label">Boost Score</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="statSales">45</div>
-          <div class="stat-label">Total Sales</div>
-        </div>
-      </div>
-      
-      <!-- Your Listings -->
-      <div class="section-header">
-        <h3 class="section-title">Your Listings</h3>
-      </div>
-      <div class="listings-grid" id="myListingsGrid"></div>
-    </div>
-  </div>
+<script>
+const API = 'http://localhost:3000/api';
+let allListings = [];
+let currentCategory = 'all';
+let searchQuery = '';
+let userProfile = null;
+let selectedListing = null;
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
+const users = {
+  'seller1': { name: 'Tech Trader', initials: 'TT', rating: 4.9 },
+  'seller2': { name: 'Gadget Guy', initials: 'GG', rating: 4.5 },
+  'seller3': { name: 'Gamer Store', initials: 'GS', rating: 4.8 },
+  'seller4': { name: 'Furniture Co', initials: 'FC', rating: 4.7 },
+};
 
-  <script>
-    // ========== ONBOARDING ==========
-    let currentStep = 1;
-    let userProfile = null;
-    
-    function nextStep(step) {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      document.getElementById('dot' + currentStep).classList.remove('active');
-      
-      currentStep = step;
-      
-      document.getElementById('step' + currentStep).classList.add('active');
-      document.getElementById('dot' + currentStep).classList.add('active');
-    }
-    
-    function skipOnboarding() {
-      document.getElementById('onboarding').classList.add('hidden');
-      localStorage.setItem('onboardingComplete', 'true');
-    }
-    
-    function completeSignup() {
-      const name = document.getElementById('signupName').value.trim();
-      const type = document.getElementById('signupType').value;
-      const location = document.getElementById('signupLocation').value.trim();
-      
-      if (!name) {
-        showToast('Please enter your name');
-        return;
-      }
-      if (!type) {
-        showToast('Please select what you want to do');
-        return;
-      }
-      
-      // Create user profile
-      userProfile = {
-        name: name,
-        type: type,
-        location: location,
-        trust_score: 100,
-        initials: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2)
-      };
-      
-      // Save to localStorage
-      localStorage.setItem('userProfile', JSON.stringify(userProfile));
-      localStorage.setItem('onboardingComplete', 'true');
-      
-      // Show celebration
-      showConfetti();
-      
-      setTimeout(() => {
-        document.getElementById('onboarding').classList.add('hidden');
-        showToast('Welcome to Marketplace, ' + name + '!');
-        updateHeaderForUser();
-      }, 1500);
-    }
-    
-    function showConfetti() {
-      const emojis = ['🎉', '🎊', '✨', '🌟', '💫'];
-      const card = document.querySelector('.onboarding-card');
-      for (let i = 0; i < 20; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.top = Math.random() * 50 + '%';
-        confetti.style.animationDelay = Math.random() * 0.5 + 's';
-        card.appendChild(confetti);
-      }
-    }
-    
-    function checkOnboarding() {
-      if (localStorage.getItem('onboardingComplete') === 'true') {
-        document.getElementById('onboarding').classList.add('hidden');
-        const saved = localStorage.getItem('userProfile');
-        if (saved) {
-          userProfile = JSON.parse(saved);
-          updateHeaderForUser();
-        }
-      }
-    }
-    
-    function updateHeaderForUser() {
-      if (userProfile) {
-        const right = document.querySelector('.header-right');
-        right.innerHTML = `
-          <a href="#" class="nav-link" id="navBrowse">Browse</a>
-          <a href="#" class="nav-link" id="navSell">Sell</a>
-          <a href="#" class="nav-link" onclick="showAccount()">
-            <span style="display:inline-flex;width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#fbbf24);border-radius:50%;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:600;">${userProfile.initials}</span>
-          </a>
-        `;
-      }
-    }
-    
-    // ========== MReal PeopleN APP ==========
-    const API = 'http://localhost:3000/api';
-    let allListings = [];
-    let currentFilter = 'all';
-    let searchQuery = '';
-    let selectedListing = null;
-    
-    // Check onboarding on load
-    checkOnboarding();
-    
-    // Mock current user (or use profile)
-    let currentUser = userProfile ? null : 'seller1';
-    const users = {
-      'seller1': { name: 'Tech Trader', trust: 92, initials: 'TT' },
-      'seller2': { name: 'Gadget Guy', trust: 78, initials: 'GG' },
-      'seller3': { name: 'Gamer Store', trust: 95, initials: 'GS' },
-      'seller4': { name: 'Furniture Flipper', trust: 81, initials: 'FF' },
-    };
-    
-    // Zipcode coordinates for distance calculation
-    const zipcodeCoords = {
-      '10001': { city: 'New York', lat: 40.7501, lng: -73.9971 },
-      '10011': { city: 'New York', lat: 40.7401, lng: -74.0006 },
-      '10012': { city: 'New York', lat: 40.7258, lng: -73.9983 },
-      '10013': { city: 'New York', lat: 40.7204, lng: -74.0028 },
-      '90001': { city: 'Los Angeles', lat: 33.9731, lng: -118.2479 },
-      '90012': { city: 'Los Angeles', lat: 34.0633, lng: -118.2378 },
-      '60601': { city: 'Chicago', lat: 41.8819, lng: -87.6278 },
-      '60614': { city: 'Chicago', lat: 41.9218, lng: -87.6513 },
-      '78701': { city: 'Austin', lat: 30.2672, lng: -97.7431 },
-      '78704': { city: 'Austin', lat: 30.2435, lng: -97.7699 },
-      '80201': { city: 'Denver', lat: 39.7392, lng: -104.9903 },
-      '98101': { city: 'Seattle', lat: 47.6062, lng: -122.3321 },
-    };
-    
-    // Calculate distance between two zipcodes (in miles)
-    function getDistance(zip1, zip2) {
-      const z1 = zipcodeCoords[zip1] || zipcodeCoords[zip1.replace(/\D/g,'').slice(0,5)] || null;
-      const z2 = zipcodeCoords[zip2] || zipcodeCoords[zip2.replace(/\D/g,'').slice(0,5)] || null;
-      if (!z1 || !z2) return 9999; // Unknown distance
-      const R = 3959;
-      const dLat = (z2.lat - z1.lat) * Math.PI / 180;
-      const dLng = (z2.lng - z1.lng) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(z1.lat * Math.PI / 180) * Math.cos(z2.lat * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-    
-    // Smart sort: prioritize user's location, then relevance
-    function smartSort(listings, userZipcode) {
-      if (!userZipcode) return listings;
-      
-      return [...listings].sort((a, b) => {
-        const distA = getDistance(userZipcode, a.zipcode);
-        const distB = getDistance(userZipcode, b.zipcode);
-        
-        // If both are local (within 50 miles), sort by distance
-        if (distA < 50 && distB < 50) return distA - distB;
-        // If one is local and one isn't, local comes first
-        if (distA < 50 && distB >= 50) return -1;
-        if (distA >= 50 && distB < 50) return 1;
-        // Both non-local: sort by distance
-        return distA - distB;
-      });
-    }
-    
-    // Load listings
-    async function loadListings() {
-      try {
-        const res = awReal Peoplet fetch(API + '/listings');
-        allListings = awReal Peoplet res.json();
-        renderListings();
-      } catch (e) {
-        document.getElementById('listingsGrid').innerHTML = '<div class="loading">Server not running. Run: npm start</div>';
-      }
-    }
-    
-    // Get badge for listing
-    function getListingBadge(listing) {
-      if (listing.boost_score) return '<span class="card-badge badge-boosted">Boosted</span>';
-      
-      const daysSinceListed = Math.floor((Date.now() - new Date(listing.created_at)) / (1000 * 60 * 60 * 24));
-      if (daysSinceListed < 2) return '<span class="card-badge badge-new">New</span>';
-      
-      return '';
-    }
-    
-    // Render listings
-    function renderListings() {
-      const grid = document.getElementById('listingsGrid');
-      let filtered = allListings;
-      
-      // Search
-      if (searchQuery) {
-        filtered = filtered.filter(l => 
-          l.title.toLowerCase().includes(searchQuery) || 
-          (l.description || '').toLowerCase().includes(searchQuery)
-        );
-      }
-      
-      // Filter
-      if (currentFilter === 'buy') filtered = filtered.filter(l => l.type === 'buy');
-      else if (currentFilter === 'sell') filtered = filtered.filter(l => l.type === 'sell');
-      else if (currentFilter !== 'all') filtered = filtered.filter(l => l.category === currentFilter);
-      
-      // Smart sort by user's location (if they provided zipcode)
-      const userZipcode = userProfile?.location;
-      filtered = smartSort(filtered, userZipcode);
-      
-      if (!filtered.length) {
-        grid.innerHTML = '<div class="loading">No listings found</div>';
-        return;
-      }
-      
-      grid.innerHTML = filtered.map(l => {
-        const user = users[l.user_id] || { name: 'Seller', trust: 50, initials: 'S' };
-        const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price} - $${l.max_price}`;
-        const imageHtml = l.image 
-          ? (l.video_url 
-            ? `<video src="${l.video_url}" poster="${l.image}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`
-            : `<img src="${l.image}" alt="${l.title}" loading="lazy">`) 
-          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`;
-        const videoBadge = l.video_url ? '<span class="video-badge">Video</span>' : '';
-        
-        // Calculate and show distance badge if user has zipcode
-        let distanceBadge = '';
-        if (userProfile?.location && l.zipcode) {
-          const dist = getDistance(userProfile.location, l.zipcode);
-          if (dist < 1000) {
-            distanceBadge = dist < 10 ? '<span class="card-badge badge-nearby">📍 Very Close</span>' : 
-                           dist < 50 ? '<span class="card-badge badge-nearby">📍 Nearby</span>' : '';
-          }
-        }
-        
-        return `
-          <div class="listing-card" onclick="openDetReal Peoplel('${l.id}')">
-            <div class="card-image">
-              ${imageHtml}
-              ${getListingBadge(l)}
-              ${distanceBadge}
-              ${videoBadge}
-              <button class="card-save" onclick="event.stopPropagation(); toggleWatchlist('${l.id}')">♡</button>
-            </div>
-            <div class="card-content">
-              <div class="card-price">${priceDisplay}</div>
-              <div class="card-title">${l.title}</div>
-              <div class="card-meta">
-                <span>${l.condition || l.type}</span>
-              </div>
-              <div class="card-location">📍 ${l.location || 'Unknown'}</div>
-              <div class="card-seller">
-                <div class="seller-avatar">${user.initials}</div>
-                <div class="seller-info">
-                  <div class="seller-name">${user.name}</div>
-                  <div class="seller-trust">⭐ ${user.trust}/100</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // Search & Filter
-    function handleSearch() {
-      searchQuery = document.getElementById('searchInput').value.toLowerCase();
-      renderListings();
-    }
-    
-    function setFilter(filter) {
-      currentFilter = filter;
-      document.querySelectorAll('.category-pill').forEach(p => {
-        p.classList.toggle('active', p.dataset.filter === filter);
-      });
-      renderListings();
-    }
-    
-    // DetReal Peoplel View
-    async function openDetReal Peoplel(id) {
-      selectedListing = allListings.find(l => l.id === id);
-      if (!selectedListing) return;
-      
-      document.getElementById('listingsView').style.display = 'none';
-      document.getElementById('detReal PeoplelView').style.display = 'block';
-      
-      // Fetch full listing with FMV
-      try {
-        const res = awReal Peoplet fetch(API + '/listings/' + id);
-        selectedListing = awReal Peoplet res.json();
-      } catch (e) {}
-      
-      const user = users[selectedListing.user_id] || { name: 'Seller', trust: 50 };
-      const priceDisplay = selectedListing.type === 'sell' ? `$${selectedListing.price}` : `$${selectedListing.min_price} - $${selectedListing.max_price}`;
-      
-      let fmvHtml = '';
-      if (selectedListing.type === 'sell' && selectedListing.fReal PeoplerMarketValue) {
-        const fmv = selectedListing.fReal PeoplerMarketValue;
-        fmvHtml = `
-          <div class="fmv-box">
-            <div class="fmv-title">📊 FReal Peopler Market Value</div>
-            <div class="fmv-values">
-              <div class="fmv-item">
-                <div class="fmv-label">Low</div>
-                <div class="fmv-value">$${fmv.low}</div>
-              </div>
-              <div class="fmv-item">
-                <div class="fmv-label">Average</div>
-                <div class="fmv-value">$${fmv.average}</div>
-              </div>
-              <div class="fmv-item">
-                <div class="fmv-label">High</div>
-                <div class="fmv-value">$${fmv.high}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-      
-      const imageHtml = selectedListing.image 
-        ? (selectedListing.video_url 
-          ? `<video class="detReal Peoplel-image" controls autoplay loop src="${selectedListing.video_url}" poster="${selectedListing.image}"></video>`
-          : `<img class="detReal Peoplel-image" src="${selectedListing.image}" alt="${selectedListing.title}">`) 
-        : `<div class="detReal Peoplel-image" style="display:flex;align-items:center;justify-content:center;font-size:120px;background:#f0f0f0;">📦</div>`;
-      
-      document.getElementById('detReal PeoplelContent').innerHTML = `
-        <div class="detReal Peoplel-header">
-          <div>${imageHtml}</div>
-          <div class="detReal Peoplel-info">
-            <div class="detReal Peoplel-price">${priceDisplay}</div>
-            <h1 class="detReal Peoplel-title">${selectedListing.title}</h1>
-            ${selectedListing.condition ? `<span class="detReal Peoplel-condition">${selectedListing.condition.replace('_', ' ')}</span>` : ''}
-            <p class="detReal Peoplel-desc">${selectedListing.description || 'No description provided.'}</p>
-            <p style="color:var(--text-light);font-size:14px;margin-bottom:8px;">📍 ${selectedListing.location || 'Unknown'}</p>
-            ${fmvHtml}
-            <div class="detReal Peoplel-actions">
-              <button class="btn btn-primary" onclick="messageSeller()">💬 Message Seller</button>
-              <button class="btn btn-secondary" onclick="makeOffer()">Make Offer</button>
+let onboardingStep = 1;
+function nextStep(step) {
+  document.getElementById('step' + onboardingStep).classList.remove('active');
+  document.getElementById('dot' + onboardingStep).classList.remove('active');
+  onboardingStep = step;
+  document.getElementById('step' + onboardingStep).classList.add('active');
+  document.getElementById('dot' + onboardingStep).classList.add('active');
+}
+function skipOnboarding() {
+  document.getElementById('onboarding').classList.add('hidden');
+  localStorage.setItem('onboardingComplete', 'true');
+}
+function completeSignup() {
+  const name = document.getElementById('signupName').value.trim();
+  const zipcode = document.getElementById('signupZipcode').value.trim();
+  if (!name) { showToast('Please enter your name'); return; }
+  userProfile = { name, zipcode, initials: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2) };
+  localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  document.getElementById('onboarding').classList.add('hidden');
+  showToast('Welcome, ' + name + '!');
+}
+
+function showView(view) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('nav' + view.charAt(0).toUpperCase() + view.slice(1)).classList.add('active');
+  document.getElementById('browseView').style.display = view === 'browse' ? 'block' : 'none';
+  document.getElementById('sellView').style.display = view === 'sell' ? 'block' : 'none';
+  document.getElementById('accountView').style.display = view === 'account' ? 'block' : 'none';
+  if (view === 'account' && userProfile) {
+    document.getElementById('accountName').textContent = userProfile.name + ' • ' + (userProfile.zipcode || 'No zipcode');
+  }
+}
+
+async function loadListings() {
+  try {
+    const res = await fetch(API + '/listings');
+    allListings = await res.json();
+    renderListings();
+  } catch (e) {
+    showToast('Could not load listings');
+  }
+}
+
+function renderListings() {
+  let filtered = [...allListings];
+  if (currentCategory !== 'all') filtered = filtered.filter(l => l.category === currentCategory);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(l => l.title.toLowerCase().includes(q) || l.description?.toLowerCase().includes(q));
+  }
+  filtered = filtered.filter(l => l.type === 'sell');
+  
+  const grid = document.getElementById('listingsGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📦</div><div class="empty-title">No items found</div><div class="empty-desc">Try a different search or category</div></div>';
+    return;
+  }
+  
+  grid.innerHTML = filtered.slice(0, 20).map((l, i) => {
+    const user = users[l.user_id] || { name: 'Seller', initials: 'S', rating: 4.0 };
+    const image = l.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop';
+    return `
+      <div class="listing-card" onclick="openDetail('${l.id}')" style="animation-delay: ${i * 0.05}s">
+        <div class="card-image">
+          <img src="${image}" alt="${l.title}" loading="lazy">
+          ${l.condition === 'new' ? '<span class="card-badge badge-new">New</span>' : ''}
+        </div>
+        <div class="card-content">
+          <div class="card-price">$${l.price}</div>
+          <div class="card-title">${l.title}</div>
+          <div class="card-meta">${l.condition?.replace('_', ' ') || 'Used'}</div>
+          <div class="card-footer">
+            <div class="seller-info">
+              <div class="seller-avatar">${user.initials}</div>
+              <div><div class="seller-name">${user.name}</div><div class="seller-rating">⭐ ${user.rating}</div></div>
             </div>
           </div>
         </div>
-      `;
-    }
-    
-    function showListings() {
-      document.getElementById('listingsView').style.display = 'block';
-      document.getElementById('detReal PeoplelView').style.display = 'none';
-      document.getElementById('accountView').style.display = 'none';
-    }
-    
-    function messageSeller() {
-      showToast('Opening messages...');
-    }
-    
-    function makeOffer() {
-      showToast('Make offer feature coming soon!');
-    }
-    
-    // Account
-    function showAccount() {
-      document.getElementById('listingsView').style.display = 'none';
-      document.getElementById('detReal PeoplelView').style.display = 'none';
-      document.getElementById('accountView').style.display = 'block';
-      
-      // Show nav links
-      document.getElementById('navBrowse').style.display = 'inline';
-      document.getElementById('navSell').style.display = 'inline';
-      
-      // Load user's listings
-      const myListings = allListings.filter(l => l.user_id === currentUser);
-      const grid = document.getElementById('myListingsGrid');
-      
-      if (!myListings.length) {
-        grid.innerHTML = '<div class="loading">No listings yet</div>';
-        return;
-      }
-      
-      grid.innerHTML = myListings.map(l => {
-        const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price}`;
-        return `
-          <div class="listing-card" onclick="openDetReal Peoplel('${l.id}')">
-            <div class="card-image">
-              ${l.image ? `<img src="${l.image}" alt="${l.title}">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`}
-              ${l.boost_score ? '<span class="card-badge badge-boosted">⚡ Boosted</span>' : ''}
-            </div>
-            <div class="card-content">
-              <div class="card-price">${priceDisplay}</div>
-              <div class="card-title">${l.title}</div>
-              <div class="card-meta">
-                <span>${l.condition || l.type}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // Watchlist
-    async function toggleWatchlist(id) {
-      try {
-        awReal Peoplet fetch(API + '/watchlist/add', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: currentUser, listing_id: id })
-        });
-        showToast('Added to watchlist!');
-      } catch (e) {
-        showToast('FReal Peopleled to save');
-      }
-    }
-    
-    // Toast
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-    
-    // Init
-    document.getElementById('navBrowse').style.display = 'none';
-    document.getElementById('navSell').style.display = 'none';
+      </div>
+    `;
+  }).join('');
+}
+
+function setCategory(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.category-pill').forEach((p, i) => {
+    const cats = ['all', 'electronics', 'furniture', 'vehicles', 'clothing', 'books'];
+    p.classList.toggle('active', cats[i] === cat);
+  });
+  renderListings();
+}
+function filterListings() {
+  searchQuery = document.getElementById('searchInput').value;
+  renderListings();
+}
+
+function openDetail(id) {
+  selectedListing = allListings.find(l => l.id === id);
+  if (!selectedListing) return;
+  const image = selectedListing.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop';
+  document.getElementById('detailImage').src = image;
+  document.getElementById('detailPrice').textContent = '$' + selectedListing.price;
+  document.getElementById('detailTitle').textContent = selectedListing.title;
+  document.getElementById('detailCondition').textContent = selectedListing.condition?.replace('_', ' ') || 'Used';
+  document.getElementById('detailDesc').textContent = selectedListing.description || 'No description provided.';
+  document.getElementById('detailLocation').textContent = '📍 ' + (selectedListing.location || 'Unknown');
+  document.getElementById('detailOverlay').classList.add('active');
+}
+function closeDetail(e) {
+  if (!e || e.target === document.getElementById('detailOverlay')) {
+    document.getElementById('detailOverlay').classList.remove('active');
+  }
+}
+function contactSeller() { showToast('Opening chat...'); }
+function makeOffer() {
+  const offer = prompt('Enter your offer amount:');
+  if (offer) showToast('Offer sent: $' + offer);
+}
+
+async function createListing() {
+  const title = document.getElementById('listingTitle').value.trim();
+  const description = document.getElementById('listingDescription').value;
+  const category = document.getElementById('listingCategory').value;
+  const price = document.getElementById('listingPrice').value;
+  const condition = document.getElementById('listingCondition').value;
+  
+  if (!title || !category || !price) { showToast('Please fill in all required fields'); return; }
+  
+  const listing = {
+    type: 'sell', category, title, description,
+    price: parseInt(price), condition,
+    location: userProfile?.zipcode ? 'Area ' + userProfile.zipcode : 'Local',
+    zipcode: userProfile?.zipcode || '',
+    tags: [],
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
+  };
+  
+  try {
+    await fetch(API + '/listings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(listing)
+    });
+    showToast('Listing posted!');
     loadListings();
-  </script>
+    showView('browse');
+    document.getElementById('listingTitle').value = '';
+    document.getElementById('listingDescription').value = '';
+    document.getElementById('listingPrice').value = '';
+  } catch (e) {
+    showToast('Error posting listing');
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('onboardingComplete') === 'true') {
+    document.getElementById('onboarding').classList.add('hidden');
+    const saved = localStorage.getItem('userProfile');
+    if (saved) userProfile = JSON.parse(saved);
+  }
+  loadListings();
+});
+</script>
 </body>
 </html>
