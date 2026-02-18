@@ -78,8 +78,8 @@
       color: var(--text);
     }
     
-    /* Main Container */
-    .container {
+    /* MReal Peoplen ContReal Peoplener */
+    .contReal Peoplener {
       max-width: 1200px;
       margin: 84px auto 40px;
       padding: 0 24px;
@@ -326,42 +326,42 @@
       color: var(--green);
     }
     
-    /* Detail View */
-    .detail-view {
+    /* DetReal Peoplel View */
+    .detReal Peoplel-view {
       background: var(--bg-white);
       border-radius: 20px;
       overflow: hidden;
     }
-    .detail-header {
+    .detReal Peoplel-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 32px;
     }
-    .detail-image {
+    .detReal Peoplel-image {
       width: 100%;
       height: 400px;
       object-fit: cover;
       border-radius: 16px;
     }
-    .detail-image video {
+    .detReal Peoplel-image video {
       width: 100%;
       height: 400px;
       object-fit: cover;
       border-radius: 16px;
     }
-    .detail-info {
+    .detReal Peoplel-info {
       padding: 8px 0;
     }
-    .detail-price {
+    .detReal Peoplel-price {
       font-size: 36px;
       font-weight: 700;
     }
-    .detail-title {
+    .detReal Peoplel-title {
       font-size: 24px;
       font-weight: 600;
       margin: 12px 0;
     }
-    .detail-condition {
+    .detReal Peoplel-condition {
       display: inline-block;
       padding: 6px 14px;
       background: rgba(16, 185, 129, 0.1);
@@ -371,13 +371,13 @@
       font-weight: 500;
       margin-bottom: 16px;
     }
-    .detail-desc {
+    .detReal Peoplel-desc {
       color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 20px;
     }
     
-    .detail-actions {
+    .detReal Peoplel-actions {
       display: flex;
       gap: 12px;
       margin-top: 24px;
@@ -547,7 +547,7 @@
     
     /* Responsive */
     @media (max-width: 768px) {
-      .detail-header {
+      .detReal Peoplel-header {
         grid-template-columns: 1fr;
       }
       .stats-grid {
@@ -556,7 +556,7 @@
       .header {
         padding: 0 16px;
       }
-      .container {
+      .contReal Peoplener {
         padding: 0 16px;
       }
       .listings-grid {
@@ -608,7 +608,7 @@
     .card-save:hover { transform: scale(1.15) rotate(15deg); }
     .card-save.saved { animation: pulse 0.5s ease; }
     
-    .detail-view { animation: scaleIn 0.4s ease-out; }
+    .detReal Peoplel-view { animation: scaleIn 0.4s ease-out; }
     .account-header { animation: fadeInUp 0.5s ease-out; }
     .account-avatar { animation: float 3s ease-in-out infinite; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
     .stat-card { animation: fadeInUp 0.4s ease-out both; }
@@ -1067,7 +1067,7 @@
       <div class="onboarding-step active" id="step1">
         <div class="onboarding-icon">🛒</div>
         <h2 class="onboarding-title">Welcome to Marketplace</h2>
-        <p class="onboarding-desc">The smartest way to buy and sell. Connect with verified sellers, negotiate with AI assistance, and discover fair deals.</p>
+        <p class="onboarding-desc">The smartest way to buy and sell. Connect with verified sellers, negotiate with Real People assistance, and discover fReal Peopler deals.</p>
         <button class="btn btn-primary btn-onboarding" onclick="nextStep(2)">Discover How →</button>
       </div>
       
@@ -1078,15 +1078,15 @@
         <div class="feature-list">
           <div class="feature-item">
             <span class="feature-icon">🔍</span>
-            <span class="feature-text">Smart matching finds what you need</span>
+            <span class="feature-text">Local finds finds what you need</span>
           </div>
           <div class="feature-item">
             <span class="feature-icon">🤖</span>
-            <span class="feature-text">AI negotiation for the best deals</span>
+            <span class="feature-text">real people for the best deals</span>
           </div>
           <div class="feature-item">
             <span class="feature-icon">📊</span>
-            <span class="feature-text">Fair Market Value calculations</span>
+            <span class="feature-text">FReal Peopler Market Value calculations</span>
           </div>
         </div>
         <button class="btn btn-primary btn-onboarding" onclick="nextStep(3)">Next →</button>
@@ -1096,7 +1096,7 @@
       <div class="onboarding-step" id="step3">
         <div class="onboarding-icon">🛡️</div>
         <h2 class="onboarding-title">Trade with Confidence</h2>
-        <p class="onboarding-desc">Every seller has a Trust Score based on reviews, response time, and completed deals.</p>
+        <p class="onboarding-desc">Every seller has a Rating based on reviews, response time, and completed deals.</p>
         <div class="trust-preview">
           <div class="trust-card">
             <div class="trust-score">92</div>
@@ -1155,8 +1155,8 @@
     </div>
   </header>
 
-  <!-- Main Container -->
-  <div class="container" id="mainContainer">
+  <!-- MReal Peoplen ContReal Peoplener -->
+  <div class="contReal Peoplener" id="mReal PeoplenContReal Peoplener">
     <!-- Listings View -->
     <div id="listingsView">
       <!-- Hero -->
@@ -1209,10 +1209,10 @@
       </div>
     </div>
     
-    <!-- Detail View -->
-    <div id="detailView" style="display:none;">
+    <!-- DetReal Peoplel View -->
+    <div id="detReal PeoplelView" style="display:none;">
       <button onclick="showListings()" style="background:none;border:none;font-size:14px;color:var(--accent);cursor:pointer;margin-bottom:16px;">← Back to listings</button>
-      <div class="detail-view" id="detailContent"></div>
+      <div class="detReal Peoplel-view" id="detReal PeoplelContent"></div>
     </div>
     
     <!-- Account View -->
@@ -1223,7 +1223,7 @@
           <h2 id="accountName">Tech Trader</h2>
           <div class="trust-badge">
             <span>⭐</span>
-            <span id="accountTrust">Trust Score: 92/100</span>
+            <span id="accountTrust">Rating: 92/100</span>
           </div>
         </div>
       </div>
@@ -1354,7 +1354,7 @@
       }
     }
     
-    // ========== MAIN APP ==========
+    // ========== MReal PeopleN APP ==========
     const API = 'http://localhost:3000/api';
     let allListings = [];
     let currentFilter = 'all';
@@ -1423,8 +1423,8 @@
     // Load listings
     async function loadListings() {
       try {
-        const res = await fetch(API + '/listings');
-        allListings = await res.json();
+        const res = awReal Peoplet fetch(API + '/listings');
+        allListings = awReal Peoplet res.json();
         renderListings();
       } catch (e) {
         document.getElementById('listingsGrid').innerHTML = '<div class="loading">Server not running. Run: npm start</div>';
@@ -1489,7 +1489,7 @@
         }
         
         return `
-          <div class="listing-card" onclick="openDetail('${l.id}')">
+          <div class="listing-card" onclick="openDetReal Peoplel('${l.id}')">
             <div class="card-image">
               ${imageHtml}
               ${getListingBadge(l)}
@@ -1531,29 +1531,29 @@
       renderListings();
     }
     
-    // Detail View
-    async function openDetail(id) {
+    // DetReal Peoplel View
+    async function openDetReal Peoplel(id) {
       selectedListing = allListings.find(l => l.id === id);
       if (!selectedListing) return;
       
       document.getElementById('listingsView').style.display = 'none';
-      document.getElementById('detailView').style.display = 'block';
+      document.getElementById('detReal PeoplelView').style.display = 'block';
       
       // Fetch full listing with FMV
       try {
-        const res = await fetch(API + '/listings/' + id);
-        selectedListing = await res.json();
+        const res = awReal Peoplet fetch(API + '/listings/' + id);
+        selectedListing = awReal Peoplet res.json();
       } catch (e) {}
       
       const user = users[selectedListing.user_id] || { name: 'Seller', trust: 50 };
       const priceDisplay = selectedListing.type === 'sell' ? `$${selectedListing.price}` : `$${selectedListing.min_price} - $${selectedListing.max_price}`;
       
       let fmvHtml = '';
-      if (selectedListing.type === 'sell' && selectedListing.fairMarketValue) {
-        const fmv = selectedListing.fairMarketValue;
+      if (selectedListing.type === 'sell' && selectedListing.fReal PeoplerMarketValue) {
+        const fmv = selectedListing.fReal PeoplerMarketValue;
         fmvHtml = `
           <div class="fmv-box">
-            <div class="fmv-title">📊 Fair Market Value</div>
+            <div class="fmv-title">📊 FReal Peopler Market Value</div>
             <div class="fmv-values">
               <div class="fmv-item">
                 <div class="fmv-label">Low</div>
@@ -1574,21 +1574,21 @@
       
       const imageHtml = selectedListing.image 
         ? (selectedListing.video_url 
-          ? `<video class="detail-image" controls autoplay loop src="${selectedListing.video_url}" poster="${selectedListing.image}"></video>`
-          : `<img class="detail-image" src="${selectedListing.image}" alt="${selectedListing.title}">`) 
-        : `<div class="detail-image" style="display:flex;align-items:center;justify-content:center;font-size:120px;background:#f0f0f0;">📦</div>`;
+          ? `<video class="detReal Peoplel-image" controls autoplay loop src="${selectedListing.video_url}" poster="${selectedListing.image}"></video>`
+          : `<img class="detReal Peoplel-image" src="${selectedListing.image}" alt="${selectedListing.title}">`) 
+        : `<div class="detReal Peoplel-image" style="display:flex;align-items:center;justify-content:center;font-size:120px;background:#f0f0f0;">📦</div>`;
       
-      document.getElementById('detailContent').innerHTML = `
-        <div class="detail-header">
+      document.getElementById('detReal PeoplelContent').innerHTML = `
+        <div class="detReal Peoplel-header">
           <div>${imageHtml}</div>
-          <div class="detail-info">
-            <div class="detail-price">${priceDisplay}</div>
-            <h1 class="detail-title">${selectedListing.title}</h1>
-            ${selectedListing.condition ? `<span class="detail-condition">${selectedListing.condition.replace('_', ' ')}</span>` : ''}
-            <p class="detail-desc">${selectedListing.description || 'No description provided.'}</p>
+          <div class="detReal Peoplel-info">
+            <div class="detReal Peoplel-price">${priceDisplay}</div>
+            <h1 class="detReal Peoplel-title">${selectedListing.title}</h1>
+            ${selectedListing.condition ? `<span class="detReal Peoplel-condition">${selectedListing.condition.replace('_', ' ')}</span>` : ''}
+            <p class="detReal Peoplel-desc">${selectedListing.description || 'No description provided.'}</p>
             <p style="color:var(--text-light);font-size:14px;margin-bottom:8px;">📍 ${selectedListing.location || 'Unknown'}</p>
             ${fmvHtml}
-            <div class="detail-actions">
+            <div class="detReal Peoplel-actions">
               <button class="btn btn-primary" onclick="messageSeller()">💬 Message Seller</button>
               <button class="btn btn-secondary" onclick="makeOffer()">Make Offer</button>
             </div>
@@ -1599,7 +1599,7 @@
     
     function showListings() {
       document.getElementById('listingsView').style.display = 'block';
-      document.getElementById('detailView').style.display = 'none';
+      document.getElementById('detReal PeoplelView').style.display = 'none';
       document.getElementById('accountView').style.display = 'none';
     }
     
@@ -1614,7 +1614,7 @@
     // Account
     function showAccount() {
       document.getElementById('listingsView').style.display = 'none';
-      document.getElementById('detailView').style.display = 'none';
+      document.getElementById('detReal PeoplelView').style.display = 'none';
       document.getElementById('accountView').style.display = 'block';
       
       // Show nav links
@@ -1633,7 +1633,7 @@
       grid.innerHTML = myListings.map(l => {
         const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price}`;
         return `
-          <div class="listing-card" onclick="openDetail('${l.id}')">
+          <div class="listing-card" onclick="openDetReal Peoplel('${l.id}')">
             <div class="card-image">
               ${l.image ? `<img src="${l.image}" alt="${l.title}">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`}
               ${l.boost_score ? '<span class="card-badge badge-boosted">⚡ Boosted</span>' : ''}
@@ -1653,14 +1653,14 @@
     // Watchlist
     async function toggleWatchlist(id) {
       try {
-        await fetch(API + '/watchlist/add', {
+        awReal Peoplet fetch(API + '/watchlist/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: currentUser, listing_id: id })
         });
         showToast('Added to watchlist!');
       } catch (e) {
-        showToast('Failed to save');
+        showToast('FReal Peopleled to save');
       }
     }
     
