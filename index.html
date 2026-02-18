@@ -231,6 +231,10 @@
       background: var(--purple);
       color: white;
     }
+    .badge-nearby {
+      background: var(--green);
+      color: white;
+    }
     .card-save {
       position: absolute;
       top: 12px;
@@ -907,9 +911,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Location</label>
-            <input type="text" class="form-input" id="signupLocation" placeholder="City or Zipcode" />
-          </div>
+              <label class="form-label">Your Zipcode</label>
+              <input type="text" class="form-input" id="signupLocation" placeholder="e.g. 10001" />
+            </div>
         </div>
         <button class="btn btn-primary btn-onboarding" onclick="completeSignup()">Create Account →</button>
       </div>
@@ -1146,6 +1150,53 @@
       'seller4': { name: 'Furniture Flipper', trust: 81, initials: 'FF' },
     };
     
+    // Zipcode coordinates for distance calculation
+    const zipcodeCoords = {
+      '10001': { city: 'New York', lat: 40.7501, lng: -73.9971 },
+      '10011': { city: 'New York', lat: 40.7401, lng: -74.0006 },
+      '10012': { city: 'New York', lat: 40.7258, lng: -73.9983 },
+      '10013': { city: 'New York', lat: 40.7204, lng: -74.0028 },
+      '90001': { city: 'Los Angeles', lat: 33.9731, lng: -118.2479 },
+      '90012': { city: 'Los Angeles', lat: 34.0633, lng: -118.2378 },
+      '60601': { city: 'Chicago', lat: 41.8819, lng: -87.6278 },
+      '60614': { city: 'Chicago', lat: 41.9218, lng: -87.6513 },
+      '78701': { city: 'Austin', lat: 30.2672, lng: -97.7431 },
+      '78704': { city: 'Austin', lat: 30.2435, lng: -97.7699 },
+      '80201': { city: 'Denver', lat: 39.7392, lng: -104.9903 },
+      '98101': { city: 'Seattle', lat: 47.6062, lng: -122.3321 },
+    };
+    
+    // Calculate distance between two zipcodes (in miles)
+    function getDistance(zip1, zip2) {
+      const z1 = zipcodeCoords[zip1] || zipcodeCoords[zip1.replace(/\D/g,'').slice(0,5)] || null;
+      const z2 = zipcodeCoords[zip2] || zipcodeCoords[zip2.replace(/\D/g,'').slice(0,5)] || null;
+      if (!z1 || !z2) return 9999; // Unknown distance
+      const R = 3959;
+      const dLat = (z2.lat - z1.lat) * Math.PI / 180;
+      const dLng = (z2.lng - z1.lng) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(z1.lat * Math.PI / 180) * Math.cos(z2.lat * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+    
+    // Smart sort: prioritize user's location, then relevance
+    function smartSort(listings, userZipcode) {
+      if (!userZipcode) return listings;
+      
+      return [...listings].sort((a, b) => {
+        const distA = getDistance(userZipcode, a.zipcode);
+        const distB = getDistance(userZipcode, b.zipcode);
+        
+        // If both are local (within 50 miles), sort by distance
+        if (distA < 50 && distB < 50) return distA - distB;
+        // If one is local and one isn't, local comes first
+        if (distA < 50 && distB >= 50) return -1;
+        if (distA >= 50 && distB < 50) return 1;
+        // Both non-local: sort by distance
+        return distA - distB;
+      });
+    }
+    
     // Load listings
     async function loadListings() {
       try {
@@ -1185,6 +1236,10 @@
       else if (currentFilter === 'sell') filtered = filtered.filter(l => l.type === 'sell');
       else if (currentFilter !== 'all') filtered = filtered.filter(l => l.category === currentFilter);
       
+      // Smart sort by user's location (if they provided zipcode)
+      const userZipcode = userProfile?.location;
+      filtered = smartSort(filtered, userZipcode);
+      
       if (!filtered.length) {
         grid.innerHTML = '<div class="loading">No listings found</div>';
         return;
@@ -1200,11 +1255,22 @@
           : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`;
         const videoBadge = l.video_url ? '<span class="video-badge">Video</span>' : '';
         
+        // Calculate and show distance badge if user has zipcode
+        let distanceBadge = '';
+        if (userProfile?.location && l.zipcode) {
+          const dist = getDistance(userProfile.location, l.zipcode);
+          if (dist < 1000) {
+            distanceBadge = dist < 10 ? '<span class="card-badge badge-nearby">📍 Very Close</span>' : 
+                           dist < 50 ? '<span class="card-badge badge-nearby">📍 Nearby</span>' : '';
+          }
+        }
+        
         return `
           <div class="listing-card" onclick="openDetail('${l.id}')">
             <div class="card-image">
               ${imageHtml}
               ${getListingBadge(l)}
+              ${distanceBadge}
               ${videoBadge}
               <button class="card-save" onclick="event.stopPropagation(); toggleWatchlist('${l.id}')">♡</button>
             </div>
