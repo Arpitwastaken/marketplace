@@ -195,6 +195,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .card-image video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .listing-card:hover .card-image img {
+      transform: scale(1.05);
     }
     .card-badge {
       position: absolute;
@@ -322,6 +331,12 @@
       gap: 32px;
     }
     .detail-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .detail-image video {
       width: 100%;
       height: 400px;
       object-fit: cover;
@@ -537,7 +552,79 @@
       .container {
         padding: 0 16px;
       }
+      .listings-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+      .card-image {
+        height: 140px;
+      }
     }
+    
+    /* ========== REMOTION ANIMATIONS ========== */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .stagger-6 { animation-delay: 0.3s; }
+    
+    .listing-card {
+      animation: fadeInUp 0.4s ease-out both;
+    }
+    .listing-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+    }
+    
+    .category-pill:hover { transform: scale(1.05); }
+    .category-pill.active { transform: scale(1.05); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+    
+    .hero { animation: fadeInUp 0.6s ease-out; }
+    .hero::before { content:''; position:absolute; top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,0.1)0%,transparent 70%);animation:float 6s ease-in-out infinite; }
+    .hero h1 { animation: fadeInUp 0.6s ease-out 0.1s both; }
+    .hero p { animation: fadeInUp 0.6s ease-out 0.2s both; }
+    
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); }
+    .btn:active { transform: translateY(0); }
+    
+    .card-save { opacity: 0; transition: all 0.3s; }
+    .listing-card:hover .card-save { opacity: 1; }
+    .card-save:hover { transform: scale(1.15) rotate(15deg); }
+    .card-save.saved { animation: pulse 0.5s ease; }
+    
+    .detail-view { animation: scaleIn 0.4s ease-out; }
+    .account-header { animation: fadeInUp 0.5s ease-out; }
+    .account-avatar { animation: float 3s ease-in-out infinite; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
+    .stat-card { animation: fadeInUp 0.4s ease-out both; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+    .stat-card:hover .stat-value { transform: scale(1.1); }
+    
+    .search-input:focus { transform: translateY(-2px); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 0 8px 20px rgba(99, 102, 241, 0.1); }
+    
+    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    
+    .video-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+    .video-badge::before { content:'▶'; font-size: 8px; }
+    
+    .deal-meter { height: 8px; background: #e5e5e5; border-radius: 4px; overflow: hidden; }
+    .deal-meter-fill { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); background: linear-gradient(90deg, var(--red), var(--orange), var(--green)); }
+    
+    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    
+    .nav-link::after { content:''; position:absolute; bottom:4px;left:12px;right:12px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 0.3s; }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link:hover { color: var(--accent); }
+    
+    .logo:hover { transform: scale(1.05); text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
   </style>
 </head>
 <body>
@@ -721,14 +808,18 @@
         const user = users[l.user_id] || { name: 'Seller', trust: 50, initials: 'S' };
         const priceDisplay = l.type === 'sell' ? `$${l.price}` : `$${l.min_price} - $${l.max_price}`;
         const imageHtml = l.image 
-          ? `<img src="${l.image}" alt="${l.title}" loading="lazy">` 
+          ? (l.video_url 
+            ? `<video src="${l.video_url}" poster="${l.image}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>`
+            : `<img src="${l.image}" alt="${l.title}" loading="lazy">`) 
           : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">📦</div>`;
+        const videoBadge = l.video_url ? '<span class="video-badge">Video</span>' : '';
         
         return `
           <div class="listing-card" onclick="openDetail('${l.id}')">
             <div class="card-image">
               ${imageHtml}
               ${getListingBadge(l)}
+              ${videoBadge}
               <button class="card-save" onclick="event.stopPropagation(); toggleWatchlist('${l.id}')">♡</button>
             </div>
             <div class="card-content">
@@ -807,7 +898,9 @@
       }
       
       const imageHtml = selectedListing.image 
-        ? `<img class="detail-image" src="${selectedListing.image}" alt="${selectedListing.title}">` 
+        ? (selectedListing.video_url 
+          ? `<video class="detail-image" controls autoplay loop src="${selectedListing.video_url}" poster="${selectedListing.image}"></video>`
+          : `<img class="detail-image" src="${selectedListing.image}" alt="${selectedListing.title}">`) 
         : `<div class="detail-image" style="display:flex;align-items:center;justify-content:center;font-size:120px;background:#f0f0f0;">📦</div>`;
       
       document.getElementById('detailContent').innerHTML = `
