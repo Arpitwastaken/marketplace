@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace</title>
+  <title>Marketplace - Buy & Sell Near You</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #fafafa;
+      --bg: #f8f9fa;
       --bg-white: #ffffff;
       --text: #1a1a1a;
-      --text-secondary: #666666;
-      --text-light: #999999;
+      --text-secondary: #5a5a5a;
+      --text-light: #888888;
       --border: #e5e5e5;
-      --accent: #6366f1;
-      --accent-hover: #4f46e5;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --accent-light: #fef3c7;
       --green: #10b981;
+      --green-light: #d1fae5;
       --red: #ef4444;
-      --orange: #f59e0b;
+      --red-light: #fee2e2;
+      --orange: #f97316;
       --purple: #8b5cf6;
     }
     body {
@@ -84,7 +87,7 @@
     
     /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, var(--accent) 0%, #818cf8 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, #fbbf24 100%);
       border-radius: 16px;
       padding: 40px;
       margin-bottom: 32px;
@@ -303,7 +306,7 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #818cf8);
+      background: linear-gradient(135deg, var(--accent), #fbbf24);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -453,7 +456,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #818cf8);
+      background: linear-gradient(135deg, var(--accent), #fbbf24);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -661,7 +664,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(-45deg, #0f0f23, #1e1b4b, #312e81, #4f46e5, #6366f1);
+      background: linear-gradient(-45deg, #0f0f23, #1e1b4b, #312e81, #4f46e5, #f59e0b);
       background-size: 400% 400%;
       animation: gradientMove 15s ease infinite;
       z-index: 9999;
@@ -735,7 +738,7 @@
       font-size: 36px;
       font-weight: 800;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, #1e1b4b, #6366f1);
+      background: linear-gradient(135deg, #1e1b4b, #f59e0b);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -842,7 +845,7 @@
       font-size: 17px;
       font-weight: 700;
       margin-top: 16px;
-      background: linear-gradient(135deg, var(--accent), #818cf8);
+      background: linear-gradient(135deg, var(--accent), #fbbf24);
       border: none;
       border-radius: 14px;
       color: white;
@@ -1345,7 +1348,7 @@
           <a href="#" class="nav-link" id="navBrowse">Browse</a>
           <a href="#" class="nav-link" id="navSell">Sell</a>
           <a href="#" class="nav-link" onclick="showAccount()">
-            <span style="display:inline-flex;width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#818cf8);border-radius:50%;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:600;">${userProfile.initials}</span>
+            <span style="display:inline-flex;width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#fbbf24);border-radius:50%;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:600;">${userProfile.initials}</span>
           </a>
         `;
       }
