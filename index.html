@@ -4,285 +4,294 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketplace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
-      --surface: #1c1c1e;
-      --surface-secondary: #2c2c2e;
-      --surface-tertiary: #3a3a3c;
-      --text: #ffffff;
-      --text-secondary: #8e8e93;
-      --text-tertiary: #636366;
-      --accent: #0a84ff;
-      --green: #30d158;
-      --orange: #ff9f0a;
-      --red: #ff453a;
-      --purple: #bf5af2;
-      --border: #38383a;
-      --radius-sm: 10px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --bg: #f0f2f5;
+      --white: #ffffff;
+      --text: #050505;
+      --text-secondary: #65676b;
+      --text-tertiary: #bcc0c4;
+      --accent: #1877f2;
+      --accent-hover: #166fe5;
+      --green: #42b72a;
+      --red: #f02849;
+      --border: #dddfe2;
+      --shadow: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 2px 8px rgba(0,0,0,0.15);
+      --radius: 8px;
+      --radius-lg: 12px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
     }
     a { color: var(--accent); text-decoration: none; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     .header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       height: 60px;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      z-index: 1000;
+      background: var(--white);
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
+      padding: 0 16px;
+      z-index: 100;
     }
-    .logo { font-size: 20px; font-weight: 600; color: var(--text); }
-    .header-nav { display: flex; gap: 8px; }
-    .nav-btn {
-      padding: 8px 16px;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover { color: var(--text); background: var(--surface); }
-    .nav-btn.active { color: var(--accent); }
-    .main {
-      padding-top: 80px;
-      padding-bottom: 100px;
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding-left: 20px;
-      padding-right: 20px;
     }
-    .hero {
-      background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
-      border-radius: var(--radius-lg);
-      padding: 48px;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 36px;
+    .logo {
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #fff 0%, #8e8e93 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p { font-size: 17px; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
-    .search-container { display: flex; gap: 12px; margin-bottom: 24px; }
-    .search-input {
-      flex: 1;
-      padding: 16px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 16px;
-      color: var(--text);
-      transition: all 0.2s;
-    }
-    .search-input::placeholder { color: var(--text-tertiary); }
-    .search-input:focus { outline: none; border-color: var(--accent); background: var(--surface-secondary); }
-    .categories {
+      color: var(--white);
+      background: var(--accent);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius);
       display: flex;
-      gap: 10px;
-      margin-bottom: 28px;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .search-box { flex: 1; max-width: 400px; position: relative; }
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg);
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+    }
+    .search-box input:focus { outline: none; }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+    .header-actions { display: flex; gap: 8px; }
+    .header-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-btn:hover { background: #d8dadf; }
+    .create-btn {
+      padding: 8px 16px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .create-btn:hover { background: var(--accent-hover); }
+    .layout {
+      display: flex;
+      max-width: 1200px;
+      margin: 76px auto 0;
+      padding: 16px;
+      gap: 24px;
+    }
+    .sidebar { width: 240px; flex-shrink: 0; }
+    .sidebar-section { margin-bottom: 24px; }
+    .sidebar-title { font-size: 17px; font-weight: 600; padding: 8px 16px; }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .sidebar-item:hover { background: #e4e6eb; }
+    .sidebar-item.active { background: #e7f3ff; }
+    .sidebar-icon { width: 24px; height: 24px; font-size: 18px; }
+    .main-content { flex: 1; }
+    .filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .filter-btn:hover { background: #f2f3f5; }
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
       overflow-x: auto;
       padding-bottom: 8px;
     }
-    .categories::-webkit-scrollbar { display: none; }
-    .category-pill {
-      padding: 12px 20px;
-      background: var(--surface);
+    .category-chip {
+      padding: 8px 16px;
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 100px;
+      border-radius: 20px;
       font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.2s;
     }
-    .category-pill:hover { background: var(--surface-secondary); color: var(--text); }
-    .category-pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .category-chip:hover { background: #f2f3f5; }
+    .category-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
     .listings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
     }
     .listing-card {
-      background: var(--surface);
+      background: var(--white);
       border-radius: var(--radius-lg);
       overflow: hidden;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-      animation: fadeInUp 0.4s ease backwards;
     }
-    .listing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .card-image { position: relative; height: 200px; background: var(--surface-secondary); overflow: hidden; }
-    .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-    .listing-card:hover .card-image img { transform: scale(1.05); }
-    .card-badge { position: absolute; top: 12px; left: 12px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
-    .badge-new { background: var(--green); color: black; }
-    .badge-hot { background: var(--red); color: white; }
-    .badge-nearby { background: var(--accent); color: white; }
-    .card-content { padding: 16px; }
-    .card-price { font-size: 24px; font-weight: 700; color: var(--text); }
-    .card-title { font-size: 16px; font-weight: 600; margin: 8px 0 4px; color: var(--text); }
-    .card-meta { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
-    .seller-info { display: flex; align-items: center; gap: 10px; }
-    .seller-avatar {
-      width: 32px; height: 32px;
+    .listing-card:hover { box-shadow: var(--shadow-lg); }
+    .card-image { position: relative; height: 180px; background: #f0f0f0; }
+    .card-image img { width: 100%; height: 100%; object-fit: cover; }
+    .card-save {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 600; color: white;
-    }
-    .seller-name { font-size: 14px; font-weight: 500; }
-    .seller-rating { font-size: 13px; color: var(--green); }
-    .onboarding {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.9);
-      z-index: 9999;
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
-      animation: fadeIn 0.4s ease;
-    }
-    .onboarding.hidden { display: none; }
-    .onboarding-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      width: 100%; max-width: 440px;
-      padding: 40px;
-      text-align: center;
-      animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-    }
-    .onboarding-icon { font-size: 64px; margin-bottom: 20px; }
-    .onboarding-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-    .onboarding-desc { font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
-    .onboarding-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
-    .progress-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-tertiary); transition: all 0.3s; }
-    .progress-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
-    .onboarding-step { display: none; animation: fadeInUp 0.4s ease; }
-    .onboarding-step.active { display: block; }
-    .form-group { margin-bottom: 20px; text-align: left; }
-    .form-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
-    .form-input {
-      width: 100%; padding: 16px;
-      background: var(--surface-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 16px; color: var(--text);
-      transition: all 0.2s;
-    }
-    .form-input:focus { outline: none; border-color: var(--accent); }
-    .form-select {
-      width: 100%; padding: 16px;
-      background: var(--surface-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 16px; color: var(--text);
-      cursor: pointer;
-    }
-    .btn {
-      padding: 16px 32px;
-      border-radius: var(--radius-md);
-      font-size: 16px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
+      background: rgba(255,255,255,0.9);
       border: none;
+      cursor: pointer;
+      font-size: 16px;
     }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: #409cff; }
-    .btn-secondary { background: var(--surface-tertiary); color: var(--text); }
-    .btn-secondary:hover { background: var(--surface-secondary); }
-    .btn-full { width: 100%; }
-    .detail-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 2000;
+    .card-content { padding: 12px; }
+    .card-price { font-size: 17px; font-weight: 700; }
+    .card-title { font-size: 15px; margin: 4px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
       display: none;
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
       padding: 20px;
-      animation: fadeIn 0.3s ease;
     }
-    .detail-overlay.active { display: flex; }
-    .detail-card {
-      background: var(--surface);
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--white);
       border-radius: var(--radius-lg);
-      width: 100%; max-width: 900px;
+      width: 100%;
+      max-width: 500px;
       max-height: 90vh;
       overflow-y: auto;
-      animation: scaleIn 0.3s ease;
-      position: relative;
     }
-    .detail-image { width: 100%; height: 350px; object-fit: cover; }
-    .detail-content { padding: 32px; }
-    .detail-price { font-size: 36px; font-weight: 700; }
-    .detail-title { font-size: 24px; font-weight: 600; margin: 12px 0; }
-    .detail-condition {
-      display: inline-block;
-      padding: 6px 14px;
-      background: var(--green);
-      color: black;
-      border-radius: 8px;
-      font-size: 13px; font-weight: 600;
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
     }
-    .detail-desc { font-size: 16px; color: var(--text-secondary); margin: 20px 0; line-height: 1.7; }
-    .detail-actions { display: flex; gap: 12px; margin-top: 24px; }
-    .detail-actions .btn { flex: 1; }
-    .close-btn {
-      position: absolute; top: 20px; right: 20px;
-      width: 40px; height: 40px;
+    .modal-header h2 { font-size: 20px; font-weight: 600; }
+    .modal-close {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: var(--surface);
       border: none;
-      color: var(--text);
+      background: transparent;
       font-size: 20px;
       cursor: pointer;
-      z-index: 10;
     }
-    .create-listing { background: var(--surface); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 32px; }
-    .create-listing h2 { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+    .modal-body { padding: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 15px;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
     .image-upload {
       border: 2px dashed var(--border);
-      border-radius: var(--radius-md);
-      padding: 48px;
+      border-radius: var(--radius);
+      padding: 32px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
     }
-    .image-upload:hover { border-color: var(--accent); background: var(--surface-secondary); }
-    .image-upload-icon { font-size: 48px; margin-bottom: 12px; }
+    .image-upload:hover { border-color: var(--accent); }
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    .btn { padding: 10px 20px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; border: none; }
+    .btn-secondary { background: var(--bg); color: var(--text); }
+    .btn-primary { background: var(--accent); color: white; }
+    .detail-modal { max-width: 700px; }
+    .detail-images { position: relative; height: 400px; background: #f0f0f0; }
+    .detail-images img { width: 100%; height: 100%; object-fit: cover; }
+    .detail-content { padding: 20px; }
+    .detail-price { font-size: 28px; font-weight: 700; }
+    .detail-title { font-size: 20px; margin: 8px 0; }
+    .detail-meta { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+    .detail-actions { display: flex; gap: 12px; margin-top: 20px; }
+    .detail-actions .btn { flex: 1; }
+    .seller-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: var(--radius);
+      margin-top: 16px;
+    }
+    .seller-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .seller-info h4 { font-size: 15px; font-weight: 600; }
+    .seller-info p { font-size: 13px; color: var(--text-secondary); }
     .toast {
-      position: fixed; bottom: 30px; left: 50%;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--surface-secondary);
-      color: var(--text);
-      padding: 16px 24px;
-      border-radius: var(--radius-md);
-      font-size: 15px; font-weight: 500;
+      background: #333;
+      color: white;
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-size: 15px;
       z-index: 10000;
       opacity: 0;
       transition: all 0.3s;
@@ -291,125 +300,144 @@
     .empty-state { text-align: center; padding: 60px 20px; }
     .empty-icon { font-size: 64px; margin-bottom: 16px; }
     .empty-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-    .empty-desc { font-size: 15px; color: var(--text-secondary); }
-    @media (max-width: 768px) {
-      .hero { padding: 32px 20px; }
-      .hero h1 { font-size: 28px; }
-      .listings-grid { grid-template-columns: 1fr; }
-      .detail-actions { flex-direction: column; }
-    }
+    .empty-desc { color: var(--text-secondary); }
+    @media (max-width: 900px) { .sidebar { display: none; } }
+    @media (max-width: 600px) { .listings-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
   </style>
 </head>
 <body>
-
-<!-- ONBOARDING -->
-<div class="onboarding" id="onboarding">
-  <div class="onboarding-card">
-    <button onclick="skipOnboarding()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:14px;">Skip</button>
-    <div class="onboarding-progress">
-      <div class="progress-dot active" id="dot1"></div>
-      <div class="progress-dot" id="dot2"></div>
-      <div class="progress-dot" id="dot3"></div>
-      <div class="progress-dot" id="dot4"></div>
+<header class="header">
+  <div class="header-content">
+    <a href="#" class="logo" onclick="showPage('browse')">M</a>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search Marketplace" id="searchInput" oninput="filterListings()">
     </div>
-    <div class="onboarding-step active" id="step1">
-      <div class="onboarding-icon">🛍️</div>
-      <h2 class="onboarding-title">Welcome to Marketplace</h2>
-      <p class="onboarding-desc">The easiest way to buy and sell items in your area. We handle everything.</p>
-      <button class="btn btn-primary btn-full" onclick="nextStep(2)">Get Started →</button>
-    </div>
-    <div class="onboarding-step" id="step2">
-      <div class="onboarding-icon">📦</div>
-      <h2 class="onboarding-title">List Once, We Do the Rest</h2>
-      <p class="onboarding-desc">Just drop off your items. We list them professionally, find buyers, and handle all the details.</p>
-      <button class="btn btn-primary btn-full" onclick="nextStep(3)">How It Works →</button>
-    </div>
-    <div class="onboarding-step" id="step3">
-      <div class="onboarding-icon">⭐</div>
-      <h2 class="onboarding-title">Trusted by Thousands</h2>
-      <p class="onboarding-desc">Every seller is rated. Transactions are secure. Your items are protected.</p>
-      <button class="btn btn-primary btn-full" onclick="nextStep(4)">Continue →</button>
-    </div>
-    <div class="onboarding-step" id="step4">
-      <div class="onboarding-icon">👋</div>
-      <h2 class="onboarding-title">Let's Get Started</h2>
-      <div class="form-group">
-        <label class="form-label">Your Name</label>
-        <input type="text" class="form-input" id="signupName" placeholder="Enter your name">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Your Zipcode</label>
-        <input type="text" class="form-input" id="signupZipcode" placeholder="e.g. 10001">
-      </div>
-      <button class="btn btn-primary btn-full" onclick="completeSignup()">Create Account</button>
+    <div class="header-actions">
+      <button class="header-btn" title="Notifications">🔔</button>
+      <button class="header-btn" title="Messages">💬</button>
+      <button class="create-btn" onclick="openCreateModal()">
+        <span>+</span>
+        <span>Create</span>
+      </button>
     </div>
   </div>
-</div>
-
-<!-- HEADER -->
-<header class="header">
-  <div class="logo">Marketplace</div>
-  <nav class="header-nav">
-    <button class="nav-btn active" onclick="showView('browse')" id="navBrowse">Browse</button>
-    <button class="nav-btn" onclick="showView('sell')" id="navSell">Sell</button>
-    <button class="nav-btn" onclick="showView('account')" id="navAccount">Account</button>
-  </nav>
 </header>
-
-<!-- MAIN -->
-<main class="main" id="mainContent">
-  <div id="browseView">
-    <div class="hero">
-      <h1>Find Great Deals Near You</h1>
-      <p>Browse thousands of items from trusted sellers in your area</p>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-item active" onclick="showPage('browse')">
+        <div class="sidebar-icon">🏠</div>
+        <span>Browse</span>
+      </div>
+      <div class="sidebar-item" onclick="showPage('saved')">
+        <div class="sidebar-icon">❤️</div>
+        <span>Saved</span>
+      </div>
+      <div class="sidebar-item" onclick="showPage('listings')">
+        <div class="sidebar-icon">📦</div>
+        <span>Your Listings</span>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-icon">💬</div>
+        <span>Messages</span>
+      </div>
     </div>
-    <div class="search-container">
-      <input type="text" class="search-input" placeholder="Search for anything..." id="searchInput" oninput="filterListings()">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Categories</div>
+      <div class="sidebar-item" onclick="setCategory('')">
+        <div class="sidebar-icon">🏪</div>
+        <span>All</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('electronics')">
+        <div class="sidebar-icon">📱</div>
+        <span>Electronics</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('vehicles')">
+        <div class="sidebar-icon">🚗</div>
+        <span>Vehicles</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('clothing')">
+        <div class="sidebar-icon">👕</div>
+        <span>Clothing</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('furniture')">
+        <div class="sidebar-icon">🪑</div>
+        <span>Furniture</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('home')">
+        <div class="sidebar-icon">🏠</div>
+        <span>Home & Garden</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('sports')">
+        <div class="sidebar-icon">⚽</div>
+        <span>Sports</span>
+      </div>
+      <div class="sidebar-item" onclick="setCategory('toys')">
+        <div class="sidebar-icon">🎮</div>
+        <span>Toys & Games</span>
+      </div>
     </div>
-    <div class="categories" id="categories">
-      <button class="category-pill active" onclick="setCategory('all')">All</button>
-      <button class="category-pill" onclick="setCategory('electronics')">Electronics</button>
-      <button class="category-pill" onclick="setCategory('furniture')">Furniture</button>
-      <button class="category-pill" onclick="setCategory('vehicles')">Vehicles</button>
-      <button class="category-pill" onclick="setCategory('clothing')">Clothing</button>
-      <button class="category-pill" onclick="setCategory('books')">Books</button>
+  </aside>
+  <main class="main-content">
+    <div class="filters">
+      <button class="filter-btn" onclick="toggleFilter(this)">📍 Location</button>
+      <button class="filter-btn" onclick="toggleFilter(this)">💰 Price</button>
+      <button class="filter-btn" onclick="toggleFilter(this)">🏷️ Category</button>
+      <button class="filter-btn" onclick="toggleFilter(this)">✨ Condition</button>
+    </div>
+    <div class="categories-bar" id="categoriesBar">
+      <div class="category-chip active" onclick="setCategory('')">All</div>
+      <div class="category-chip" onclick="setCategory('electronics')">Electronics</div>
+      <div class="category-chip" onclick="setCategory('vehicles')">Vehicles</div>
+      <div class="category-chip" onclick="setCategory('clothing')">Clothing</div>
+      <div class="category-chip" onclick="setCategory('furniture')">Furniture</div>
+      <div class="category-chip" onclick="setCategory('home')">Home & Garden</div>
+      <div class="category-chip" onclick="setCategory('sports')">Sports</div>
+      <div class="category-chip" onclick="setCategory('toys')">Toys</div>
     </div>
     <div class="listings-grid" id="listingsGrid"></div>
-  </div>
-  
-  <div id="sellView" style="display:none;">
-    <div class="create-listing">
-      <h2>List an Item</h2>
+  </main>
+</div>
+<div class="modal-overlay" id="createModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Create Listing</h2>
+      <button class="modal-close" onclick="closeCreateModal()">✕</button>
+    </div>
+    <div class="modal-body">
       <div class="form-group">
         <label class="form-label">Photos</label>
         <div class="image-upload" onclick="document.getElementById('imageInput').click()">
-          <div class="image-upload-icon">📷</div>
-          <p>Click to upload photos</p>
-          <input type="file" id="imageInput" accept="image/*" multiple style="display:none">
+          <div style="font-size:32px;margin-bottom:8px;">📷</div>
+          <div>Add Photos</div>
         </div>
+        <input type="file" id="imageInput" accept="image/*" multiple style="display:none">
       </div>
       <div class="form-group">
-        <label class="form-label">Title</label>
+        <label class="form-label">Title *</label>
         <input type="text" class="form-input" id="listingTitle" placeholder="What are you selling?">
       </div>
       <div class="form-group">
-        <label class="form-label">Description</label>
-        <input type="text" class="form-input" id="listingDescription" placeholder="Describe your item...">
+        <label class="form-label">Price *</label>
+        <input type="number" class="form-input" id="listingPrice" placeholder="$0.00">
       </div>
       <div class="form-group">
-        <label class="form-label">Category</label>
+        <label class="form-label">Category *</label>
         <select class="form-select" id="listingCategory">
-          <option value="">Select a category</option>
+          <option value="">Select category</option>
           <option value="electronics">Electronics</option>
-          <option value="furniture">Furniture</option>
           <option value="vehicles">Vehicles</option>
           <option value="clothing">Clothing</option>
-          <option value="books">Books</option>
+          <option value="furniture">Furniture</option>
+          <option value="home">Home & Garden</option>
+          <option value="sports">Sports</option>
+          <option value="toys">Toys & Games</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Price ($)</label>
-        <input type="number" class="form-input" id="listingPrice" placeholder="0.00">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="listingDescription" placeholder="Describe your item..."></textarea>
       </div>
       <div class="form-group">
         <label class="form-label">Condition</label>
@@ -421,159 +449,105 @@
           <option value="fair">Fair</option>
         </select>
       </div>
-      <button class="btn btn-primary btn-full" onclick="createListing()">Post Listing</button>
+      <div class="form-group">
+        <label class="form-label">Location</label>
+        <input type="text" class="form-input" id="listingLocation" placeholder="City, State">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeCreateModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="createListing()">Post Listing</button>
     </div>
   </div>
-  
-  <div id="accountView" style="display:none;">
-    <div class="create-listing" style="margin-bottom:24px;">
-      <h2>Your Account</h2>
-      <p style="color:var(--text-secondary);" id="accountName"></p>
+</div>
+<div class="modal-overlay" id="detailModal">
+  <div class="modal detail-modal">
+    <div class="modal-header">
+      <h2>Item Details</h2>
+      <button class="modal-close" onclick="closeDetail()">✕</button>
     </div>
-    <h3 style="font-size:18px;margin-bottom:16px;">Your Listings</h3>
-    <div class="listings-grid" id="myListingsGrid"></div>
-  </div>
-</main>
-
-<!-- DETAIL MODAL -->
-<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
-  <div class="detail-card" onclick="event.stopPropagation()">
-    <button class="close-btn" onclick="closeDetail()">✕</button>
-    <img class="detail-image" id="detailImage" src="" alt="">
+    <div class="detail-images">
+      <img id="detailImage" src="" alt="">
+    </div>
     <div class="detail-content">
       <div class="detail-price" id="detailPrice"></div>
-      <h2 class="detail-title" id="detailTitle"></h2>
-      <span class="detail-condition" id="detailCondition"></span>
-      <p class="detail-desc" id="detailDesc"></p>
-      <p style="color:var(--text-secondary);font-size:14px;" id="detailLocation"></p>
+      <h3 class="detail-title" id="detailTitle"></h3>
+      <p class="detail-meta" id="detailMeta"></p>
       <div class="detail-actions">
-        <button class="btn btn-primary" onclick="contactSeller()">Contact Seller</button>
+        <button class="btn btn-primary" onclick="contactSeller()">Message Seller</button>
         <button class="btn btn-secondary" onclick="makeOffer()">Make Offer</button>
+      </div>
+      <div class="seller-card">
+        <div class="seller-avatar" id="sellerAvatar"></div>
+        <div class="seller-info">
+          <h4 id="sellerName"></h4>
+          <p>Member since 2024 • Verified</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
-const API = 'http://localhost:3000/api';
-let allListings = [];
-let currentCategory = 'all';
-let searchQuery = '';
-let userProfile = null;
-let selectedListing = null;
-
 const users = {
-  'seller1': { name: 'Tech Trader', initials: 'TT', rating: 4.9 },
-  'seller2': { name: 'Gadget Guy', initials: 'GG', rating: 4.5 },
-  'seller3': { name: 'Gamer Store', initials: 'GS', rating: 4.8 },
-  'seller4': { name: 'Furniture Co', initials: 'FC', rating: 4.7 },
+  'u1': { name: 'John Smith', initials: 'JS' },
+  'u2': { name: 'Sarah Johnson', initials: 'SJ' },
+  'u3': { name: 'Mike Williams', initials: 'MW' },
+  'u4': { name: 'Emily Brown', initials: 'EB' },
+  'u5': { name: 'David Lee', initials: 'DL' },
 };
-
-let onboardingStep = 1;
-function nextStep(step) {
-  document.getElementById('step' + onboardingStep).classList.remove('active');
-  document.getElementById('dot' + onboardingStep).classList.remove('active');
-  onboardingStep = step;
-  document.getElementById('step' + onboardingStep).classList.add('active');
-  document.getElementById('dot' + onboardingStep).classList.add('active');
+const sampleListings = [
+  { id: '1', user_id: 'u1', title: 'iPhone 15 Pro Max 256GB', price: 950, category: 'electronics', condition: 'like_new', location: 'New York, NY', image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop' },
+  { id: '2', user_id: 'u2', title: 'MacBook Pro M3 14"', price: 1850, category: 'electronics', condition: 'like_new', location: 'Los Angeles, CA', image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&h=300&fit=crop' },
+  { id: '3', user_id: 'u3', title: 'PS5 Digital Edition - Brand New', price: 380, category: 'electronics', condition: 'new', location: 'Chicago, IL', image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop' },
+  { id: '4', user_id: 'u4', title: '2023 Toyota Camry LE', price: 24000, category: 'vehicles', condition: 'good', location: 'Miami, FL', image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop' },
+  { id: '5', user_id: 'u5', title: 'Herman Miller Aeron Chair', price: 850, category: 'furniture', condition: 'good', location: 'Seattle, WA', image: 'https://images.unsplash.com/photo-1580480055273-228ff5398ef7?w=400&h=300&fit=crop' },
+  { id: '6', user_id: 'u1', title: 'Nike Air Jordan 1 - Size 10', price: 180, category: 'clothing', condition: 'like_new', location: 'Boston, MA', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop' },
+  { id: '7', user_id: 'u2', title: 'Samsung 65" 4K Smart TV', price: 650, category: 'electronics', condition: 'good', location: 'Denver, CO', image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop' },
+  { id: '8', user_id: 'u3', title: 'Vintage Wooden Dining Table', price: 420, category: 'furniture', condition: 'fair', location: 'Portland, OR', image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400&h=300&fit=crop' },
+  { id: '9', user_id: 'u4', title: 'Canon EOS R5 Camera', price: 2800, category: 'electronics', condition: 'like_new', location: 'San Francisco, CA', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=300&fit=crop' },
+  { id: '10', user_id: 'u5', title: 'Peloton Bike+', price: 1200, category: 'sports', condition: 'like_new', location: 'Austin, TX', image: 'https://images.unsplash.com/photo-1591741535018-3b0cc59f7fcd?w=400&h=300&fit=crop' },
+  { id: '11', user_id: 'u1', title: 'PlayStation VR2 Headset', price: 450, category: 'electronics', condition: 'new', location: 'Phoenix, AZ', image: 'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop' },
+  { id: '12', user_id: 'u2', title: 'Leather Sofa - 3 Seater', price: 750, category: 'furniture', condition: 'good', location: 'Atlanta, GA', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop' },
+];
+let allListings = [...sampleListings];
+let currentCategory = '';
+let searchQuery = '';
+let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+let myListings = JSON.parse(localStorage.getItem('myListings') || '[]');
+let currentPage = 'browse';
+let selectedListing = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
-function skipOnboarding() {
-  document.getElementById('onboarding').classList.add('hidden');
-  localStorage.setItem('onboardingComplete', 'true');
-}
-function completeSignup() {
-  const name = document.getElementById('signupName').value.trim();
-  const zipcode = document.getElementById('signupZipcode').value.trim();
-  if (!name) { showToast('Please enter your name'); return; }
-  userProfile = { name, zipcode, initials: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2) };
-  localStorage.setItem('userProfile', JSON.stringify(userProfile));
-  document.getElementById('onboarding').classList.add('hidden');
-  showToast('Welcome, ' + name + '!');
-}
-
-function showView(view) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('nav' + view.charAt(0).toUpperCase() + view.slice(1)).classList.add('active');
-  document.getElementById('browseView').style.display = view === 'browse' ? 'block' : 'none';
-  document.getElementById('sellView').style.display = view === 'sell' ? 'block' : 'none';
-  document.getElementById('accountView').style.display = view === 'account' ? 'block' : 'none';
-  if (view === 'account' && userProfile) {
-    document.getElementById('accountName').textContent = userProfile.name + ' • ' + (userProfile.zipcode || 'No zipcode');
-  }
-}
-
-async function loadListings() {
-  // Try to load from API first, fallback to sample data
-  try {
-    const res = await fetch(API + '/listings');
-    if (res.ok) {
-      allListings = await res.json();
-      renderListings();
-      return;
-    }
-  } catch (e) {}
-  
-  // Sample data when API unavailable
-  allListings = [
-    { id: '1', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'iPhone 15 Pro Max', description: 'Excellent condition, barely used', price: 950, condition: 'like_new', location: 'New York', zipcode: '10012', tags: ['iphone', 'apple'], image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop' },
-    { id: '2', user_id: 'seller2', type: 'sell', category: 'electronics', title: 'MacBook Pro M3', description: 'Like new, includes charger', price: 1850, condition: 'like_new', location: 'Los Angeles', zipcode: '90012', tags: ['macbook', 'apple', 'laptop'], image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&h=300&fit=crop' },
-    { id: '3', user_id: 'seller3', type: 'sell', category: 'electronics', title: 'PS5 Digital Edition', description: 'Brand new, unopened', price: 380, condition: 'new', location: 'Austin', zipcode: '78704', tags: ['ps5', 'playstation', 'gaming'], image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop' },
-    { id: '4', user_id: 'seller1', type: 'sell', category: 'electronics', title: 'RTX 4080 Super', description: 'Brand new in box', price: 1100, condition: 'new', location: 'New York', zipcode: '10012', tags: ['gpu', 'rtx_4080'], image: 'https://images.unsplash.com/photo-1555685812-4b943f3e9942?w=400&h=300&fit=crop' },
-    { id: '5', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Herman Miller Aeron Chair', description: 'Size B, fully loaded', price: 850, condition: 'good', location: 'Chicago', zipcode: '60601', tags: ['chair', 'office', 'ergonomic'], image: 'https://images.unsplash.com/photo-1580480055273-228ff5398ef7?w=400&h=300&fit=crop' },
-    { id: '6', user_id: 'seller4', type: 'sell', category: 'furniture', title: 'Uplift V2 Standing Desk', description: 'Excellent condition, bamboo top', price: 450, condition: 'good', location: 'Denver', zipcode: '80201', tags: ['desk', 'standing', 'office'], image: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop' },
-    { id: '7', user_id: 'seller5', type: 'sell', category: 'vehicles', title: 'Trek Domane SL5 Road Bike', description: '2023 model, carbon frame', price: 2800, condition: 'like_new', location: 'Seattle', zipcode: '98101', tags: ['bike', 'trek', 'road'], image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400&h=300&fit=crop' },
-    { id: '8', user_id: 'seller6', type: 'sell', category: 'electronics', title: 'Fender Stratocaster', description: 'American Pro II, Sunburst', price: 1450, condition: 'like_new', location: 'Austin', zipcode: '78701', tags: ['guitar', 'fender', 'music'], image: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400&h=300&fit=crop' },
-  ];
-  renderListings();
-}
-
 function renderListings() {
   let filtered = [...allListings];
-  if (currentCategory !== 'all') filtered = filtered.filter(l => l.category === currentCategory);
+  if (currentCategory) filtered = filtered.filter(l => l.category === currentCategory);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    filtered = filtered.filter(l => l.title.toLowerCase().includes(q) || l.description?.toLowerCase().includes(q));
+    filtered = filtered.filter(l => l.title.toLowerCase().includes(q) || l.location?.toLowerCase().includes(q));
   }
-  filtered = filtered.filter(l => l.type === 'sell');
-  
+  if (currentPage === 'saved') filtered = filtered.filter(l => savedItems.includes(l.id));
+  else if (currentPage === 'listings') filtered = myListings;
   const grid = document.getElementById('listingsGrid');
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📦</div><div class="empty-title">No items found</div><div class="empty-desc">Try a different search or category</div></div>';
+    const empty = currentPage === 'saved' ? { icon: '❤️', title: 'No saved items', desc: 'Save items you like' } : currentPage === 'listings' ? { icon: '📦', title: 'No listings yet', desc: 'Create your first listing' } : { icon: '🔍', title: 'No items found', desc: 'Try adjusting your filters' };
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">${empty.icon}</div><div class="empty-title">${empty.title}</div><div class="empty-desc">${empty.desc}</div></div>`;
     return;
   }
-  
-  grid.innerHTML = filtered.slice(0, 20).map((l, i) => {
-    const user = users[l.user_id] || { name: 'Seller', initials: 'S', rating: 4.0 };
-    const image = l.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop';
-    return `
-      <div class="listing-card" onclick="openDetail('${l.id}')" style="animation-delay: ${i * 0.05}s">
-        <div class="card-image">
-          <img src="${image}" alt="${l.title}" loading="lazy">
-          ${l.condition === 'new' ? '<span class="card-badge badge-new">New</span>' : ''}
-        </div>
-        <div class="card-content">
-          <div class="card-price">$${l.price}</div>
-          <div class="card-title">${l.title}</div>
-          <div class="card-meta">${l.condition?.replace('_', ' ') || 'Used'}</div>
-          <div class="card-footer">
-            <div class="seller-info">
-              <div class="seller-avatar">${user.initials}</div>
-              <div><div class="seller-name">${user.name}</div><div class="seller-rating">⭐ ${user.rating}</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+  grid.innerHTML = filtered.map(l => {
+    const user = users[l.user_id] || { name: 'User', initials: 'U' };
+    return `<div class="listing-card" onclick="openDetail('${l.id}')"><div class="card-image"><img src="${l.image}" alt="${l.title}" loading="lazy"><button class="card-save ${savedItems.includes(l.id) ? 'saved' : ''}" onclick="event.stopPropagation(); toggleSave('${l.id}')">${savedItems.includes(l.id) ? '❤️' : '🤍'}</button></div><div class="card-content"><div class="card-price">$${l.price.toLocaleString()}</div><div class="card-title">${l.title}</div><div class="card-meta">${l.location}</div></div></div>`;
   }).join('');
 }
-
 function setCategory(cat) {
   currentCategory = cat;
-  document.querySelectorAll('.category-pill').forEach((p, i) => {
-    const cats = ['all', 'electronics', 'furniture', 'vehicles', 'clothing', 'books'];
-    p.classList.toggle('active', cats[i] === cat);
+  document.querySelectorAll('.category-chip').forEach((c, i) => {
+    const cats = ['', 'electronics', 'vehicles', 'clothing', 'furniture', 'home', 'sports', 'toys'];
+    c.classList.toggle('active', cats[i] === cat);
   });
   renderListings();
 }
@@ -581,92 +555,51 @@ function filterListings() {
   searchQuery = document.getElementById('searchInput').value;
   renderListings();
 }
-
+function showPage(page) {
+  currentPage = page;
+  renderListings();
+}
+function toggleSave(id) {
+  if (savedItems.includes(id)) savedItems = savedItems.filter(i => i !== id);
+  else savedItems.push(id);
+  localStorage.setItem('savedItems', JSON.stringify(savedItems));
+  renderListings();
+}
+function openCreateModal() { document.getElementById('createModal').classList.add('active'); }
+function closeCreateModal() { document.getElementById('createModal').classList.remove('active'); }
+function toggleFilter(btn) { btn.classList.toggle('active'); }
+function createListing() {
+  const title = document.getElementById('listingTitle').value.trim();
+  const price = document.getElementById('listingPrice').value;
+  const category = document.getElementById('listingCategory').value;
+  if (!title || !price || !category) { showToast('Please fill in required fields'); return; }
+  const newListing = { id: 'u' + Date.now(), user_id: 'u1', title, price: parseInt(price), category, condition: document.getElementById('listingCondition').value || 'good', location: document.getElementById('listingLocation').value || 'Unknown', description: document.getElementById('listingDescription').value, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop' };
+  myListings.push(newListing);
+  allListings.unshift(newListing);
+  localStorage.setItem('myListings', JSON.stringify(myListings));
+  showToast('Listing posted!');
+  closeCreateModal();
+  renderListings();
+  document.getElementById('listingTitle').value = '';
+  document.getElementById('listingPrice').value = '';
+  document.getElementById('listingDescription').value = '';
+}
 function openDetail(id) {
   selectedListing = allListings.find(l => l.id === id);
   if (!selectedListing) return;
-  const image = selectedListing.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop';
-  document.getElementById('detailImage').src = image;
-  document.getElementById('detailPrice').textContent = '$' + selectedListing.price;
+  const user = users[selectedListing.user_id] || { name: 'User', initials: 'U' };
+  document.getElementById('detailImage').src = selectedListing.image;
+  document.getElementById('detailPrice').textContent = '$' + selectedListing.price.toLocaleString();
   document.getElementById('detailTitle').textContent = selectedListing.title;
-  document.getElementById('detailCondition').textContent = selectedListing.condition?.replace('_', ' ') || 'Used';
-  document.getElementById('detailDesc').textContent = selectedListing.description || 'No description provided.';
-  document.getElementById('detailLocation').textContent = '📍 ' + (selectedListing.location || 'Unknown');
-  document.getElementById('detailOverlay').classList.add('active');
+  document.getElementById('detailMeta').textContent = `${selectedListing.location} • ${selectedListing.condition || 'Used'}`;
+  document.getElementById('sellerAvatar').textContent = user.initials;
+  document.getElementById('sellerName').textContent = user.name;
+  document.getElementById('detailModal').classList.add('active');
 }
-function closeDetail(e) {
-  if (!e || e.target === document.getElementById('detailOverlay')) {
-    document.getElementById('detailOverlay').classList.remove('active');
-  }
-}
+function closeDetail() { document.getElementById('detailModal').classList.remove('active'); }
 function contactSeller() { showToast('Opening chat...'); }
-function makeOffer() {
-  const offer = prompt('Enter your offer amount:');
-  if (offer) showToast('Offer sent: $' + offer);
-}
-
-async function createListing() {
-  const title = document.getElementById('listingTitle').value.trim();
-  const description = document.getElementById('listingDescription').value;
-  const category = document.getElementById('listingCategory').value;
-  const price = document.getElementById('listingPrice').value;
-  const condition = document.getElementById('listingCondition').value;
-  
-  if (!title || !category || !price) { showToast('Please fill in all required fields'); return; }
-  
-  const newListing = {
-    id: String(Date.now()),
-    user_id: 'user1',
-    type: 'sell',
-    category,
-    title,
-    description,
-    price: parseInt(price),
-    condition,
-    location: userProfile?.zipcode ? 'Area ' + userProfile.zipcode : 'Local',
-    zipcode: userProfile?.zipcode || '',
-    tags: [],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
-  };
-  
-  // Try API first, fallback to localStorage
-  try {
-    await fetch(API + '/listings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newListing)
-    });
-  } catch (e) {
-    // Store locally if API unavailable
-    const localListings = JSON.parse(localStorage.getItem('myListings') || '[]');
-    localListings.push(newListing);
-    localStorage.setItem('myListings', JSON.stringify(localListings));
-  }
-  
-  showToast('Listing posted!');
-  loadListings();
-  showView('browse');
-  document.getElementById('listingTitle').value = '';
-  document.getElementById('listingDescription').value = '';
-  document.getElementById('listingPrice').value = '';
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// Init
-document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('onboardingComplete') === 'true') {
-    document.getElementById('onboarding').classList.add('hidden');
-    const saved = localStorage.getItem('userProfile');
-    if (saved) userProfile = JSON.parse(saved);
-  }
-  loadListings();
-});
+function makeOffer() { const offer = prompt('Enter your offer:'); if (offer) showToast('Offer sent: $' + offer); }
+renderListings();
 </script>
 </body>
 </html>
